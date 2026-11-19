@@ -322,13 +322,18 @@ export namespace DeletedReader {
     | 'simulated_wisepos_e'
     | 'stripe_m2'
     | 'stripe_s700'
+    | 'stripe_s700_devkit'
     | 'stripe_s710'
+    | 'stripe_s710_devkit'
     | 'stripe_t600'
+    | 'stripe_t600_devkit'
     | 'verifone_P400'
     | 'verifone_m425'
     | 'verifone_p630'
     | 'verifone_ux700'
+    | 'verifone_ux700_devkit'
     | 'verifone_v660p'
+    | 'verifone_v660p_devkit'
     | OtherString;
 }
 export namespace Reader {
@@ -414,13 +419,18 @@ export namespace Reader {
     | 'simulated_wisepos_e'
     | 'stripe_m2'
     | 'stripe_s700'
+    | 'stripe_s700_devkit'
     | 'stripe_s710'
+    | 'stripe_s710_devkit'
     | 'stripe_t600'
+    | 'stripe_t600_devkit'
     | 'verifone_P400'
     | 'verifone_m425'
     | 'verifone_p630'
     | 'verifone_ux700'
+    | 'verifone_ux700_devkit'
     | 'verifone_v660p'
+    | 'verifone_v660p_devkit'
     | OtherString;
 
   export type Status = 'offline' | 'online' | OtherString;
@@ -793,6 +803,7 @@ export namespace Reader {
         | 'forwarding_api_upstream_connection_timeout'
         | 'forwarding_api_upstream_error'
         | 'idempotency_key_in_use'
+        | 'inactive_api_operation_confirmation_required'
         | 'incorrect_address'
         | 'incorrect_cvc'
         | 'incorrect_number'
@@ -1398,13 +1409,18 @@ export namespace Terminal {
       | 'simulated_wisepos_e'
       | 'stripe_m2'
       | 'stripe_s700'
+      | 'stripe_s700_devkit'
       | 'stripe_s710'
+      | 'stripe_s710_devkit'
       | 'stripe_t600'
+      | 'stripe_t600_devkit'
       | 'verifone_P400'
       | 'verifone_m425'
       | 'verifone_p630'
       | 'verifone_ux700'
+      | 'verifone_ux700_devkit'
       | 'verifone_v660p'
+      | 'verifone_v660p_devkit'
       | OtherString;
 
     export type Status = 'offline' | 'online' | OtherString;

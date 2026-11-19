@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
-import {RangeQueryParam, OtherString} from '../../../shared.js';
+import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ApprovalRequestResource extends StripeResource {
@@ -501,7 +501,7 @@ export namespace V2 {
       /**
        * Filter by creation time.
        */
-      created?: RangeQueryParam;
+      created?: ApprovalRequestListParams.Created;
 
       /**
        * Maximum number of results to return.
@@ -512,6 +512,42 @@ export namespace V2 {
        * Filter by approval request status (e.g. "requires_review", "approved", "succeeded", "failed", "rejected", "canceled", "expired").
        */
       status?: string;
+    }
+
+    export namespace ApprovalRequestListParams {
+      export interface Created {
+        /**
+         * Filter for objects created after the specified timestamp.
+         * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gt?: string | number;
+
+        /**
+         * Filter for objects created on or after the specified timestamp.
+         * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gte?: string | number;
+
+        /**
+         * Filter for objects created before the specified timestamp.
+         * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lt?: string | number;
+
+        /**
+         * Filter for objects created on or before the specified timestamp.
+         * Must be an RFC 3339 date & time value, for example: 2022-09-18T13:22:00Z.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lte?: string | number;
+      }
     }
   }
 }

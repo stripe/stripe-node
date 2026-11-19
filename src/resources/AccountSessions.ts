@@ -72,6 +72,8 @@ export namespace AccountSession {
 
     documents: Components.Documents;
 
+    export_tax_transactions?: Components.ExportTaxTransactions | null;
+
     financial_account: Components.FinancialAccount;
 
     financial_account_transactions: Components.FinancialAccountTransactions;
@@ -100,11 +102,15 @@ export namespace AccountSession {
 
     payouts_list: Components.PayoutsList;
 
+    product_tax_code_selector?: Components.ProductTaxCodeSelector | null;
+
     reporting_chart: Components.ReportingChart;
 
     tax_registrations: Components.TaxRegistrations;
 
     tax_settings: Components.TaxSettings;
+
+    tax_threshold_monitoring?: Components.TaxThresholdMonitoring | null;
 
     terminal_hardware_orders: Components.TerminalHardwareOrders;
 
@@ -191,6 +197,15 @@ export namespace AccountSession {
       enabled: boolean;
 
       features: Documents.Features;
+    }
+
+    export interface ExportTaxTransactions {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: ExportTaxTransactions.Features;
     }
 
     export interface FinancialAccount {
@@ -319,6 +334,15 @@ export namespace AccountSession {
       features: PayoutsList.Features;
     }
 
+    export interface ProductTaxCodeSelector {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: ProductTaxCodeSelector.Features;
+    }
+
     export interface ReportingChart {
       /**
        * Whether the embedded component is enabled.
@@ -344,6 +368,15 @@ export namespace AccountSession {
       enabled: boolean;
 
       features: TaxSettings.Features;
+    }
+
+    export interface TaxThresholdMonitoring {
+      /**
+       * Whether the embedded component is enabled.
+       */
+      enabled: boolean;
+
+      features: TaxThresholdMonitoring.Features;
     }
 
     export interface TerminalHardwareOrders {
@@ -467,6 +500,10 @@ export namespace AccountSession {
     }
 
     export namespace Documents {
+      export interface Features {}
+    }
+
+    export namespace ExportTaxTransactions {
       export interface Features {}
     }
 
@@ -721,6 +758,10 @@ export namespace AccountSession {
       export interface Features {}
     }
 
+    export namespace ProductTaxCodeSelector {
+      export interface Features {}
+    }
+
     export namespace ReportingChart {
       export interface Features {}
     }
@@ -730,6 +771,10 @@ export namespace AccountSession {
     }
 
     export namespace TaxSettings {
+      export interface Features {}
+    }
+
+    export namespace TaxThresholdMonitoring {
       export interface Features {}
     }
 

@@ -15,7 +15,6 @@ import {Plan, DeletedPlan} from './Plans.js';
 import {Invoice} from './Invoices.js';
 import * as TestHelpers from './TestHelpers/index.js';
 import {Metadata, OtherString} from '../shared.js';
-import {RequestOptions} from '../lib.js';
 export interface QuotePreviewSubscriptionSchedule {
   /**
    * Unique identifier for the object.

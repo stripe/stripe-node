@@ -1,7 +1,6 @@
 // File generated from our OpenAPI spec
 
 import {OtherString} from '../../../shared.js';
-import {RequestOptions} from '../../../lib.js';
 export interface CollectionSettingVersion {
   /**
    * The ID of the CollectionSettingVersion object.

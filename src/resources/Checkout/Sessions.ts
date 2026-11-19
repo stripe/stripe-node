@@ -131,6 +131,8 @@ export class SessionResource extends StripeResource {
   }
   /**
    * Creates a Checkout Session object.
+   *
+   * Validate requests on your server and protect your application's Session-creation endpoint with access controls and limits on repeated creation. See [Protect your Session-creation endpoint](https://docs.stripe.com/payments/accept-a-payment?payment-ui=elements&api-integration=checkout#protect-session-creation).
    */
   create(
     params?: Checkout.SessionCreateParams,
@@ -1006,6 +1008,11 @@ export namespace Session {
 
   export interface AutomaticTax {
     /**
+     * Controls how much address information Checkout collects when automatic tax is enabled.
+     */
+    address_collection_precision?: AutomaticTax.AddressCollectionPrecision | null;
+
+    /**
      * Indicates whether automatic tax is enabled for the session
      */
     enabled: boolean;
@@ -1652,6 +1659,8 @@ export namespace Session {
   }
 
   export namespace AutomaticTax {
+    export type AddressCollectionPrecision = 'full' | 'minimal';
+
     export interface Liability {
       /**
        * The connected account being referenced when `type` is `account`.
@@ -4473,6 +4482,15 @@ export namespace Checkout {
 
     export interface AutomaticTax {
       /**
+       * Controls how much address information Checkout collects when [automatic_tax](https://stripe.com/docs/api/checkout/sessions/object#checkout_session_object-automatic_tax-enabled) is enabled.
+       *
+       * Defaults to `full`, which collects the address fields needed for the most accurate tax calculation. Set to `minimal` to collect only the fields required for tax in the buyer's country, accepting potentially less precise tax calculation in exchange for a streamlined form.
+       *
+       * Only honored when `automatic_tax.enabled` is `true`, `billing_address_collection` is `auto`, the resolved tax address source is the session billing address, and `ui_mode` is `form`.
+       */
+      address_collection_precision?: AutomaticTax.AddressCollectionPrecision;
+
+      /**
        * Set to `true` to [calculate tax automatically](https://docs.stripe.com/tax) using the customer's location.
        *
        * Enabling this parameter causes Checkout to collect any billing address information necessary for tax calculation.
@@ -5416,6 +5434,8 @@ export namespace Checkout {
     }
 
     export namespace AutomaticTax {
+      export type AddressCollectionPrecision = 'full' | 'minimal';
+
       export interface Liability {
         /**
          * The connected account being referenced when `type` is `account`.

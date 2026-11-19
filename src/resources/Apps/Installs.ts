@@ -6,7 +6,7 @@ import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class InstallResource extends StripeResource {
   /**
-   * Returns a list of app installs. An app developer filtering by its own app with its own key sees that app's installs across the accounts that installed it. An app developer acting on a connected account through Stripe-Account and filtering by its app sees that account's installs of the app, and an embedding platform acting on a connected account sees only the installs it created there. Other callers see the installs on their own account. A live key lists live installs and a test key lists test installs; the key of an app's managed sandbox filtering by app lists that app's installs across every sandbox.
+   * Returns a list of app installs. An app developer filtering by its own app with its own key sees that app's installs across the accounts that installed it. An app developer acting on a connected account through Stripe-Account and filtering by its app sees that account's installs of the app, and an embedding platform acting on a connected account sees only the installs it created there. Other callers see the installs on their own account. A live key lists live installs and a test key lists test installs; the key of an app's managed sandbox filtering by app lists that app's installs across every sandbox, and also that app's legacy test mode installs when the developer has no legacy test mode.
    */
   list(
     params?: Apps.InstallListParams,
@@ -17,7 +17,7 @@ export class InstallResource extends StripeResource {
     }) as any;
   }
   /**
-   * Creates an app install. An account installs its own private app with its own key; public and testing installs are made from the Dashboard. An app developer acting on a connected account through Stripe-Account installs or reinstalls its app there, and an embedding platform can do the same once the app's developer approves its request to embed the app. For a private app, creating an install installs the newest completed upload; when that version is already installed with nothing pending, the existing install is returned.
+   * Creates an app install. An account installs its own private app with its own key; public and testing installs are made from the Dashboard. An app developer acting on a connected account through Stripe-Account installs or reinstalls its app there, and an embedding platform can do the same once the app's developer approves its request to embed the app and the platform has accepted the Embedding Platform Terms and Conditions in the Dashboard. For a private app, creating an install installs the newest completed upload; when that version is already installed with nothing pending, the existing install is returned.
    */
   create(
     params: Apps.InstallCreateParams,

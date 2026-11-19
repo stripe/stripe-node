@@ -283,7 +283,7 @@ export interface Account {
   created: string;
 
   /**
-   * A value indicating the Stripe dashboard this Account has access to. This will depend on which configurations are enabled for this account.
+   * Specifies the account's Stripe-hosted Dashboard access. Available values depend on the configurations enabled for the account. Learn more about [configuring Dashboard access](https://docs.stripe.com/connect/accounts-v2/connected-account-configuration#set-dashboard-access).
    */
   dashboard?: Account.Dashboard;
 
@@ -521,6 +521,11 @@ export namespace Account {
        * The Merchant Category Code (MCC) for the merchant. MCCs classify businesses based on the goods or services they provide.
        */
       mcc?: string;
+
+      /**
+       * Settings for PayPay payments.
+       */
+      paypay_payments?: Merchant.PaypayPayments;
 
       /**
        * Settings for the default text that appears on statements for language variations.
@@ -890,6 +895,11 @@ export namespace Account {
         bancontact_payments?: Capabilities.BancontactPayments;
 
         /**
+         * Allow the merchant to process Billie payments.
+         */
+        billie_payments?: Capabilities.BilliePayments;
+
+        /**
          * Allow the merchant to process BLIK payments.
          */
         blik_payments?: Capabilities.BlikPayments;
@@ -980,6 +990,11 @@ export namespace Account {
         link_payments?: Capabilities.LinkPayments;
 
         /**
+         * Allow the merchant to process MB WAY payments.
+         */
+        mb_way_payments?: Capabilities.MbWayPayments;
+
+        /**
          * Allow the merchant to process MobilePay payments.
          */
         mobilepay_payments?: Capabilities.MobilepayPayments;
@@ -998,6 +1013,11 @@ export namespace Account {
          * Allow the merchant to process Naver Pay payments.
          */
         naver_pay_payments?: Capabilities.NaverPayPayments;
+
+        /**
+         * Allow the merchant to process New Zealand BECS Direct Debit payments.
+         */
+        nz_bank_account_becs_debit_payments?: Capabilities.NzBankAccountBecsDebitPayments;
 
         /**
          * Allow the merchant to process OXXO payments.
@@ -1023,6 +1043,16 @@ export namespace Account {
          * Allow the merchant to process PayNow payments.
          */
         paynow_payments?: Capabilities.PaynowPayments;
+
+        /**
+         * Allow the merchant to process PayPay payments.
+         */
+        paypay_payments?: Capabilities.PaypayPayments;
+
+        /**
+         * Allow the merchant to process Pix payments.
+         */
+        pix_payments?: Capabilities.PixPayments;
 
         /**
          * Allow the merchant to process PromptPay payments.
@@ -1099,9 +1129,36 @@ export namespace Account {
 
       export interface KonbiniPayments {
         /**
+         * Information provided to support the onboarding process for Konbini payments.
+         */
+        additional_material?: string;
+
+        /**
          * Support for Konbini payments.
          */
         support?: KonbiniPayments.Support;
+      }
+
+      export interface PaypayPayments {
+        /**
+         * Additional files supporting PayPay payments configuration.
+         */
+        additional_files: Array<string>;
+
+        /**
+         * The type of goods sold by the merchant for PayPay payments.
+         */
+        goods_type?: PaypayPayments.GoodsType;
+
+        /**
+         * The business's website for PayPay payments.
+         */
+        site?: PaypayPayments.Site;
+
+        /**
+         * URL to the Specified Commercial Transactions Act page for PayPay payments.
+         */
+        specified_commercial_transactions_act_url?: string;
       }
 
       export interface ScriptStatementDescriptor {
@@ -1271,6 +1328,18 @@ export namespace Account {
            * Additional details about the capability's status. This value is empty when `status` is `active`.
            */
           status_details: Array<BancontactPayments.StatusDetail>;
+        }
+
+        export interface BilliePayments {
+          /**
+           * The status of the Capability.
+           */
+          status: BilliePayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<BilliePayments.StatusDetail>;
         }
 
         export interface BlikPayments {
@@ -1489,6 +1558,18 @@ export namespace Account {
           status_details: Array<LinkPayments.StatusDetail>;
         }
 
+        export interface MbWayPayments {
+          /**
+           * The status of the Capability.
+           */
+          status: MbWayPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<MbWayPayments.StatusDetail>;
+        }
+
         export interface MobilepayPayments {
           /**
            * The status of the Capability.
@@ -1535,6 +1616,18 @@ export namespace Account {
            * Additional details about the capability's status. This value is empty when `status` is `active`.
            */
           status_details: Array<NaverPayPayments.StatusDetail>;
+        }
+
+        export interface NzBankAccountBecsDebitPayments {
+          /**
+           * The status of the Capability.
+           */
+          status: NzBankAccountBecsDebitPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<NzBankAccountBecsDebitPayments.StatusDetail>;
         }
 
         export interface OxxoPayments {
@@ -1595,6 +1688,30 @@ export namespace Account {
            * Additional details about the capability's status. This value is empty when `status` is `active`.
            */
           status_details: Array<PaynowPayments.StatusDetail>;
+        }
+
+        export interface PaypayPayments {
+          /**
+           * The status of the Capability.
+           */
+          status: PaypayPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<PaypayPayments.StatusDetail>;
+        }
+
+        export interface PixPayments {
+          /**
+           * The status of the Capability.
+           */
+          status: PixPayments.Status;
+
+          /**
+           * Additional details about the capability's status. This value is empty when `status` is `active`.
+           */
+          status_details: Array<PixPayments.StatusDetail>;
         }
 
         export interface PromptpayPayments {
@@ -2109,6 +2226,51 @@ export namespace Account {
         }
 
         export namespace BancontactPayments {
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace BilliePayments {
           export type Status =
             | 'active'
             | 'pending'
@@ -2963,6 +3125,51 @@ export namespace Account {
           }
         }
 
+        export namespace MbWayPayments {
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
         export namespace MobilepayPayments {
           export type Status =
             | 'active'
@@ -3099,6 +3306,51 @@ export namespace Account {
         }
 
         export namespace NaverPayPayments {
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace NzBankAccountBecsDebitPayments {
           export type Status =
             | 'active'
             | 'pending'
@@ -3324,6 +3576,96 @@ export namespace Account {
         }
 
         export namespace PaynowPayments {
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace PaypayPayments {
+          export type Status =
+            | 'active'
+            | 'pending'
+            | 'rejected'
+            | 'restricted'
+            | 'unsupported';
+
+          export interface StatusDetail {
+            /**
+             * Machine-readable code explaining the reason for the Capability to be in its current status.
+             */
+            code: StatusDetail.Code;
+
+            /**
+             * Machine-readable code explaining how to make the Capability active.
+             */
+            resolution: StatusDetail.Resolution;
+          }
+
+          export namespace StatusDetail {
+            export type Code =
+              | 'determining_status'
+              | 'rejected_fraud'
+              | 'rejected_incomplete_verification'
+              | 'rejected_listed'
+              | 'rejected_other'
+              | 'rejected_platform_fraud'
+              | 'rejected_platform_other'
+              | 'rejected_platform_terms_of_service'
+              | 'rejected_terms_of_service'
+              | 'requirements_past_due'
+              | 'requirements_pending_verification'
+              | 'restricted_other'
+              | 'unsupported_business'
+              | 'unsupported_country'
+              | 'unsupported_entity_type';
+
+            export type Resolution =
+              | 'contact_stripe'
+              | 'no_resolution'
+              | 'provide_info';
+          }
+        }
+
+        export namespace PixPayments {
           export type Status =
             | 'active'
             | 'pending'
@@ -4012,6 +4354,57 @@ export namespace Account {
              */
             start_time?: string;
           }
+        }
+      }
+
+      export namespace PaypayPayments {
+        export type GoodsType = 'digital_content' | 'other';
+
+        export interface Site {
+          /**
+           * Additional information about the business's website when it's accessible.
+           */
+          accessible?: Site.Accessible;
+
+          /**
+           * Additional information about the business's website when it's in development.
+           */
+          in_development?: Site.InDevelopment;
+
+          /**
+           * Additional information about the business's website when it has restricted access.
+           */
+          restricted?: Site.Restricted;
+
+          /**
+           * The status of the business's website.
+           */
+          type?: Site.Type;
+        }
+
+        export namespace Site {
+          export interface Accessible {}
+
+          export interface InDevelopment {
+            /**
+             * Whether a password needed to access the business's website has been provided.
+             */
+            password_provided: boolean;
+
+            /**
+             * The username needed to access the business's website.
+             */
+            username?: string;
+          }
+
+          export interface Restricted {
+            /**
+             * The file explaining the payment flow for the business.
+             */
+            payment_flow_file?: string;
+          }
+
+          export type Type = 'accessible' | 'in_development' | 'restricted';
         }
       }
 
@@ -6109,12 +6502,12 @@ export namespace Account {
 
     export interface Responsibilities {
       /**
-       * Indicates whether the platform or connected account is responsible for paying Stripe fees for pricing-control-eligible products.
+       * Controls who pays Stripe fees for direct charges and other pricing-control-eligible Stripe products. For new integrations, setting `losses_collector=application` requires `fees_collector=application`; legacy Custom and Express accounts can also use `application_custom` or `application_express`. For destination charges and separate charges and transfers, Stripe bills the platform regardless of this setting. Learn more about [fee behavior on connected accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior), including application fees and pricing considerations.
        */
       fees_collector?: Responsibilities.FeesCollector;
 
       /**
-       * A value indicating the responsibility for losses on this account.
+       * Controls who is responsible for payment-related negative balances on this account. The platform remains liable for negative balances on its own account. To use Stripe negative balance liability, your integration must meet [Managed Risk requirements](https://docs.stripe.com/connect/risk-management/managed-risk).
        */
       losses_collector?: Responsibilities.LossesCollector;
 
@@ -6607,6 +7000,7 @@ export namespace Account {
             | 'bank_accounts.sepa'
             | 'bank_accounts.swift'
             | 'bank_accounts.wire'
+            | 'billie_payments'
             | 'blik_payments'
             | 'blik_recurring_payments'
             | 'boleto_payments'
@@ -6638,10 +7032,12 @@ export namespace Account {
             | 'konbini_payments'
             | 'kr_card_payments'
             | 'link_payments'
+            | 'mb_way_payments'
             | 'mobilepay_payments'
             | 'multibanco_payments'
             | 'mx_bank_transfer_payments'
             | 'naver_pay_payments'
+            | 'nz_bank_account_becs_debit_payments'
             | 'outbound_payments.bank_accounts'
             | 'outbound_payments.cards'
             | 'outbound_payments.financial_accounts'
@@ -6651,7 +7047,9 @@ export namespace Account {
             | 'p24_payments'
             | 'payco_payments'
             | 'paynow_payments'
+            | 'paypay_payments'
             | 'pay_by_bank_payments'
+            | 'pix_payments'
             | 'promptpay_payments'
             | 'received_credits.bank_accounts'
             | 'received_debits.bank_accounts'
@@ -8764,6 +9162,7 @@ export namespace Account {
             | 'bank_accounts.sepa'
             | 'bank_accounts.swift'
             | 'bank_accounts.wire'
+            | 'billie_payments'
             | 'blik_payments'
             | 'blik_recurring_payments'
             | 'boleto_payments'
@@ -8795,10 +9194,12 @@ export namespace Account {
             | 'konbini_payments'
             | 'kr_card_payments'
             | 'link_payments'
+            | 'mb_way_payments'
             | 'mobilepay_payments'
             | 'multibanco_payments'
             | 'mx_bank_transfer_payments'
             | 'naver_pay_payments'
+            | 'nz_bank_account_becs_debit_payments'
             | 'outbound_payments.bank_accounts'
             | 'outbound_payments.cards'
             | 'outbound_payments.financial_accounts'
@@ -8808,7 +9209,9 @@ export namespace Account {
             | 'p24_payments'
             | 'payco_payments'
             | 'paynow_payments'
+            | 'paypay_payments'
             | 'pay_by_bank_payments'
+            | 'pix_payments'
             | 'promptpay_payments'
             | 'received_credits.bank_accounts'
             | 'received_debits.bank_accounts'
@@ -8909,7 +9312,7 @@ export namespace V2 {
       contact_phone?: string;
 
       /**
-       * A value indicating the Stripe dashboard this Account has access to. This will depend on which configurations are enabled for this account.
+       * Specifies the account's Stripe-hosted Dashboard access. Available values depend on the configurations enabled for the account. Learn more about [configuring Dashboard access](https://docs.stripe.com/connect/accounts-v2/connected-account-configuration#set-dashboard-access).
        */
       dashboard?: AccountCreateParams.Dashboard;
 
@@ -9086,6 +9489,11 @@ export namespace V2 {
            * The Merchant Category Code (MCC) for the Merchant Configuration. MCCs classify businesses based on the goods or services they provide.
            */
           mcc?: string;
+
+          /**
+           * Settings for PayPay payments.
+           */
+          paypay_payments?: Merchant.PaypayPayments;
 
           /**
            * Settings for the default text that appears on statements for language variations.
@@ -9368,6 +9776,11 @@ export namespace V2 {
             bancontact_payments?: Capabilities.BancontactPayments;
 
             /**
+             * Allow the merchant to process Billie payments.
+             */
+            billie_payments?: Capabilities.BilliePayments;
+
+            /**
              * Allow the merchant to process BLIK payments.
              */
             blik_payments?: Capabilities.BlikPayments;
@@ -9458,6 +9871,11 @@ export namespace V2 {
             link_payments?: Capabilities.LinkPayments;
 
             /**
+             * Allow the merchant to process MB WAY payments.
+             */
+            mb_way_payments?: Capabilities.MbWayPayments;
+
+            /**
              * Allow the merchant to process MobilePay payments.
              */
             mobilepay_payments?: Capabilities.MobilepayPayments;
@@ -9476,6 +9894,11 @@ export namespace V2 {
              * Allow the merchant to process Naver Pay payments.
              */
             naver_pay_payments?: Capabilities.NaverPayPayments;
+
+            /**
+             * Allow the merchant to process New Zealand BECS Direct Debit payments.
+             */
+            nz_bank_account_becs_debit_payments?: Capabilities.NzBankAccountBecsDebitPayments;
 
             /**
              * Allow the merchant to process OXXO payments.
@@ -9501,6 +9924,16 @@ export namespace V2 {
              * Allow the merchant to process PayNow payments.
              */
             paynow_payments?: Capabilities.PaynowPayments;
+
+            /**
+             * Allow the merchant to process PayPay payments.
+             */
+            paypay_payments?: Capabilities.PaypayPayments;
+
+            /**
+             * Allow the merchant to process Pix payments.
+             */
+            pix_payments?: Capabilities.PixPayments;
 
             /**
              * Allow the merchant to process PromptPay payments.
@@ -9572,9 +10005,36 @@ export namespace V2 {
 
           export interface KonbiniPayments {
             /**
+             * Information provided to support the onboarding process for Konbini payments.
+             */
+            additional_material?: string;
+
+            /**
              * Support for Konbini payments.
              */
             support?: KonbiniPayments.Support;
+          }
+
+          export interface PaypayPayments {
+            /**
+             * Additional files supporting PayPay payments configuration.
+             */
+            additional_files: Array<string>;
+
+            /**
+             * The type of goods sold by the merchant for PayPay payments.
+             */
+            goods_type?: PaypayPayments.GoodsType;
+
+            /**
+             * The business's website for PayPay payments.
+             */
+            site?: PaypayPayments.Site;
+
+            /**
+             * URL to the Specified Commercial Transactions Act page for PayPay payments.
+             */
+            specified_commercial_transactions_act_url?: string;
           }
 
           export interface ScriptStatementDescriptor {
@@ -9695,6 +10155,13 @@ export namespace V2 {
             }
 
             export interface BancontactPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface BilliePayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -9827,6 +10294,13 @@ export namespace V2 {
               requested: boolean;
             }
 
+            export interface MbWayPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
             export interface MobilepayPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -9849,6 +10323,13 @@ export namespace V2 {
             }
 
             export interface NaverPayPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface NzBankAccountBecsDebitPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -9884,6 +10365,20 @@ export namespace V2 {
             }
 
             export interface PaynowPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface PaypayPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested: boolean;
+            }
+
+            export interface PixPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -10019,6 +10514,57 @@ export namespace V2 {
                  */
                 start_time?: string;
               }
+            }
+          }
+
+          export namespace PaypayPayments {
+            export type GoodsType = 'digital_content' | 'other';
+
+            export interface Site {
+              /**
+               * Additional information about the business's website when it's accessible.
+               */
+              accessible?: Site.Accessible;
+
+              /**
+               * Additional information about the business's website when it's in development.
+               */
+              in_development?: Site.InDevelopment;
+
+              /**
+               * Additional information about the business's website when it has restricted access.
+               */
+              restricted?: Site.Restricted;
+
+              /**
+               * The status of the business's website.
+               */
+              type?: Site.Type;
+            }
+
+            export namespace Site {
+              export interface Accessible {}
+
+              export interface InDevelopment {
+                /**
+                 * The password needed to access the business's website.
+                 */
+                password?: string;
+
+                /**
+                 * The username needed to access the business's website.
+                 */
+                username?: string;
+              }
+
+              export interface Restricted {
+                /**
+                 * The file explaining the payment flow for the business.
+                 */
+                payment_flow_file?: string;
+              }
+
+              export type Type = 'accessible' | 'in_development' | 'restricted';
             }
           }
 
@@ -10647,12 +11193,12 @@ export namespace V2 {
 
         export interface Responsibilities {
           /**
-           * A value indicating the party responsible for collecting fees from this account.
+           * Controls who pays Stripe fees for direct charges and other pricing-control-eligible Stripe products. For new integrations, setting `losses_collector=application` requires `fees_collector=application`; legacy Custom and Express accounts can also use `application_custom` or `application_express`. For destination charges and separate charges and transfers, Stripe bills the platform regardless of this setting. Learn more about [fee behavior on connected accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior), including application fees and pricing considerations.
            */
           fees_collector: Responsibilities.FeesCollector;
 
           /**
-           * A value indicating who is responsible for losses when this Account can't pay back negative balances from payments.
+           * Controls who is responsible for payment-related negative balances on this account. The platform remains liable for negative balances on its own account. To use Stripe negative balance liability, your integration must meet [Managed Risk requirements](https://docs.stripe.com/connect/risk-management/managed-risk).
            */
           losses_collector: Responsibilities.LossesCollector;
         }
@@ -12221,7 +12767,7 @@ export namespace V2 {
       contact_phone?: string;
 
       /**
-       * A value indicating the Stripe dashboard this Account has access to. This will depend on which configurations are enabled for this account.
+       * Specifies the account's Stripe-hosted Dashboard access. Available values depend on the configurations enabled for the account. Learn more about [configuring Dashboard access](https://docs.stripe.com/connect/accounts-v2/connected-account-configuration#set-dashboard-access).
        */
       dashboard?: AccountUpdateParams.Dashboard;
 
@@ -12415,6 +12961,11 @@ export namespace V2 {
            * The Merchant Category Code (MCC) for the merchant. MCCs classify businesses based on the goods or services they provide.
            */
           mcc?: string;
+
+          /**
+           * Settings for PayPay payments.
+           */
+          paypay_payments?: Merchant.PaypayPayments;
 
           /**
            * Settings for the default text that appears on statements for language variations.
@@ -12719,6 +13270,11 @@ export namespace V2 {
             bancontact_payments?: Capabilities.BancontactPayments;
 
             /**
+             * Allow the merchant to process Billie payments.
+             */
+            billie_payments?: Capabilities.BilliePayments;
+
+            /**
              * Allow the merchant to process BLIK payments.
              */
             blik_payments?: Capabilities.BlikPayments;
@@ -12809,6 +13365,11 @@ export namespace V2 {
             link_payments?: Capabilities.LinkPayments;
 
             /**
+             * Allow the merchant to process MB WAY payments.
+             */
+            mb_way_payments?: Capabilities.MbWayPayments;
+
+            /**
              * Allow the merchant to process MobilePay payments.
              */
             mobilepay_payments?: Capabilities.MobilepayPayments;
@@ -12827,6 +13388,11 @@ export namespace V2 {
              * Allow the merchant to process Naver Pay payments.
              */
             naver_pay_payments?: Capabilities.NaverPayPayments;
+
+            /**
+             * Allow the merchant to process New Zealand BECS Direct Debit payments.
+             */
+            nz_bank_account_becs_debit_payments?: Capabilities.NzBankAccountBecsDebitPayments;
 
             /**
              * Allow the merchant to process OXXO payments.
@@ -12852,6 +13418,16 @@ export namespace V2 {
              * Allow the merchant to process PayNow payments.
              */
             paynow_payments?: Capabilities.PaynowPayments;
+
+            /**
+             * Allow the merchant to process PayPay payments.
+             */
+            paypay_payments?: Capabilities.PaypayPayments;
+
+            /**
+             * Allow the merchant to process Pix payments.
+             */
+            pix_payments?: Capabilities.PixPayments;
 
             /**
              * Allow the merchant to process PromptPay payments.
@@ -12923,9 +13499,36 @@ export namespace V2 {
 
           export interface KonbiniPayments {
             /**
+             * Information provided to support the onboarding process for Konbini payments.
+             */
+            additional_material?: string;
+
+            /**
              * Support for Konbini payments.
              */
             support?: KonbiniPayments.Support;
+          }
+
+          export interface PaypayPayments {
+            /**
+             * Additional files supporting PayPay payments configuration.
+             */
+            additional_files?: Array<string>;
+
+            /**
+             * The type of goods sold by the merchant for PayPay payments.
+             */
+            goods_type?: PaypayPayments.GoodsType;
+
+            /**
+             * The business's website for PayPay payments.
+             */
+            site?: PaypayPayments.Site;
+
+            /**
+             * URL to the Specified Commercial Transactions Act page for PayPay payments.
+             */
+            specified_commercial_transactions_act_url?: string;
           }
 
           export interface ScriptStatementDescriptor {
@@ -13046,6 +13649,13 @@ export namespace V2 {
             }
 
             export interface BancontactPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface BilliePayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -13178,6 +13788,13 @@ export namespace V2 {
               requested?: boolean;
             }
 
+            export interface MbWayPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
             export interface MobilepayPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -13200,6 +13817,13 @@ export namespace V2 {
             }
 
             export interface NaverPayPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface NzBankAccountBecsDebitPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -13235,6 +13859,20 @@ export namespace V2 {
             }
 
             export interface PaynowPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface PaypayPayments {
+              /**
+               * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+               */
+              requested?: boolean;
+            }
+
+            export interface PixPayments {
               /**
                * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
                */
@@ -13370,6 +14008,57 @@ export namespace V2 {
                  */
                 start_time?: string;
               }
+            }
+          }
+
+          export namespace PaypayPayments {
+            export type GoodsType = 'digital_content' | 'other';
+
+            export interface Site {
+              /**
+               * Additional information about the business's website when it's accessible.
+               */
+              accessible?: Site.Accessible;
+
+              /**
+               * Additional information about the business's website when it's in development.
+               */
+              in_development?: Site.InDevelopment;
+
+              /**
+               * Additional information about the business's website when it has restricted access.
+               */
+              restricted?: Site.Restricted;
+
+              /**
+               * The status of the business's website.
+               */
+              type?: Site.Type;
+            }
+
+            export namespace Site {
+              export interface Accessible {}
+
+              export interface InDevelopment {
+                /**
+                 * The password needed to access the business's website.
+                 */
+                password?: string;
+
+                /**
+                 * The username needed to access the business's website.
+                 */
+                username?: string;
+              }
+
+              export interface Restricted {
+                /**
+                 * The file explaining the payment flow for the business.
+                 */
+                payment_flow_file?: string;
+              }
+
+              export type Type = 'accessible' | 'in_development' | 'restricted';
             }
           }
 
@@ -13998,12 +14687,12 @@ export namespace V2 {
 
         export interface Responsibilities {
           /**
-           * A value indicating the party responsible for collecting fees from this account.
+           * Controls who pays Stripe fees for direct charges and other pricing-control-eligible Stripe products. For new integrations, setting `losses_collector=application` requires `fees_collector=application`; legacy Custom and Express accounts can also use `application_custom` or `application_express`. For destination charges and separate charges and transfers, Stripe bills the platform regardless of this setting. Learn more about [fee behavior on connected accounts](https://docs.stripe.com/connect/direct-charges-fee-payer-behavior), including application fees and pricing considerations. Set this value when adding an applicable configuration to the account. You can't change it after it's set.
            */
           fees_collector: Responsibilities.FeesCollector;
 
           /**
-           * A value indicating who is responsible for losses when this Account can't pay back negative balances from payments.
+           * Controls who is responsible for payment-related negative balances on this account. The platform remains liable for negative balances on its own account. To use Stripe negative balance liability, your integration must meet [Managed Risk requirements](https://docs.stripe.com/connect/risk-management/managed-risk). Set this value when adding an applicable configuration to the account. You can't change it after it's set.
            */
           losses_collector: Responsibilities.LossesCollector;
         }

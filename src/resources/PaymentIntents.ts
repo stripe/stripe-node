@@ -1469,6 +1469,7 @@ export namespace PaymentIntent {
       | 'forwarding_api_upstream_connection_timeout'
       | 'forwarding_api_upstream_error'
       | 'idempotency_key_in_use'
+      | 'inactive_api_operation_confirmation_required'
       | 'incorrect_address'
       | 'incorrect_cvc'
       | 'incorrect_number'
@@ -1913,9 +1914,9 @@ export namespace PaymentIntent {
 
     export interface VerifyWithMicrodeposits {
       /**
-       * The timestamp when the microdeposits are expected to land.
+       * The timestamp when the microdeposits are expected to land. Null for instant microdeposits.
        */
-      arrival_date: number;
+      arrival_date: number | null;
 
       /**
        * The URL for the hosted verification page, which allows customers to verify their bank account.
@@ -5969,7 +5970,7 @@ export interface PaymentIntentCreateParams {
   statement_descriptor?: string;
 
   /**
-   * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement.
+   * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement. A suffix longer than 22 characters returns an error. If a valid suffix makes the complete statement descriptor longer than 22 characters, Stripe truncates the descriptor instead of returning an error. Learn how to [fit the suffix in the complete descriptor](https://docs.stripe.com/get-started/account/statement-descriptors#suffix-length).
    */
   statement_descriptor_suffix?: string;
 
@@ -13677,7 +13678,7 @@ export interface PaymentIntentUpdateParams {
   statement_descriptor?: string;
 
   /**
-   * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement.
+   * Provides information about a card charge. Concatenated to the account's [statement descriptor prefix](https://docs.stripe.com/get-started/account/statement-descriptors#static) to form the complete statement descriptor that appears on the customer's statement. A suffix longer than 22 characters returns an error. If a valid suffix makes the complete statement descriptor longer than 22 characters, Stripe truncates the descriptor instead of returning an error. Learn how to [fit the suffix in the complete descriptor](https://docs.stripe.com/get-started/account/statement-descriptors#suffix-length).
    */
   statement_descriptor_suffix?: string;
 

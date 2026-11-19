@@ -96,7 +96,7 @@ export interface Dispute {
   amount: number;
 
   /**
-   * List of zero, one, or two balance transactions that show funds withdrawn and reinstated to your Stripe account as a result of this dispute.
+   * List of balance transactions that show funds withdrawn and reinstated to your Stripe account as a result of this dispute.
    */
   balance_transactions: Array<BalanceTransaction>;
 
@@ -184,7 +184,7 @@ export namespace Dispute {
     /**
      * Appeal evidence submitted during the appeal stage.
      */
-    appeal?: Evidence.Appeal | null;
+    appeal: Evidence.Appeal | null;
 
     /**
      * The billing address provided by the customer.
