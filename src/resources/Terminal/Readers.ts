@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {Location} from './Locations.js';
 import {GiftCard} from './../GiftCards.js';
+import {Location} from './Locations.js';
 import {GiftCardOperation} from './../GiftCardOperations.js';
 import {PaymentIntent} from './../PaymentIntents.js';
 import {PaymentMethod} from './../PaymentMethods.js';
@@ -1422,6 +1422,31 @@ export namespace Reader {
          * Enable customer-initiated cancellation when refunding this payment.
          */
         enable_customer_cancellation?: boolean;
+
+        /**
+         * Represents the destination gift card configuration for a refund
+         */
+        gift_card?: RefundPaymentConfig.GiftCard;
+      }
+
+      export namespace RefundPaymentConfig {
+        export interface GiftCard {
+          /**
+           * The brand of the destination gift card collected on the reader.
+           */
+          brand: GiftCard.Brand;
+
+          /**
+           * The gift card operation to perform with the refund amount.
+           */
+          operation_type: GiftCard.OperationType;
+        }
+
+        export namespace GiftCard {
+          export type Brand = 'svs' | OtherString;
+
+          export type OperationType = 'activation' | 'reload';
+        }
       }
     }
 
@@ -2071,6 +2096,31 @@ export namespace Terminal {
        * Enables cancel button on transaction screens.
        */
       enable_customer_cancellation?: boolean;
+
+      /**
+       * Collect a destination gift card on the reader to reload or activate with the refund amount. If omitted, refund the original gift card without collecting card data.
+       */
+      gift_card?: RefundPaymentConfig.GiftCard;
+    }
+
+    export namespace RefundPaymentConfig {
+      export interface GiftCard {
+        /**
+         * The brand of the destination gift card to collect on the reader.
+         */
+        brand: GiftCard.Brand;
+
+        /**
+         * The gift card operation to perform with the refund amount.
+         */
+        operation_type: GiftCard.OperationType;
+      }
+
+      export namespace GiftCard {
+        export type Brand = 'svs' | OtherString;
+
+        export type OperationType = 'activation' | 'reload';
+      }
     }
   }
 }

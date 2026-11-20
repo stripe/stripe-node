@@ -1374,9 +1374,9 @@ export namespace PaymentIntent {
 
   export interface RadarOptions {
     /**
-     * The value you provided for whether this transaction starts a free trial. This is null if you haven't explicitly set it.
+     * The value you provided for whether this transaction starts a free trial. This field is omitted if you haven't explicitly set it.
      */
-    is_free_trial_transaction?: boolean | null;
+    is_free_trial_transaction?: boolean;
   }
 
   export interface Redaction {
@@ -2419,7 +2419,13 @@ export namespace PaymentIntent {
           }
 
           export namespace SupportedToken {
-            export type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
+            export type TokenCurrency =
+              | 'ousd'
+              | 'phantom_cash'
+              | 'usdc'
+              | 'usdg'
+              | 'usdp'
+              | OtherString;
           }
         }
 
@@ -2437,7 +2443,13 @@ export namespace PaymentIntent {
           }
 
           export namespace SupportedToken {
-            export type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
+            export type TokenCurrency =
+              | 'ousd'
+              | 'phantom_cash'
+              | 'usdc'
+              | 'usdg'
+              | 'usdp'
+              | OtherString;
           }
         }
 
@@ -2455,7 +2467,13 @@ export namespace PaymentIntent {
           }
 
           export namespace SupportedToken {
-            export type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
+            export type TokenCurrency =
+              | 'ousd'
+              | 'phantom_cash'
+              | 'usdc'
+              | 'usdg'
+              | 'usdp'
+              | OtherString;
           }
         }
 
@@ -2473,7 +2491,13 @@ export namespace PaymentIntent {
           }
 
           export namespace SupportedToken {
-            export type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
+            export type TokenCurrency =
+              | 'ousd'
+              | 'phantom_cash'
+              | 'usdc'
+              | 'usdg'
+              | 'usdp'
+              | OtherString;
           }
         }
 
@@ -2491,7 +2515,13 @@ export namespace PaymentIntent {
           }
 
           export namespace SupportedToken {
-            export type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
+            export type TokenCurrency =
+              | 'ousd'
+              | 'phantom_cash'
+              | 'usdc'
+              | 'usdg'
+              | 'usdp'
+              | OtherString;
           }
         }
       }

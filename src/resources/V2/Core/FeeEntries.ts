@@ -6,7 +6,9 @@ import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class FeeEntryResource extends StripeResource {
   /**
-   * List FeeEntries optionally filtered by incurred_by, fee_batch, or collection_record (at most one filter at a time).
+   * Lists FeeEntries, optionally filtered by `incurred_by`, `fee_batch`, or
+   * `collection_record`. When filtering by `fee_batch`, results reflect current
+   * membership; historical membership is unavailable.
    */
   list(
     params?: V2.Core.FeeEntryListParams,
@@ -59,7 +61,10 @@ export interface FeeEntry {
   created: string;
 
   /**
-   * The ID of the FeeBatch that collected this fee, if any.
+   * The ID of the FeeBatch currently assigned to collect this fee, if any. If Stripe
+   * cancels the assigned FeeBatch before billing, Stripe reassigns the FeeEntry to a
+   * replacement FeeBatch. During reassociation, this field can temporarily continue
+   * to reference the canceled FeeBatch.
    */
   fee_batch?: string;
 
@@ -77,6 +82,14 @@ export interface FeeEntry {
    * The reason this fee entry was created.
    */
   reason: FeeEntry.Reason;
+
+  /**
+   * The current billing status of the fee. Every FeeEntry eventually transitions
+   * from `assessed` to `billed` when its associated FeeBatch is billed. While
+   * `assessed`, its FeeBatch association can change if the assigned batch is canceled.
+   * Once `billed`, the status and FeeBatch association are terminal.
+   */
+  status: FeeEntry.Status;
 
   /**
    * The tax portion of the fee, if applicable.
@@ -153,6 +166,8 @@ export namespace FeeEntry {
     | 'reprice'
     | 'tier_true_up'
     | OtherString;
+
+  export type Status = 'assessed' | 'billed' | OtherString;
 
   export interface Tax {
     /**

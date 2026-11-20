@@ -116,6 +116,11 @@ export namespace V2 {
         network: FinancialAddressDebitParams.Network;
 
         /**
+         * Network-specific details for the simulated debit. Only used for ACH debits; supplied details must be valid.
+         */
+        network_details?: FinancialAddressDebitParams.NetworkDetails;
+
+        /**
          * String explaining funds flow. Use this field to populate the statement descriptor of the ReceivedDebit created as an eventual result of this simulation.
          */
         statement_descriptor?: string;
@@ -123,6 +128,22 @@ export namespace V2 {
 
       export namespace FinancialAddressDebitParams {
         export type Network = 'ach' | 'bacs' | OtherString;
+
+        export interface NetworkDetails {
+          /**
+           * ACH-specific details for the simulated debit.
+           */
+          ach?: NetworkDetails.Ach;
+        }
+
+        export namespace NetworkDetails {
+          export interface Ach {
+            /**
+             * The ACH company ID of the originator of the simulated debit. Must contain exactly 10 alphanumeric characters. Sent to the network in uppercase.
+             */
+            originator_company_id: string;
+          }
+        }
       }
     }
   }

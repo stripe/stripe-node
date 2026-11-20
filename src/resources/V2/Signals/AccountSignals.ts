@@ -61,6 +61,10 @@ export class AccountSignalResource extends StripeResource {
                     kind: 'object',
                     fields: {score: {kind: 'decimal_string'}},
                   },
+                  user_buyer_classification: {
+                    kind: 'object',
+                    fields: {buyer_type_score: {kind: 'decimal_string'}},
+                  },
                   user_multi_accounting: {
                     kind: 'object',
                     fields: {score: {kind: 'decimal_string'}},
@@ -123,6 +127,10 @@ export class AccountSignalResource extends StripeResource {
             user_affinity: {
               kind: 'object',
               fields: {score: {kind: 'decimal_string'}},
+            },
+            user_buyer_classification: {
+              kind: 'object',
+              fields: {buyer_type_score: {kind: 'decimal_string'}},
             },
             user_multi_accounting: {
               kind: 'object',
@@ -209,6 +217,11 @@ export interface AccountSignal {
    * Data for the user affinity signal. Present only when type is user_affinity.
    */
   user_affinity?: AccountSignal.UserAffinity;
+
+  /**
+   * Data for the user buyer classification signal. Present only when type is user_buyer_classification.
+   */
+  user_buyer_classification?: AccountSignal.UserBuyerClassification;
 
   /**
    * Data for the user multi-accounting signal. Present only when type is user_multi_accounting.
@@ -316,6 +329,7 @@ export namespace AccountSignal {
     | 'payment_delinquency_exposure'
     | 'user_account_sharing'
     | 'user_affinity'
+    | 'user_buyer_classification'
     | 'user_multi_accounting'
     | OtherString;
 
@@ -342,6 +356,18 @@ export namespace AccountSignal {
      * The specific affinity score for the user, between 0.00 and 100.00. Absent when level is unknown.
      */
     score?: Decimal;
+  }
+
+  export interface UserBuyerClassification {
+    /**
+     * Predicted type of buyer behind the user.
+     */
+    buyer_type: UserBuyerClassification.BuyerType;
+
+    /**
+     * The score for the predicted buyer type, between 0.00 and 100.00. Absent when buyer_type is unknown.
+     */
+    buyer_type_score?: Decimal;
   }
 
   export interface UserMultiAccounting {
@@ -600,6 +626,10 @@ export namespace AccountSignal {
       | OtherString;
   }
 
+  export namespace UserBuyerClassification {
+    export type BuyerType = 'business' | 'unknown' | OtherString;
+  }
+
   export namespace UserMultiAccounting {
     export type RiskLevel =
       | 'elevated'
@@ -644,6 +674,7 @@ export namespace V2 {
         | 'payment_delinquency_exposure'
         | 'user_account_sharing'
         | 'user_affinity'
+        | 'user_buyer_classification'
         | 'user_multi_accounting'
         | OtherString;
 

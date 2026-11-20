@@ -1435,8 +1435,6 @@ export interface Invoice {
    */
   application: string | Application | DeletedApplication | null;
 
-  applied_credit_memos?: Invoice.AppliedCreditMemos;
-
   /**
    * Number of payment attempts made for this invoice, from the perspective of the payment retry schedule. Any payment attempt counts as the first attempt, and subsequently only automatic retries increment the attempt count. In other words, manual payment attempts after the first attempt do not affect the retry schedule. If a failure is returned with a non-retryable return code, the invoice can no longer be retried unless a new payment method is obtained. Retries will continue to be scheduled, and attempt_count will continue to increment, but retries will only be executed if a new payment method is obtained.
    */
@@ -1846,13 +1844,6 @@ export namespace Invoice {
      * The status of the payment, one of `open`, `paid`, or `past_due`
      */
     status: AmountsDue.Status;
-  }
-
-  export interface AppliedCreditMemos {
-    /**
-     * The Credit Memos with credit currently applied to this invoice, with one entry per Credit Memo. An invoice can have credit applied from at most 10 Credit Memos, so the list is returned in full.
-     */
-    data: Array<AppliedCreditMemos.Data>;
   }
 
   export interface AutomaticTax {
@@ -2384,20 +2375,6 @@ export namespace Invoice {
 
   export namespace AmountsDue {
     export type Status = 'open' | 'paid' | 'past_due' | OtherString;
-  }
-
-  export namespace AppliedCreditMemos {
-    export interface Data {
-      /**
-       * The credit currently applied to this invoice from the Credit Memo, in cents (or local equivalent). Applying credit reduces `amount_due` and `amount_remaining` without changing `amount_paid`.
-       */
-      applied_amount: number;
-
-      /**
-       * The ID of the Credit Memo whose credit is applied to this invoice.
-       */
-      credit_memo: string;
-    }
   }
 
   export namespace AutomaticTax {

@@ -56,12 +56,15 @@ import {CustomerResource as TestHelpersCustomers} from './resources/TestHelpers/
 import {DebitDisputeResource as V2MoneyManagementDebitDisputes} from './resources/V2/MoneyManagement/DebitDisputes.js';
 import {DebitReversalResource as TreasuryDebitReversals} from './resources/Treasury/DebitReversals.js';
 import {DepositAddressResource as CryptoDepositAddresses} from './resources/Crypto/DepositAddresses.js';
+import {DisputeAdjustmentResource as V2MoneyManagementDisputeAdjustments} from './resources/V2/MoneyManagement/DisputeAdjustments.js';
 import {DisputeSettlementDetailResource as IssuingDisputeSettlementDetails} from './resources/Issuing/DisputeSettlementDetails.js';
 import {DisputeResource as IssuingDisputes} from './resources/Issuing/Disputes.js';
 import {DisputeResource as TestHelpersIssuingDisputes} from './resources/TestHelpers/Issuing/Disputes.js';
+import {DisputeResource as V2MoneyManagementDisputes} from './resources/V2/MoneyManagement/Disputes.js';
 import {EarlyFraudWarningResource as RadarEarlyFraudWarnings} from './resources/Radar/EarlyFraudWarnings.js';
 import {EarnedCreditResource as V2MoneyManagementEarnedCredits} from './resources/V2/MoneyManagement/EarnedCredits.js';
 import {EligibilityResource as V2ProvisioningEligibility} from './resources/V2/Provisioning/Eligibility.js';
+import {EvaluationOutcomeResource as V2RiskEvaluationOutcomes} from './resources/V2/Risk/EvaluationOutcomes.js';
 import {EventDestinationResource as V2CoreEventDestinations} from './resources/V2/Core/EventDestinations.js';
 import {EventResource as V2CoreEvents} from './resources/V2/Core/Events.js';
 import {FeatureResource as EntitlementsFeatures} from './resources/Entitlements/Features.js';
@@ -539,6 +542,8 @@ export const V2 = resourceNamespace('v2', {
     Adjustments: V2MoneyManagementAdjustments,
     CurrencyConversions: V2MoneyManagementCurrencyConversions,
     DebitDisputes: V2MoneyManagementDebitDisputes,
+    DisputeAdjustments: V2MoneyManagementDisputeAdjustments,
+    Disputes: V2MoneyManagementDisputes,
     EarnedCredits: V2MoneyManagementEarnedCredits,
     FinancialAccounts: V2MoneyManagementFinancialAccounts,
     FinancialAddresses: V2MoneyManagementFinancialAddresses,
@@ -592,7 +597,10 @@ export const V2 = resourceNamespace('v2', {
     ReportRuns: V2ReportingReportRuns,
     Reports: V2ReportingReports,
   }),
-  Risk: resourceNamespace('risk', {Forms: V2RiskForms}),
+  Risk: resourceNamespace('risk', {
+    EvaluationOutcomes: V2RiskEvaluationOutcomes,
+    Forms: V2RiskForms,
+  }),
   Signals: resourceNamespace('signals', {
     AccountActivities: V2SignalsAccountActivities,
     AccountEvaluations: V2SignalsAccountEvaluations,

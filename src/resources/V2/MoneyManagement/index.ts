@@ -16,124 +16,130 @@ import {
   DebitDispute,
   DebitDisputeResource,
 } from './DebitDisputes.js';
+import {V2 as V2Namespace3, Dispute, DisputeResource} from './Disputes.js';
 import {
-  V2 as V2Namespace3,
+  V2 as V2Namespace4,
+  DisputeAdjustment,
+  DisputeAdjustmentResource,
+} from './DisputeAdjustments.js';
+import {
+  V2 as V2Namespace5,
   EarnedCredit,
   EarnedCreditResource,
 } from './EarnedCredits.js';
 import {
-  V2 as V2Namespace4,
+  V2 as V2Namespace6,
   FinancialAccount,
   FinancialAccountResource,
 } from './FinancialAccounts.js';
 import {
-  V2 as V2Namespace5,
+  V2 as V2Namespace7,
   FinancialAddress,
   FinancialAddressResource,
 } from './FinancialAddresses.js';
 import {
-  V2 as V2Namespace6,
+  V2 as V2Namespace8,
   FundingIntent,
   FundingIntentResource,
 } from './FundingIntents.js';
 import {
-  V2 as V2Namespace7,
+  V2 as V2Namespace9,
   FundingSession,
   FundingSessionResource,
 } from './FundingSessions.js';
 import {
-  V2 as V2Namespace8,
+  V2 as V2Namespace10,
   InboundFunding,
   InboundFundingResource,
 } from './InboundFundings.js';
 import {
-  V2 as V2Namespace9,
+  V2 as V2Namespace11,
   InboundTransfer,
   InboundTransferResource,
 } from './InboundTransfers.js';
 import {
-  V2 as V2Namespace10,
+  V2 as V2Namespace12,
   InboundTransferMandate,
   InboundTransferMandateResource,
 } from './InboundTransferMandates.js';
 import {
-  V2 as V2Namespace11,
+  V2 as V2Namespace13,
   OutboundPayment,
   OutboundPaymentResource,
 } from './OutboundPayments.js';
 import {
-  V2 as V2Namespace12,
+  V2 as V2Namespace14,
   OutboundPaymentQuote,
   OutboundPaymentQuoteResource,
 } from './OutboundPaymentQuotes.js';
 import {
-  V2 as V2Namespace13,
+  V2 as V2Namespace15,
   OutboundSetupIntent,
   OutboundSetupIntentResource,
 } from './OutboundSetupIntents.js';
 import {
-  V2 as V2Namespace14,
+  V2 as V2Namespace16,
   OutboundTransfer,
   OutboundTransferResource,
 } from './OutboundTransfers.js';
 import {
-  V2 as V2Namespace15,
+  V2 as V2Namespace17,
   PayoutIntent,
   PayoutIntentResource,
 } from './PayoutIntents.js';
 import {
-  V2 as V2Namespace16,
+  V2 as V2Namespace18,
   PayoutMethod,
   PayoutMethodResource,
 } from './PayoutMethods.js';
 import {
-  V2 as V2Namespace17,
+  V2 as V2Namespace19,
   PayoutMethodsBankAccountSpec,
   PayoutMethodsBankAccountSpecResource,
 } from './PayoutMethodsBankAccountSpec.js';
 import {
-  V2 as V2Namespace18,
+  V2 as V2Namespace20,
   ReceivedCredit,
   ReceivedCreditResource,
 } from './ReceivedCredits.js';
 import {
-  V2 as V2Namespace19,
+  V2 as V2Namespace21,
   ReceivedDebit,
   ReceivedDebitResource,
 } from './ReceivedDebits.js';
 import {
-  V2 as V2Namespace20,
+  V2 as V2Namespace22,
   ReceivedDebitMandate,
   ReceivedDebitMandateResource,
 } from './ReceivedDebitMandates.js';
 import {
-  V2 as V2Namespace21,
+  V2 as V2Namespace23,
   RecipientVerification,
   RecipientVerificationResource,
 } from './RecipientVerifications.js';
 import {
-  V2 as V2Namespace22,
+  V2 as V2Namespace24,
   RewardProgram,
   RewardProgramResource,
 } from './RewardPrograms.js';
 import {
-  V2 as V2Namespace23,
+  V2 as V2Namespace25,
   RewardProgramEnrollment,
   RewardProgramEnrollmentResource,
 } from './RewardProgramEnrollments.js';
 import {
-  V2 as V2Namespace24,
+  V2 as V2Namespace26,
   SpendingMandate,
   SpendingMandateResource,
 } from './SpendingMandates.js';
-import {V2 as V2Namespace25, TestHelperResource} from './TestHelpers.js';
+import {V2 as V2Namespace27, TestHelperResource} from './TestHelpers.js';
 import {
-  V2 as V2Namespace26,
+  V2 as V2Namespace28,
   Transaction,
   TransactionResource,
 } from './Transactions.js';
 import {
-  V2 as V2Namespace27,
+  V2 as V2Namespace29,
   TransactionEntry,
   TransactionEntryResource,
 } from './TransactionEntries.js';
@@ -149,6 +155,8 @@ import {RewardProgramRule} from './RewardProgramRules.js';
 export {Adjustment} from './Adjustments.js';
 export {CurrencyConversion} from './CurrencyConversions.js';
 export {DebitDispute} from './DebitDisputes.js';
+export {Dispute} from './Disputes.js';
+export {DisputeAdjustment} from './DisputeAdjustments.js';
 export {EarnedCredit} from './EarnedCredits.js';
 export {FinancialAccount} from './FinancialAccounts.js';
 export {FinancialAddress} from './FinancialAddresses.js';
@@ -186,6 +194,8 @@ export class MoneyManagement {
   adjustments: AdjustmentResource;
   currencyConversions: CurrencyConversionResource;
   debitDisputes: DebitDisputeResource;
+  disputes: DisputeResource;
+  disputeAdjustments: DisputeAdjustmentResource;
   earnedCredits: EarnedCreditResource;
   financialAccounts: FinancialAccountResource;
   financialAddresses: FinancialAddressResource;
@@ -216,6 +226,8 @@ export class MoneyManagement {
     this.adjustments = new AdjustmentResource(stripe);
     this.currencyConversions = new CurrencyConversionResource(stripe);
     this.debitDisputes = new DebitDisputeResource(stripe);
+    this.disputes = new DisputeResource(stripe);
+    this.disputeAdjustments = new DisputeAdjustmentResource(stripe);
     this.earnedCredits = new EarnedCreditResource(stripe);
     this.financialAccounts = new FinancialAccountResource(stripe);
     this.financialAddresses = new FinancialAddressResource(stripe);
@@ -258,114 +270,123 @@ export declare namespace MoneyManagement {
   export import DebitDisputeCreateParams = V2Namespace2.MoneyManagement.DebitDisputeCreateParams;
   export import DebitDisputeRetrieveParams = V2Namespace2.MoneyManagement.DebitDisputeRetrieveParams;
   export {DebitDispute, DebitDisputeResource};
-  export import EarnedCreditListParams = V2Namespace3.MoneyManagement.EarnedCreditListParams;
-  export import EarnedCreditRetrieveParams = V2Namespace3.MoneyManagement.EarnedCreditRetrieveParams;
+  export import DisputeListParams = V2Namespace3.MoneyManagement.DisputeListParams;
+  export import DisputeCreateParams = V2Namespace3.MoneyManagement.DisputeCreateParams;
+  export import DisputeRetrieveParams = V2Namespace3.MoneyManagement.DisputeRetrieveParams;
+  export {Dispute, DisputeResource};
+  export import DisputeAdjustmentListParams = V2Namespace4.MoneyManagement.DisputeAdjustmentListParams;
+  export import DisputeAdjustmentRetrieveParams = V2Namespace4.MoneyManagement.DisputeAdjustmentRetrieveParams;
+  export {DisputeAdjustment, DisputeAdjustmentResource};
+  export import EarnedCreditListParams = V2Namespace5.MoneyManagement.EarnedCreditListParams;
+  export import EarnedCreditRetrieveParams = V2Namespace5.MoneyManagement.EarnedCreditRetrieveParams;
   export {EarnedCredit, EarnedCreditResource};
-  export import FinancialAccountListParams = V2Namespace4.MoneyManagement.FinancialAccountListParams;
-  export import FinancialAccountCreateParams = V2Namespace4.MoneyManagement.FinancialAccountCreateParams;
-  export import FinancialAccountRetrieveParams = V2Namespace4.MoneyManagement.FinancialAccountRetrieveParams;
-  export import FinancialAccountUpdateParams = V2Namespace4.MoneyManagement.FinancialAccountUpdateParams;
-  export import FinancialAccountCloseParams = V2Namespace4.MoneyManagement.FinancialAccountCloseParams;
+  export import FinancialAccountListParams = V2Namespace6.MoneyManagement.FinancialAccountListParams;
+  export import FinancialAccountCreateParams = V2Namespace6.MoneyManagement.FinancialAccountCreateParams;
+  export import FinancialAccountRetrieveParams = V2Namespace6.MoneyManagement.FinancialAccountRetrieveParams;
+  export import FinancialAccountUpdateParams = V2Namespace6.MoneyManagement.FinancialAccountUpdateParams;
+  export import FinancialAccountCloseParams = V2Namespace6.MoneyManagement.FinancialAccountCloseParams;
   export {FinancialAccount, FinancialAccountResource};
-  export import FinancialAddressListParams = V2Namespace5.MoneyManagement.FinancialAddressListParams;
-  export import FinancialAddressCreateParams = V2Namespace5.MoneyManagement.FinancialAddressCreateParams;
-  export import FinancialAddressRetrieveParams = V2Namespace5.MoneyManagement.FinancialAddressRetrieveParams;
+  export import FinancialAddressListParams = V2Namespace7.MoneyManagement.FinancialAddressListParams;
+  export import FinancialAddressCreateParams = V2Namespace7.MoneyManagement.FinancialAddressCreateParams;
+  export import FinancialAddressRetrieveParams = V2Namespace7.MoneyManagement.FinancialAddressRetrieveParams;
   export {FinancialAddress, FinancialAddressResource};
-  export import FundingIntentListParams = V2Namespace6.MoneyManagement.FundingIntentListParams;
-  export import FundingIntentCreateParams = V2Namespace6.MoneyManagement.FundingIntentCreateParams;
-  export import FundingIntentRetrieveParams = V2Namespace6.MoneyManagement.FundingIntentRetrieveParams;
-  export import FundingIntentUpdateParams = V2Namespace6.MoneyManagement.FundingIntentUpdateParams;
-  export import FundingIntentCancelParams = V2Namespace6.MoneyManagement.FundingIntentCancelParams;
-  export import FundingIntentConfirmParams = V2Namespace6.MoneyManagement.FundingIntentConfirmParams;
+  export import FundingIntentListParams = V2Namespace8.MoneyManagement.FundingIntentListParams;
+  export import FundingIntentCreateParams = V2Namespace8.MoneyManagement.FundingIntentCreateParams;
+  export import FundingIntentRetrieveParams = V2Namespace8.MoneyManagement.FundingIntentRetrieveParams;
+  export import FundingIntentUpdateParams = V2Namespace8.MoneyManagement.FundingIntentUpdateParams;
+  export import FundingIntentCancelParams = V2Namespace8.MoneyManagement.FundingIntentCancelParams;
+  export import FundingIntentConfirmParams = V2Namespace8.MoneyManagement.FundingIntentConfirmParams;
   export {FundingIntent, FundingIntentResource};
-  export import FundingSessionCreateParams = V2Namespace7.MoneyManagement.FundingSessionCreateParams;
+  export import FundingSessionCreateParams = V2Namespace9.MoneyManagement.FundingSessionCreateParams;
   export {FundingSession, FundingSessionResource};
-  export import InboundFundingListParams = V2Namespace8.MoneyManagement.InboundFundingListParams;
-  export import InboundFundingRetrieveParams = V2Namespace8.MoneyManagement.InboundFundingRetrieveParams;
+  export import InboundFundingListParams = V2Namespace10.MoneyManagement.InboundFundingListParams;
+  export import InboundFundingRetrieveParams = V2Namespace10.MoneyManagement.InboundFundingRetrieveParams;
   export {InboundFunding, InboundFundingResource};
-  export import InboundTransferListParams = V2Namespace9.MoneyManagement.InboundTransferListParams;
-  export import InboundTransferCreateParams = V2Namespace9.MoneyManagement.InboundTransferCreateParams;
-  export import InboundTransferRetrieveParams = V2Namespace9.MoneyManagement.InboundTransferRetrieveParams;
+  export import InboundTransferListParams = V2Namespace11.MoneyManagement.InboundTransferListParams;
+  export import InboundTransferCreateParams = V2Namespace11.MoneyManagement.InboundTransferCreateParams;
+  export import InboundTransferRetrieveParams = V2Namespace11.MoneyManagement.InboundTransferRetrieveParams;
   export {InboundTransfer, InboundTransferResource};
-  export import InboundTransferMandateListParams = V2Namespace10.MoneyManagement.InboundTransferMandateListParams;
-  export import InboundTransferMandateCreateParams = V2Namespace10.MoneyManagement.InboundTransferMandateCreateParams;
-  export import InboundTransferMandateRetrieveParams = V2Namespace10.MoneyManagement.InboundTransferMandateRetrieveParams;
-  export import InboundTransferMandateCancelParams = V2Namespace10.MoneyManagement.InboundTransferMandateCancelParams;
+  export import InboundTransferMandateListParams = V2Namespace12.MoneyManagement.InboundTransferMandateListParams;
+  export import InboundTransferMandateCreateParams = V2Namespace12.MoneyManagement.InboundTransferMandateCreateParams;
+  export import InboundTransferMandateRetrieveParams = V2Namespace12.MoneyManagement.InboundTransferMandateRetrieveParams;
+  export import InboundTransferMandateCancelParams = V2Namespace12.MoneyManagement.InboundTransferMandateCancelParams;
   export {InboundTransferMandate, InboundTransferMandateResource};
-  export import OutboundPaymentListParams = V2Namespace11.MoneyManagement.OutboundPaymentListParams;
-  export import OutboundPaymentCreateParams = V2Namespace11.MoneyManagement.OutboundPaymentCreateParams;
-  export import OutboundPaymentRetrieveParams = V2Namespace11.MoneyManagement.OutboundPaymentRetrieveParams;
-  export import OutboundPaymentCancelParams = V2Namespace11.MoneyManagement.OutboundPaymentCancelParams;
+  export import OutboundPaymentListParams = V2Namespace13.MoneyManagement.OutboundPaymentListParams;
+  export import OutboundPaymentCreateParams = V2Namespace13.MoneyManagement.OutboundPaymentCreateParams;
+  export import OutboundPaymentRetrieveParams = V2Namespace13.MoneyManagement.OutboundPaymentRetrieveParams;
+  export import OutboundPaymentCancelParams = V2Namespace13.MoneyManagement.OutboundPaymentCancelParams;
   export {OutboundPayment, OutboundPaymentResource};
-  export import OutboundPaymentQuoteCreateParams = V2Namespace12.MoneyManagement.OutboundPaymentQuoteCreateParams;
-  export import OutboundPaymentQuoteRetrieveParams = V2Namespace12.MoneyManagement.OutboundPaymentQuoteRetrieveParams;
+  export import OutboundPaymentQuoteCreateParams = V2Namespace14.MoneyManagement.OutboundPaymentQuoteCreateParams;
+  export import OutboundPaymentQuoteRetrieveParams = V2Namespace14.MoneyManagement.OutboundPaymentQuoteRetrieveParams;
   export {OutboundPaymentQuote, OutboundPaymentQuoteResource};
-  export import OutboundSetupIntentListParams = V2Namespace13.MoneyManagement.OutboundSetupIntentListParams;
-  export import OutboundSetupIntentCreateParams = V2Namespace13.MoneyManagement.OutboundSetupIntentCreateParams;
-  export import OutboundSetupIntentRetrieveParams = V2Namespace13.MoneyManagement.OutboundSetupIntentRetrieveParams;
-  export import OutboundSetupIntentUpdateParams = V2Namespace13.MoneyManagement.OutboundSetupIntentUpdateParams;
-  export import OutboundSetupIntentCancelParams = V2Namespace13.MoneyManagement.OutboundSetupIntentCancelParams;
+  export import OutboundSetupIntentListParams = V2Namespace15.MoneyManagement.OutboundSetupIntentListParams;
+  export import OutboundSetupIntentCreateParams = V2Namespace15.MoneyManagement.OutboundSetupIntentCreateParams;
+  export import OutboundSetupIntentRetrieveParams = V2Namespace15.MoneyManagement.OutboundSetupIntentRetrieveParams;
+  export import OutboundSetupIntentUpdateParams = V2Namespace15.MoneyManagement.OutboundSetupIntentUpdateParams;
+  export import OutboundSetupIntentCancelParams = V2Namespace15.MoneyManagement.OutboundSetupIntentCancelParams;
   export {OutboundSetupIntent, OutboundSetupIntentResource};
-  export import OutboundTransferListParams = V2Namespace14.MoneyManagement.OutboundTransferListParams;
-  export import OutboundTransferCreateParams = V2Namespace14.MoneyManagement.OutboundTransferCreateParams;
-  export import OutboundTransferRetrieveParams = V2Namespace14.MoneyManagement.OutboundTransferRetrieveParams;
-  export import OutboundTransferCancelParams = V2Namespace14.MoneyManagement.OutboundTransferCancelParams;
+  export import OutboundTransferListParams = V2Namespace16.MoneyManagement.OutboundTransferListParams;
+  export import OutboundTransferCreateParams = V2Namespace16.MoneyManagement.OutboundTransferCreateParams;
+  export import OutboundTransferRetrieveParams = V2Namespace16.MoneyManagement.OutboundTransferRetrieveParams;
+  export import OutboundTransferCancelParams = V2Namespace16.MoneyManagement.OutboundTransferCancelParams;
   export {OutboundTransfer, OutboundTransferResource};
-  export import PayoutIntentListParams = V2Namespace15.MoneyManagement.PayoutIntentListParams;
-  export import PayoutIntentCreateParams = V2Namespace15.MoneyManagement.PayoutIntentCreateParams;
-  export import PayoutIntentRetrieveParams = V2Namespace15.MoneyManagement.PayoutIntentRetrieveParams;
-  export import PayoutIntentUpdateParams = V2Namespace15.MoneyManagement.PayoutIntentUpdateParams;
-  export import PayoutIntentCancelParams = V2Namespace15.MoneyManagement.PayoutIntentCancelParams;
-  export import PayoutIntentConfirmParams = V2Namespace15.MoneyManagement.PayoutIntentConfirmParams;
-  export import PayoutIntentRefreshFxQuoteParams = V2Namespace15.MoneyManagement.PayoutIntentRefreshFxQuoteParams;
-  export import PayoutIntentRefreshRecipientVerificationParams = V2Namespace15.MoneyManagement.PayoutIntentRefreshRecipientVerificationParams;
+  export import PayoutIntentListParams = V2Namespace17.MoneyManagement.PayoutIntentListParams;
+  export import PayoutIntentCreateParams = V2Namespace17.MoneyManagement.PayoutIntentCreateParams;
+  export import PayoutIntentRetrieveParams = V2Namespace17.MoneyManagement.PayoutIntentRetrieveParams;
+  export import PayoutIntentUpdateParams = V2Namespace17.MoneyManagement.PayoutIntentUpdateParams;
+  export import PayoutIntentCancelParams = V2Namespace17.MoneyManagement.PayoutIntentCancelParams;
+  export import PayoutIntentConfirmParams = V2Namespace17.MoneyManagement.PayoutIntentConfirmParams;
+  export import PayoutIntentRefreshFxQuoteParams = V2Namespace17.MoneyManagement.PayoutIntentRefreshFxQuoteParams;
+  export import PayoutIntentRefreshRecipientVerificationParams = V2Namespace17.MoneyManagement.PayoutIntentRefreshRecipientVerificationParams;
   export {PayoutIntent, PayoutIntentResource};
-  export import PayoutMethodListParams = V2Namespace16.MoneyManagement.PayoutMethodListParams;
-  export import PayoutMethodRetrieveParams = V2Namespace16.MoneyManagement.PayoutMethodRetrieveParams;
-  export import PayoutMethodArchiveParams = V2Namespace16.MoneyManagement.PayoutMethodArchiveParams;
-  export import PayoutMethodDisableParams = V2Namespace16.MoneyManagement.PayoutMethodDisableParams;
-  export import PayoutMethodUnarchiveParams = V2Namespace16.MoneyManagement.PayoutMethodUnarchiveParams;
+  export import PayoutMethodListParams = V2Namespace18.MoneyManagement.PayoutMethodListParams;
+  export import PayoutMethodRetrieveParams = V2Namespace18.MoneyManagement.PayoutMethodRetrieveParams;
+  export import PayoutMethodArchiveParams = V2Namespace18.MoneyManagement.PayoutMethodArchiveParams;
+  export import PayoutMethodDisableParams = V2Namespace18.MoneyManagement.PayoutMethodDisableParams;
+  export import PayoutMethodUnarchiveParams = V2Namespace18.MoneyManagement.PayoutMethodUnarchiveParams;
   export {PayoutMethod, PayoutMethodResource};
-  export import PayoutMethodsBankAccountSpecRetrieveParams = V2Namespace17.MoneyManagement.PayoutMethodsBankAccountSpecRetrieveParams;
+  export import PayoutMethodsBankAccountSpecRetrieveParams = V2Namespace19.MoneyManagement.PayoutMethodsBankAccountSpecRetrieveParams;
   export {PayoutMethodsBankAccountSpec, PayoutMethodsBankAccountSpecResource};
-  export import ReceivedCreditListParams = V2Namespace18.MoneyManagement.ReceivedCreditListParams;
-  export import ReceivedCreditRetrieveParams = V2Namespace18.MoneyManagement.ReceivedCreditRetrieveParams;
+  export import ReceivedCreditListParams = V2Namespace20.MoneyManagement.ReceivedCreditListParams;
+  export import ReceivedCreditRetrieveParams = V2Namespace20.MoneyManagement.ReceivedCreditRetrieveParams;
   export {ReceivedCredit, ReceivedCreditResource};
-  export import ReceivedDebitListParams = V2Namespace19.MoneyManagement.ReceivedDebitListParams;
-  export import ReceivedDebitRetrieveParams = V2Namespace19.MoneyManagement.ReceivedDebitRetrieveParams;
+  export import ReceivedDebitListParams = V2Namespace21.MoneyManagement.ReceivedDebitListParams;
+  export import ReceivedDebitRetrieveParams = V2Namespace21.MoneyManagement.ReceivedDebitRetrieveParams;
   export {ReceivedDebit, ReceivedDebitResource};
-  export import ReceivedDebitMandateListParams = V2Namespace20.MoneyManagement.ReceivedDebitMandateListParams;
-  export import ReceivedDebitMandateRetrieveParams = V2Namespace20.MoneyManagement.ReceivedDebitMandateRetrieveParams;
-  export import ReceivedDebitMandateCancelParams = V2Namespace20.MoneyManagement.ReceivedDebitMandateCancelParams;
+  export import ReceivedDebitMandateListParams = V2Namespace22.MoneyManagement.ReceivedDebitMandateListParams;
+  export import ReceivedDebitMandateRetrieveParams = V2Namespace22.MoneyManagement.ReceivedDebitMandateRetrieveParams;
+  export import ReceivedDebitMandateCancelParams = V2Namespace22.MoneyManagement.ReceivedDebitMandateCancelParams;
   export {ReceivedDebitMandate, ReceivedDebitMandateResource};
-  export import RecipientVerificationCreateParams = V2Namespace21.MoneyManagement.RecipientVerificationCreateParams;
-  export import RecipientVerificationRetrieveParams = V2Namespace21.MoneyManagement.RecipientVerificationRetrieveParams;
-  export import RecipientVerificationAcknowledgeParams = V2Namespace21.MoneyManagement.RecipientVerificationAcknowledgeParams;
+  export import RecipientVerificationCreateParams = V2Namespace23.MoneyManagement.RecipientVerificationCreateParams;
+  export import RecipientVerificationRetrieveParams = V2Namespace23.MoneyManagement.RecipientVerificationRetrieveParams;
+  export import RecipientVerificationAcknowledgeParams = V2Namespace23.MoneyManagement.RecipientVerificationAcknowledgeParams;
   export {RecipientVerification, RecipientVerificationResource};
-  export import RewardProgramListParams = V2Namespace22.MoneyManagement.RewardProgramListParams;
-  export import RewardProgramCreateParams = V2Namespace22.MoneyManagement.RewardProgramCreateParams;
-  export import RewardProgramRetrieveParams = V2Namespace22.MoneyManagement.RewardProgramRetrieveParams;
-  export import RewardProgramUpdateParams = V2Namespace22.MoneyManagement.RewardProgramUpdateParams;
-  export import RewardProgramActivateParams = V2Namespace22.MoneyManagement.RewardProgramActivateParams;
-  export import RewardProgramDeactivateParams = V2Namespace22.MoneyManagement.RewardProgramDeactivateParams;
+  export import RewardProgramListParams = V2Namespace24.MoneyManagement.RewardProgramListParams;
+  export import RewardProgramCreateParams = V2Namespace24.MoneyManagement.RewardProgramCreateParams;
+  export import RewardProgramRetrieveParams = V2Namespace24.MoneyManagement.RewardProgramRetrieveParams;
+  export import RewardProgramUpdateParams = V2Namespace24.MoneyManagement.RewardProgramUpdateParams;
+  export import RewardProgramActivateParams = V2Namespace24.MoneyManagement.RewardProgramActivateParams;
+  export import RewardProgramDeactivateParams = V2Namespace24.MoneyManagement.RewardProgramDeactivateParams;
   export {RewardProgram, RewardProgramResource};
-  export import RewardProgramEnrollmentListParams = V2Namespace23.MoneyManagement.RewardProgramEnrollmentListParams;
-  export import RewardProgramEnrollmentCreateParams = V2Namespace23.MoneyManagement.RewardProgramEnrollmentCreateParams;
-  export import RewardProgramEnrollmentRetrieveParams = V2Namespace23.MoneyManagement.RewardProgramEnrollmentRetrieveParams;
-  export import RewardProgramEnrollmentActivateParams = V2Namespace23.MoneyManagement.RewardProgramEnrollmentActivateParams;
-  export import RewardProgramEnrollmentDeactivateParams = V2Namespace23.MoneyManagement.RewardProgramEnrollmentDeactivateParams;
+  export import RewardProgramEnrollmentListParams = V2Namespace25.MoneyManagement.RewardProgramEnrollmentListParams;
+  export import RewardProgramEnrollmentCreateParams = V2Namespace25.MoneyManagement.RewardProgramEnrollmentCreateParams;
+  export import RewardProgramEnrollmentRetrieveParams = V2Namespace25.MoneyManagement.RewardProgramEnrollmentRetrieveParams;
+  export import RewardProgramEnrollmentActivateParams = V2Namespace25.MoneyManagement.RewardProgramEnrollmentActivateParams;
+  export import RewardProgramEnrollmentDeactivateParams = V2Namespace25.MoneyManagement.RewardProgramEnrollmentDeactivateParams;
   export {RewardProgramEnrollment, RewardProgramEnrollmentResource};
-  export import SpendingMandateListParams = V2Namespace24.MoneyManagement.SpendingMandateListParams;
-  export import SpendingMandateRetrieveParams = V2Namespace24.MoneyManagement.SpendingMandateRetrieveParams;
-  export import SpendingMandateCancelParams = V2Namespace24.MoneyManagement.SpendingMandateCancelParams;
+  export import SpendingMandateListParams = V2Namespace26.MoneyManagement.SpendingMandateListParams;
+  export import SpendingMandateCreateParams = V2Namespace26.MoneyManagement.SpendingMandateCreateParams;
+  export import SpendingMandateRetrieveParams = V2Namespace26.MoneyManagement.SpendingMandateRetrieveParams;
+  export import SpendingMandateUpdateParams = V2Namespace26.MoneyManagement.SpendingMandateUpdateParams;
+  export import SpendingMandateCancelParams = V2Namespace26.MoneyManagement.SpendingMandateCancelParams;
   export {SpendingMandate, SpendingMandateResource};
-  export import TransactionListParams = V2Namespace26.MoneyManagement.TransactionListParams;
-  export import TransactionRetrieveParams = V2Namespace26.MoneyManagement.TransactionRetrieveParams;
-  export import TransactionUpdateParams = V2Namespace26.MoneyManagement.TransactionUpdateParams;
-  export import TransactionRefreshRegulatoryReceiptParams = V2Namespace26.MoneyManagement.TransactionRefreshRegulatoryReceiptParams;
+  export import TransactionListParams = V2Namespace28.MoneyManagement.TransactionListParams;
+  export import TransactionRetrieveParams = V2Namespace28.MoneyManagement.TransactionRetrieveParams;
+  export import TransactionUpdateParams = V2Namespace28.MoneyManagement.TransactionUpdateParams;
+  export import TransactionRefreshRegulatoryReceiptParams = V2Namespace28.MoneyManagement.TransactionRefreshRegulatoryReceiptParams;
   export {Transaction, TransactionResource};
-  export import TransactionEntryListParams = V2Namespace27.MoneyManagement.TransactionEntryListParams;
-  export import TransactionEntryRetrieveParams = V2Namespace27.MoneyManagement.TransactionEntryRetrieveParams;
+  export import TransactionEntryListParams = V2Namespace29.MoneyManagement.TransactionEntryListParams;
+  export import TransactionEntryRetrieveParams = V2Namespace29.MoneyManagement.TransactionEntryRetrieveParams;
   export {TransactionEntry, TransactionEntryResource};
   export {EarnedCreditSimulation};
   export {FinancialAccountWalletExportCredentials};

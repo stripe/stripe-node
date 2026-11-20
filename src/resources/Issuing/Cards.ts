@@ -132,6 +132,11 @@ export interface Card {
   financial_account?: string | null;
 
   /**
+   * Details about the flexible credential configuration for this card. This is only populated when enrolled to flex credentials, and is omitted unless you explicitly request it with `include[]=flexible_credential`.
+   */
+  flexible_credential?: Card.FlexibleCredential | null;
+
+  /**
    * The last 4 digits of the card number.
    */
   last4: string;
@@ -255,6 +260,13 @@ export namespace Card {
      * The type of crypto wallet.
      */
     type: CryptoWallet.Type | null;
+  }
+
+  export interface FlexibleCredential {
+    /**
+     * Details about the secondary credentials for this card.
+     */
+    secondary_credentials?: Array<FlexibleCredential.SecondaryCredential>;
   }
 
   export interface LatestFraudWarning {
@@ -437,6 +449,19 @@ export namespace Card {
 
   export namespace CryptoWallet {
     export type Type = 'bridge_wallet' | 'squads' | 'standard' | OtherString;
+  }
+
+  export namespace FlexibleCredential {
+    export interface SecondaryCredential {
+      /**
+       * The funding source that this credential can support.
+       */
+      funding?: SecondaryCredential.Funding;
+    }
+
+    export namespace SecondaryCredential {
+      export type Funding = 'credit' | OtherString;
+    }
   }
 
   export namespace LatestFraudWarning {

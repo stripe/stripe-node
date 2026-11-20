@@ -241,6 +241,8 @@ export namespace InvoiceRenderingTemplate {
 
     export namespace InvoicePdf {
       export interface Block {
+        custom_plain_text?: Block.CustomPlainText;
+
         custom_plain_text_cel?: Block.CustomPlainTextCel;
 
         /**
@@ -255,6 +257,13 @@ export namespace InvoiceRenderingTemplate {
       }
 
       export namespace Block {
+        export interface CustomPlainText {
+          /**
+           * Literal text to render, preserving whitespace and newlines.
+           */
+          plain_text: string;
+        }
+
         export interface CustomPlainTextCel {
           /**
            * A CEL expression that returns text using the invoice context.
@@ -263,6 +272,7 @@ export namespace InvoiceRenderingTemplate {
         }
 
         export type Type =
+          | 'custom_plain_text'
           | 'custom_plain_text_cel'
           | 'footer_content'
           | 'invoice_details'
@@ -345,13 +355,18 @@ export namespace InvoiceRenderingTemplateCreateParams {
   export namespace RenderingSettings {
     export interface InvoicePdf {
       /**
-       * Ordered invoice PDF blocks. A maximum of 20 blocks is allowed.
+       * Ordered invoice PDF blocks, at most 20. Include every default type exactly once; custom text blocks may repeat.
        */
       blocks?: Emptyable<Array<InvoicePdf.Block>>;
     }
 
     export namespace InvoicePdf {
       export interface Block {
+        /**
+         * Configuration for a repeatable literal text block. Omit this hash on a keyed update to retain saved text; supply it to replace the text.
+         */
+        custom_plain_text?: Block.CustomPlainText;
+
         /**
          * Configuration for a custom CEL text block.
          */
@@ -369,6 +384,13 @@ export namespace InvoiceRenderingTemplateCreateParams {
       }
 
       export namespace Block {
+        export interface CustomPlainText {
+          /**
+           * Literal text to render, preserving whitespace and newlines. Required, at most 10,000 characters; an empty string renders no text.
+           */
+          plain_text: string;
+        }
+
         export interface CustomPlainTextCel {
           /**
            * A CEL expression that returns text using the invoice context.
@@ -377,6 +399,7 @@ export namespace InvoiceRenderingTemplateCreateParams {
         }
 
         export type Type =
+          | 'custom_plain_text'
           | 'custom_plain_text_cel'
           | 'footer_content'
           | 'invoice_details'
@@ -473,13 +496,18 @@ export namespace InvoiceRenderingTemplateUpdateParams {
   export namespace RenderingSettings {
     export interface InvoicePdf {
       /**
-       * Ordered invoice PDF blocks. A maximum of 20 blocks is allowed.
+       * The complete replacement order of at most 20 invoice PDF blocks. Keys retain saved configuration when its hash is omitted. Omitted custom blocks are removed; include every default type exactly once. Omit blocks to preserve settings, or supply an empty string to reset to defaults.
        */
       blocks?: Emptyable<Array<InvoicePdf.Block>>;
     }
 
     export namespace InvoicePdf {
       export interface Block {
+        /**
+         * Configuration for a repeatable literal text block. Omit this hash on a keyed update to retain saved text; supply it to replace the text.
+         */
+        custom_plain_text?: Block.CustomPlainText;
+
         /**
          * Configuration for a custom CEL text block.
          */
@@ -497,6 +525,13 @@ export namespace InvoiceRenderingTemplateUpdateParams {
       }
 
       export namespace Block {
+        export interface CustomPlainText {
+          /**
+           * Literal text to render, preserving whitespace and newlines. Required, at most 10,000 characters; an empty string renders no text.
+           */
+          plain_text: string;
+        }
+
         export interface CustomPlainTextCel {
           /**
            * A CEL expression that returns text using the invoice context.
@@ -505,6 +540,7 @@ export namespace InvoiceRenderingTemplateUpdateParams {
         }
 
         export type Type =
+          | 'custom_plain_text'
           | 'custom_plain_text_cel'
           | 'footer_content'
           | 'invoice_details'

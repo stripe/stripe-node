@@ -109,9 +109,13 @@ export namespace Mandate {
   export interface PaymentMethodDetails {
     acss_debit?: PaymentMethodDetails.AcssDebit;
 
+    aeon_pay?: PaymentMethodDetails.AeonPay;
+
     amazon_pay?: PaymentMethodDetails.AmazonPay;
 
     au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
+
+    au_pay?: PaymentMethodDetails.AuPay;
 
     bacs_debit?: PaymentMethodDetails.BacsDebit;
 
@@ -121,6 +125,8 @@ export namespace Mandate {
 
     cashapp?: PaymentMethodDetails.Cashapp;
 
+    dbarai?: PaymentMethodDetails.Dbarai;
+
     kakao_pay?: PaymentMethodDetails.KakaoPay;
 
     klarna?: PaymentMethodDetails.Klarna;
@@ -128,6 +134,8 @@ export namespace Mandate {
     kr_card?: PaymentMethodDetails.KrCard;
 
     link?: PaymentMethodDetails.Link;
+
+    merpay?: PaymentMethodDetails.Merpay;
 
     naver_pay?: PaymentMethodDetails.NaverPay;
 
@@ -138,6 +146,8 @@ export namespace Mandate {
     payto?: PaymentMethodDetails.Payto;
 
     pix?: PaymentMethodDetails.Pix;
+
+    rakuten_pay?: PaymentMethodDetails.RakutenPay;
 
     revolut_pay?: PaymentMethodDetails.RevolutPay;
 
@@ -214,6 +224,8 @@ export namespace Mandate {
       transaction_type: AcssDebit.TransactionType;
     }
 
+    export interface AeonPay {}
+
     export interface AmazonPay {}
 
     export interface AuBecsDebit {
@@ -222,6 +234,8 @@ export namespace Mandate {
        */
       url: string;
     }
+
+    export interface AuPay {}
 
     export interface BacsDebit {
       /**
@@ -273,6 +287,8 @@ export namespace Mandate {
 
     export interface Cashapp {}
 
+    export interface Dbarai {}
+
     export interface KakaoPay {}
 
     export interface Klarna {}
@@ -280,6 +296,8 @@ export namespace Mandate {
     export interface KrCard {}
 
     export interface Link {}
+
+    export interface Merpay {}
 
     export interface NaverPay {}
 
@@ -376,6 +394,8 @@ export namespace Mandate {
        */
       start_date?: string;
     }
+
+    export interface RakutenPay {}
 
     export interface RevolutPay {}
 

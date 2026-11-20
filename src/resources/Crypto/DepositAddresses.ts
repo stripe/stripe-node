@@ -1,7 +1,12 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../StripeResource.js';
-import {MetadataParam, PaginationParams, Metadata} from '../../shared.js';
+import {
+  MetadataParam,
+  PaginationParams,
+  Metadata,
+  OtherString,
+} from '../../shared.js';
 import {RequestOptions, ApiListPromise, Response} from '../../lib.js';
 
 export class DepositAddressResource extends StripeResource {
@@ -112,7 +117,11 @@ export namespace DepositAddress {
     /**
      * The supported token currency. Supported token currencies include: `usdc`.
      */
-    token_currency: 'usdc';
+    token_currency: SupportedToken.TokenCurrency;
+  }
+
+  export namespace SupportedToken {
+    export type TokenCurrency = 'ousd' | 'phantom_cash' | 'usdc' | OtherString;
   }
 }
 export namespace Crypto {

@@ -79,6 +79,7 @@ export namespace AccountEvaluation {
     | 'fraudulent_website'
     | 'user_account_sharing'
     | 'user_affinity'
+    | 'user_buyer_classification'
     | 'user_multi_accounting'
     | OtherString;
 
@@ -151,6 +152,7 @@ export namespace V2 {
         | 'fraudulent_website'
         | 'user_account_sharing'
         | 'user_affinity'
+        | 'user_buyer_classification'
         | 'user_multi_accounting'
         | OtherString;
 

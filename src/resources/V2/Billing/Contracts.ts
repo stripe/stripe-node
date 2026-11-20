@@ -52,6 +52,44 @@ export class ContractResource extends StripeResource {
                                 kind: 'object',
                                 fields: {
                                   current_quantity: {kind: 'decimal_string'},
+                                  pricing_overrides: {
+                                    kind: 'object',
+                                    fields: {
+                                      data: {
+                                        kind: 'array',
+                                        element: {
+                                          kind: 'object',
+                                          fields: {
+                                            overwrite_price: {
+                                              kind: 'object',
+                                              fields: {
+                                                tiers: {
+                                                  kind: 'array',
+                                                  element: {
+                                                    kind: 'object',
+                                                    fields: {
+                                                      flat_amount_decimal: {
+                                                        kind: 'decimal_string',
+                                                      },
+                                                      unit_amount_decimal: {
+                                                        kind: 'decimal_string',
+                                                      },
+                                                      up_to: {
+                                                        kind: 'int64_string',
+                                                      },
+                                                      up_to_decimal: {
+                                                        kind: 'decimal_string',
+                                                      },
+                                                    },
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
                                 },
                               },
                             },
@@ -79,6 +117,21 @@ export class ContractResource extends StripeResource {
                               overwrite: {
                                 kind: 'object',
                                 fields: {
+                                  tiers: {
+                                    kind: 'array',
+                                    element: {
+                                      kind: 'object',
+                                      fields: {
+                                        flat_amount_decimal: {
+                                          kind: 'decimal_string',
+                                        },
+                                        unit_amount_decimal: {
+                                          kind: 'decimal_string',
+                                        },
+                                        up_to: {kind: 'int64_string'},
+                                      },
+                                    },
+                                  },
                                   unit_amount_decimal: {kind: 'decimal_string'},
                                 },
                               },
@@ -87,6 +140,28 @@ export class ContractResource extends StripeResource {
                           recurring_price: {
                             kind: 'object',
                             fields: {quantity: {kind: 'decimal_string'}},
+                          },
+                          scheduled_fee: {
+                            kind: 'object',
+                            fields: {
+                              bill_schedule: {
+                                kind: 'object',
+                                fields: {
+                                  custom: {
+                                    kind: 'array',
+                                    element: {
+                                      kind: 'object',
+                                      fields: {
+                                        quantity: {kind: 'decimal_string'},
+                                        unit_amount_decimal: {
+                                          kind: 'decimal_string',
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
                           },
                         },
                       },
@@ -126,13 +201,46 @@ export class ContractResource extends StripeResource {
                     },
                     overwrite: {
                       kind: 'object',
-                      fields: {unit_amount_decimal: {kind: 'decimal_string'}},
+                      fields: {
+                        tiers: {
+                          kind: 'array',
+                          element: {
+                            kind: 'object',
+                            fields: {
+                              flat_amount_decimal: {kind: 'decimal_string'},
+                              unit_amount_decimal: {kind: 'decimal_string'},
+                              up_to: {kind: 'int64_string'},
+                            },
+                          },
+                        },
+                        unit_amount_decimal: {kind: 'decimal_string'},
+                      },
                     },
                   },
                 },
                 recurring_price: {
                   kind: 'object',
                   fields: {quantity: {kind: 'decimal_string'}},
+                },
+                scheduled_fee: {
+                  kind: 'object',
+                  fields: {
+                    bill_schedule: {
+                      kind: 'object',
+                      fields: {
+                        custom: {
+                          kind: 'array',
+                          element: {
+                            kind: 'object',
+                            fields: {
+                              quantity: {kind: 'decimal_string'},
+                              unit_amount_decimal: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
                 },
               },
             },
@@ -155,7 +263,45 @@ export class ContractResource extends StripeResource {
                       fields: {
                         price_details: {
                           kind: 'object',
-                          fields: {current_quantity: {kind: 'decimal_string'}},
+                          fields: {
+                            current_quantity: {kind: 'decimal_string'},
+                            pricing_overrides: {
+                              kind: 'object',
+                              fields: {
+                                data: {
+                                  kind: 'array',
+                                  element: {
+                                    kind: 'object',
+                                    fields: {
+                                      overwrite_price: {
+                                        kind: 'object',
+                                        fields: {
+                                          tiers: {
+                                            kind: 'array',
+                                            element: {
+                                              kind: 'object',
+                                              fields: {
+                                                flat_amount_decimal: {
+                                                  kind: 'decimal_string',
+                                                },
+                                                unit_amount_decimal: {
+                                                  kind: 'decimal_string',
+                                                },
+                                                up_to: {kind: 'int64_string'},
+                                                up_to_decimal: {
+                                                  kind: 'decimal_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
                         },
                       },
                     },
@@ -182,6 +328,17 @@ export class ContractResource extends StripeResource {
                         overwrite: {
                           kind: 'object',
                           fields: {
+                            tiers: {
+                              kind: 'array',
+                              element: {
+                                kind: 'object',
+                                fields: {
+                                  flat_amount_decimal: {kind: 'decimal_string'},
+                                  unit_amount_decimal: {kind: 'decimal_string'},
+                                  up_to: {kind: 'int64_string'},
+                                },
+                              },
+                            },
                             unit_amount_decimal: {kind: 'decimal_string'},
                           },
                         },
@@ -190,6 +347,26 @@ export class ContractResource extends StripeResource {
                     recurring_price: {
                       kind: 'object',
                       fields: {quantity: {kind: 'decimal_string'}},
+                    },
+                    scheduled_fee: {
+                      kind: 'object',
+                      fields: {
+                        bill_schedule: {
+                          kind: 'object',
+                          fields: {
+                            custom: {
+                              kind: 'array',
+                              element: {
+                                kind: 'object',
+                                fields: {
+                                  quantity: {kind: 'decimal_string'},
+                                  unit_amount_decimal: {kind: 'decimal_string'},
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
                     },
                   },
                 },
@@ -248,6 +425,42 @@ export class ContractResource extends StripeResource {
                             kind: 'object',
                             fields: {
                               current_quantity: {kind: 'decimal_string'},
+                              pricing_overrides: {
+                                kind: 'object',
+                                fields: {
+                                  data: {
+                                    kind: 'array',
+                                    element: {
+                                      kind: 'object',
+                                      fields: {
+                                        overwrite_price: {
+                                          kind: 'object',
+                                          fields: {
+                                            tiers: {
+                                              kind: 'array',
+                                              element: {
+                                                kind: 'object',
+                                                fields: {
+                                                  flat_amount_decimal: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                  unit_amount_decimal: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                  up_to: {kind: 'int64_string'},
+                                                  up_to_decimal: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
                             },
                           },
                         },
@@ -275,6 +488,21 @@ export class ContractResource extends StripeResource {
                           overwrite: {
                             kind: 'object',
                             fields: {
+                              tiers: {
+                                kind: 'array',
+                                element: {
+                                  kind: 'object',
+                                  fields: {
+                                    flat_amount_decimal: {
+                                      kind: 'decimal_string',
+                                    },
+                                    unit_amount_decimal: {
+                                      kind: 'decimal_string',
+                                    },
+                                    up_to: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
                               unit_amount_decimal: {kind: 'decimal_string'},
                             },
                           },
@@ -283,6 +511,28 @@ export class ContractResource extends StripeResource {
                       recurring_price: {
                         kind: 'object',
                         fields: {quantity: {kind: 'decimal_string'}},
+                      },
+                      scheduled_fee: {
+                        kind: 'object',
+                        fields: {
+                          bill_schedule: {
+                            kind: 'object',
+                            fields: {
+                              custom: {
+                                kind: 'array',
+                                element: {
+                                  kind: 'object',
+                                  fields: {
+                                    quantity: {kind: 'decimal_string'},
+                                    unit_amount_decimal: {
+                                      kind: 'decimal_string',
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                       },
                     },
                   },
@@ -332,6 +582,21 @@ export class ContractResource extends StripeResource {
                           overwrite: {
                             kind: 'object',
                             fields: {
+                              tiers: {
+                                kind: 'array',
+                                element: {
+                                  kind: 'object',
+                                  fields: {
+                                    flat_amount_decimal: {
+                                      kind: 'decimal_string',
+                                    },
+                                    unit_amount_decimal: {
+                                      kind: 'decimal_string',
+                                    },
+                                    up_to: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
                               unit_amount_decimal: {kind: 'decimal_string'},
                             },
                           },
@@ -341,6 +606,28 @@ export class ContractResource extends StripeResource {
                         kind: 'object',
                         fields: {quantity: {kind: 'decimal_string'}},
                       },
+                      scheduled_fee: {
+                        kind: 'object',
+                        fields: {
+                          bill_schedule: {
+                            kind: 'object',
+                            fields: {
+                              custom: {
+                                kind: 'array',
+                                element: {
+                                  kind: 'object',
+                                  fields: {
+                                    quantity: {kind: 'decimal_string'},
+                                    unit_amount_decimal: {
+                                      kind: 'decimal_string',
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
                     },
                   },
                   update_term: {
@@ -349,6 +636,28 @@ export class ContractResource extends StripeResource {
                       recurring_price: {
                         kind: 'object',
                         fields: {quantity: {kind: 'decimal_string'}},
+                      },
+                      scheduled_fee: {
+                        kind: 'object',
+                        fields: {
+                          bill_schedule: {
+                            kind: 'object',
+                            fields: {
+                              custom: {
+                                kind: 'array',
+                                element: {
+                                  kind: 'object',
+                                  fields: {
+                                    quantity: {kind: 'decimal_string'},
+                                    unit_amount_decimal: {
+                                      kind: 'decimal_string',
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                       },
                     },
                   },
@@ -375,6 +684,42 @@ export class ContractResource extends StripeResource {
                             kind: 'object',
                             fields: {
                               current_quantity: {kind: 'decimal_string'},
+                              pricing_overrides: {
+                                kind: 'object',
+                                fields: {
+                                  data: {
+                                    kind: 'array',
+                                    element: {
+                                      kind: 'object',
+                                      fields: {
+                                        overwrite_price: {
+                                          kind: 'object',
+                                          fields: {
+                                            tiers: {
+                                              kind: 'array',
+                                              element: {
+                                                kind: 'object',
+                                                fields: {
+                                                  flat_amount_decimal: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                  unit_amount_decimal: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                  up_to: {kind: 'int64_string'},
+                                                  up_to_decimal: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
                             },
                           },
                         },
@@ -402,6 +747,21 @@ export class ContractResource extends StripeResource {
                           overwrite: {
                             kind: 'object',
                             fields: {
+                              tiers: {
+                                kind: 'array',
+                                element: {
+                                  kind: 'object',
+                                  fields: {
+                                    flat_amount_decimal: {
+                                      kind: 'decimal_string',
+                                    },
+                                    unit_amount_decimal: {
+                                      kind: 'decimal_string',
+                                    },
+                                    up_to: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
                               unit_amount_decimal: {kind: 'decimal_string'},
                             },
                           },
@@ -410,6 +770,28 @@ export class ContractResource extends StripeResource {
                       recurring_price: {
                         kind: 'object',
                         fields: {quantity: {kind: 'decimal_string'}},
+                      },
+                      scheduled_fee: {
+                        kind: 'object',
+                        fields: {
+                          bill_schedule: {
+                            kind: 'object',
+                            fields: {
+                              custom: {
+                                kind: 'array',
+                                element: {
+                                  kind: 'object',
+                                  fields: {
+                                    quantity: {kind: 'decimal_string'},
+                                    unit_amount_decimal: {
+                                      kind: 'decimal_string',
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                       },
                     },
                   },
@@ -454,6 +836,42 @@ export class ContractResource extends StripeResource {
                             kind: 'object',
                             fields: {
                               current_quantity: {kind: 'decimal_string'},
+                              pricing_overrides: {
+                                kind: 'object',
+                                fields: {
+                                  data: {
+                                    kind: 'array',
+                                    element: {
+                                      kind: 'object',
+                                      fields: {
+                                        overwrite_price: {
+                                          kind: 'object',
+                                          fields: {
+                                            tiers: {
+                                              kind: 'array',
+                                              element: {
+                                                kind: 'object',
+                                                fields: {
+                                                  flat_amount_decimal: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                  unit_amount_decimal: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                  up_to: {kind: 'int64_string'},
+                                                  up_to_decimal: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
                             },
                           },
                         },
@@ -481,6 +899,21 @@ export class ContractResource extends StripeResource {
                           overwrite: {
                             kind: 'object',
                             fields: {
+                              tiers: {
+                                kind: 'array',
+                                element: {
+                                  kind: 'object',
+                                  fields: {
+                                    flat_amount_decimal: {
+                                      kind: 'decimal_string',
+                                    },
+                                    unit_amount_decimal: {
+                                      kind: 'decimal_string',
+                                    },
+                                    up_to: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
                               unit_amount_decimal: {kind: 'decimal_string'},
                             },
                           },
@@ -489,6 +922,28 @@ export class ContractResource extends StripeResource {
                       recurring_price: {
                         kind: 'object',
                         fields: {quantity: {kind: 'decimal_string'}},
+                      },
+                      scheduled_fee: {
+                        kind: 'object',
+                        fields: {
+                          bill_schedule: {
+                            kind: 'object',
+                            fields: {
+                              custom: {
+                                kind: 'array',
+                                element: {
+                                  kind: 'object',
+                                  fields: {
+                                    quantity: {kind: 'decimal_string'},
+                                    unit_amount_decimal: {
+                                      kind: 'decimal_string',
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                       },
                     },
                   },
@@ -533,6 +988,42 @@ export class ContractResource extends StripeResource {
                             kind: 'object',
                             fields: {
                               current_quantity: {kind: 'decimal_string'},
+                              pricing_overrides: {
+                                kind: 'object',
+                                fields: {
+                                  data: {
+                                    kind: 'array',
+                                    element: {
+                                      kind: 'object',
+                                      fields: {
+                                        overwrite_price: {
+                                          kind: 'object',
+                                          fields: {
+                                            tiers: {
+                                              kind: 'array',
+                                              element: {
+                                                kind: 'object',
+                                                fields: {
+                                                  flat_amount_decimal: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                  unit_amount_decimal: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                  up_to: {kind: 'int64_string'},
+                                                  up_to_decimal: {
+                                                    kind: 'decimal_string',
+                                                  },
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
                             },
                           },
                         },
@@ -560,6 +1051,21 @@ export class ContractResource extends StripeResource {
                           overwrite: {
                             kind: 'object',
                             fields: {
+                              tiers: {
+                                kind: 'array',
+                                element: {
+                                  kind: 'object',
+                                  fields: {
+                                    flat_amount_decimal: {
+                                      kind: 'decimal_string',
+                                    },
+                                    unit_amount_decimal: {
+                                      kind: 'decimal_string',
+                                    },
+                                    up_to: {kind: 'int64_string'},
+                                  },
+                                },
+                              },
                               unit_amount_decimal: {kind: 'decimal_string'},
                             },
                           },
@@ -568,6 +1074,28 @@ export class ContractResource extends StripeResource {
                       recurring_price: {
                         kind: 'object',
                         fields: {quantity: {kind: 'decimal_string'}},
+                      },
+                      scheduled_fee: {
+                        kind: 'object',
+                        fields: {
+                          bill_schedule: {
+                            kind: 'object',
+                            fields: {
+                              custom: {
+                                kind: 'array',
+                                element: {
+                                  kind: 'object',
+                                  fields: {
+                                    quantity: {kind: 'decimal_string'},
+                                    unit_amount_decimal: {
+                                      kind: 'decimal_string',
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
                       },
                     },
                   },
@@ -1045,6 +1573,26 @@ export namespace Contract {
 
               export interface OverwritePrice {
                 /**
+                 * Defines whether the price override is billed per unit or by tiers.
+                 */
+                billing_scheme?: OverwritePrice.BillingScheme;
+
+                /**
+                 * Defines whether the tiered price should be graduated or volume-based.
+                 */
+                tiering_mode?: OverwritePrice.TieringMode;
+
+                /**
+                 * Each element represents a pricing tier.
+                 */
+                tiers?: Array<OverwritePrice.Tier>;
+
+                /**
+                 * Defines whether the tiered price should be graduated or volume-based.
+                 */
+                tiers_mode?: OverwritePrice.TiersMode;
+
+                /**
                  * The per-unit amount to be charged, represented as a decimal string in minor currency units.
                  */
                 unit_amount?: string;
@@ -1058,6 +1606,51 @@ export namespace Contract {
               }
 
               export type Type = 'overwrite_price' | OtherString;
+
+              export namespace OverwritePrice {
+                export type BillingScheme = 'per_unit' | 'tiered';
+
+                export type TieringMode = 'graduated' | 'volume';
+
+                export interface Tier {
+                  /**
+                   * Price for the entire tier, represented as a decimal string in minor currency units.
+                   */
+                  flat_amount?: string;
+
+                  /**
+                   * Price for the entire tier in minor currency units.
+                   */
+                  flat_amount_decimal?: Decimal;
+
+                  /**
+                   * Per-unit price for units included in this tier, represented as a decimal string in minor currency units.
+                   */
+                  unit_amount?: string;
+
+                  /**
+                   * Per-unit price for units included in this tier in minor currency units.
+                   */
+                  unit_amount_decimal?: Decimal;
+
+                  /**
+                   * Up to and including this whole-number quantity is contained in the tier. If omitted, the tier has no upper bound.
+                   */
+                  up_to?: bigint;
+
+                  /**
+                   * Up to and including this quantity will be contained in the tier.
+                   */
+                  up_to_decimal?: Decimal;
+
+                  /**
+                   * No upper bound to this tier.
+                   */
+                  up_to_inf?: 'inf';
+                }
+
+                export type TiersMode = 'graduated' | 'volume';
+              }
             }
           }
         }
@@ -1518,6 +2111,21 @@ export namespace V2 {
 
           export interface Overwrite {
             /**
+             * Whether the replacement pricing is per unit or tiered.
+             */
+            billing_scheme?: Overwrite.BillingScheme;
+
+            /**
+             * Replacement pricing tiers.
+             */
+            tiers?: Array<Overwrite.Tier>;
+
+            /**
+             * How the pricing tiers are applied.
+             */
+            tiers_mode?: Overwrite.TiersMode;
+
+            /**
              * The replacement per-unit amount in minor currency units.
              */
             unit_amount_decimal?: Decimal;
@@ -1564,6 +2172,29 @@ export namespace V2 {
 
           export namespace EndsAt {
             export type Type = 'never' | 'now' | 'timestamp' | OtherString;
+          }
+
+          export namespace Overwrite {
+            export type BillingScheme = 'per_unit' | 'tiered';
+
+            export interface Tier {
+              /**
+               * Flat amount in minor currency units.
+               */
+              flat_amount_decimal?: Decimal;
+
+              /**
+               * Per-unit amount in minor currency units.
+               */
+              unit_amount_decimal?: Decimal;
+
+              /**
+               * Inclusive whole-number upper bound. Omitted for an unbounded final tier.
+               */
+              up_to?: bigint;
+            }
+
+            export type TiersMode = 'graduated' | 'volume';
           }
 
           export namespace StartsAt {
@@ -1633,14 +2264,19 @@ export namespace V2 {
           export namespace BillSchedule {
             export interface Custom {
               /**
-               * Non-negative amount with an explicit currency that must match the contract's currency.
-               */
-              amount: V2Amount;
-
-              /**
                * A finite bill date. Resolved once per request, including on idempotent retries.
                */
               bill_at: Custom.BillAt;
+
+              /**
+               * Positive installment quantity. Defaults to 1 when omitted.
+               */
+              quantity?: Decimal;
+
+              /**
+               * Positive unit price in minor units of the contract's currency, before multiplying by quantity.
+               */
+              unit_amount_decimal: Decimal;
             }
 
             export type Type = 'custom' | OtherString;
@@ -1990,6 +2626,21 @@ export namespace V2 {
 
             export interface Overwrite {
               /**
+               * Whether the replacement pricing is per unit or tiered.
+               */
+              billing_scheme?: Overwrite.BillingScheme;
+
+              /**
+               * Replacement pricing tiers.
+               */
+              tiers?: Array<Overwrite.Tier>;
+
+              /**
+               * How the pricing tiers are applied.
+               */
+              tiers_mode?: Overwrite.TiersMode;
+
+              /**
                * The replacement per-unit amount in minor currency units.
                */
               unit_amount_decimal?: Decimal;
@@ -2036,6 +2687,29 @@ export namespace V2 {
 
             export namespace EndsAt {
               export type Type = 'never' | 'now' | 'timestamp' | OtherString;
+            }
+
+            export namespace Overwrite {
+              export type BillingScheme = 'per_unit' | 'tiered';
+
+              export interface Tier {
+                /**
+                 * Flat amount in minor currency units.
+                 */
+                flat_amount_decimal?: Decimal;
+
+                /**
+                 * Per-unit amount in minor currency units.
+                 */
+                unit_amount_decimal?: Decimal;
+
+                /**
+                 * Inclusive whole-number upper bound. Omitted for an unbounded final tier.
+                 */
+                up_to?: bigint;
+              }
+
+              export type TiersMode = 'graduated' | 'volume';
             }
 
             export namespace StartsAt {
@@ -2105,14 +2779,19 @@ export namespace V2 {
             export namespace BillSchedule {
               export interface Custom {
                 /**
-                 * Non-negative amount with an explicit currency that must match the contract's currency.
-                 */
-                amount: V2Amount;
-
-                /**
                  * A finite bill date. Resolved once per request, including on idempotent retries.
                  */
                 bill_at: Custom.BillAt;
+
+                /**
+                 * Positive installment quantity. Defaults to 1 when omitted.
+                 */
+                quantity?: Decimal;
+
+                /**
+                 * Positive unit price in minor units of the contract's currency, before multiplying by quantity.
+                 */
+                unit_amount_decimal: Decimal;
               }
 
               export type Type = 'custom' | OtherString;
@@ -2351,14 +3030,19 @@ export namespace V2 {
             export namespace BillSchedule {
               export interface Custom {
                 /**
-                 * Non-negative amount with an explicit currency that must match the contract's currency.
-                 */
-                amount: V2Amount;
-
-                /**
                  * A finite bill date. Resolved once per request, including on idempotent retries.
                  */
                 bill_at: Custom.BillAt;
+
+                /**
+                 * Positive installment quantity. Defaults to 1 when omitted.
+                 */
+                quantity?: Decimal;
+
+                /**
+                 * Positive unit price in minor units of the contract's currency, before multiplying by quantity.
+                 */
+                unit_amount_decimal: Decimal;
               }
 
               export type Type = 'custom' | OtherString;

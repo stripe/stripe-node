@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 import {StripeResource} from '../../../StripeResource.js';
+import {V2Amount} from './../V2Amounts.js';
 import {OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
@@ -23,6 +24,21 @@ export class SpendingMandateResource extends StripeResource {
     ) as any;
   }
   /**
+   * Creates an active SpendingMandate authorizing an ACH originator to debit a Financial Account.
+   * @throws Stripe.AlreadyExistsError
+   */
+  create(
+    params: V2.MoneyManagement.SpendingMandateCreateParams,
+    options?: RequestOptions
+  ): Promise<Response<SpendingMandate>> {
+    return this._makeRequest(
+      'POST',
+      '/v2/money_management/spending_mandates',
+      params,
+      options
+    ) as any;
+  }
+  /**
    * Retrieves the details of an existing SpendingMandate.
    */
   retrieve(
@@ -32,6 +48,22 @@ export class SpendingMandateResource extends StripeResource {
   ): Promise<Response<SpendingMandate>> {
     return this._makeRequest(
       'GET',
+      `/v2/money_management/spending_mandates/${encodeURIComponent(id)}`,
+      params,
+      options
+    ) as any;
+  }
+  /**
+   * Updates an active ACH SpendingMandate.
+   * @throws Stripe.AlreadyExistsError
+   */
+  update(
+    id: string,
+    params?: V2.MoneyManagement.SpendingMandateUpdateParams,
+    options?: RequestOptions
+  ): Promise<Response<SpendingMandate>> {
+    return this._makeRequest(
+      'POST',
       `/v2/money_management/spending_mandates/${encodeURIComponent(id)}`,
       params,
       options
@@ -118,6 +150,11 @@ export namespace SpendingMandate {
     account_holder_name?: string;
 
     /**
+     * ACH-specific authorization details. Present when `network` is `ach`.
+     */
+    ach?: BankTransfer.Ach;
+
+    /**
      * The financial address associated with this mandate.
      */
     financial_address: string;
@@ -182,7 +219,19 @@ export namespace SpendingMandate {
   export type Type = 'bank_transfer' | OtherString;
 
   export namespace BankTransfer {
-    export type Network = 'bacs' | OtherString;
+    export interface Ach {
+      /**
+       * ACH Company ID used to identify the authorized originator.
+       */
+      originator_company_id: string;
+
+      /**
+       * Maximum amount authorized for a single debit. If absent, the Financial Account limit applies.
+       */
+      transaction_limit?: V2Amount;
+    }
+
+    export type Network = 'ach' | 'bacs' | OtherString;
   }
 
   export namespace StatusDetails {
@@ -204,7 +253,107 @@ export namespace SpendingMandate {
 }
 export namespace V2 {
   export namespace MoneyManagement {
+    export interface SpendingMandateCreateParams {
+      /**
+       * The Financial Account to authorize debits against.
+       */
+      financial_account: string;
+
+      /**
+       * The mandate type.
+       */
+      type: SpendingMandateCreateParams.Type;
+
+      /**
+       * Bank transfer authorization details. Required when `type` is `bank_transfer`.
+       */
+      bank_transfer?: SpendingMandateCreateParams.BankTransfer;
+    }
+
+    export namespace SpendingMandateCreateParams {
+      export type Type = 'bank_transfer' | OtherString;
+
+      export interface BankTransfer {
+        /**
+         * Display name for the authorized originator.
+         */
+        account_holder_name: string;
+
+        /**
+         * ACH authorization details. Required when `network` is `ach`.
+         */
+        ach?: BankTransfer.Ach;
+
+        /**
+         * An active US Financial Address belonging to the Financial Account.
+         */
+        financial_address: string;
+
+        /**
+         * The bank transfer network. Only ACH mandates can be created.
+         */
+        network: BankTransfer.Network;
+      }
+
+      export namespace BankTransfer {
+        export interface Ach {
+          /**
+           * ACH Company ID identifying the authorized originator. Must contain exactly 10 alphanumeric characters.
+           */
+          originator_company_id: string;
+
+          /**
+           * Positive per-debit limit in USD.
+           */
+          transaction_limit?: V2Amount;
+        }
+
+        export type Network = 'ach' | OtherString;
+      }
+    }
+  }
+}
+export namespace V2 {
+  export namespace MoneyManagement {
     export interface SpendingMandateRetrieveParams {}
+  }
+}
+export namespace V2 {
+  export namespace MoneyManagement {
+    export interface SpendingMandateUpdateParams {
+      /**
+       * Bank transfer fields to update. Omitted fields remain unchanged.
+       */
+      bank_transfer?: SpendingMandateUpdateParams.BankTransfer;
+    }
+
+    export namespace SpendingMandateUpdateParams {
+      export interface BankTransfer {
+        /**
+         * Display name for the authorized originator, up to 50 characters long.
+         */
+        account_holder_name?: string;
+
+        /**
+         * ACH authorization fields to update.
+         */
+        ach?: BankTransfer.Ach;
+      }
+
+      export namespace BankTransfer {
+        export interface Ach {
+          /**
+           * ACH Company ID identifying the authorized originator. Must contain exactly 10 alphanumeric characters.
+           */
+          originator_company_id?: string;
+
+          /**
+           * Per-debit limit for originator.
+           */
+          transaction_limit?: V2Amount;
+        }
+      }
+    }
   }
 }
 export namespace V2 {
@@ -221,6 +370,11 @@ export namespace V2 {
       limit?: number;
 
       /**
+       * Filter by bank transfer network. If omitted, returns mandates for all networks.
+       */
+      network?: SpendingMandateListParams.Network;
+
+      /**
        * Filter by mandate status.
        */
       statuses?: Array<SpendingMandateListParams.Status>;
@@ -232,6 +386,8 @@ export namespace V2 {
     }
 
     export namespace SpendingMandateListParams {
+      export type Network = 'ach' | 'bacs' | OtherString;
+
       export type Status =
         | 'active'
         | 'canceled'

@@ -87,6 +87,12 @@ export interface ReceivedDebit {
   dispute_details?: ReceivedDebit.DisputeDetails;
 
   /**
+   * Has the value `true` if the object has an associated Dispute otherwise or the value `false`.
+   * Use the Disputes List API with `target` to see details.
+   */
+  disputed: boolean;
+
+  /**
    * The amount and currency of the original/external debit request.
    */
   external_amount?: V2Amount;
@@ -556,15 +562,17 @@ export namespace ReceivedDebit {
     export namespace Failed {
       export type Reason =
         | 'capability_inactive'
+        | 'debits_disabled'
         | 'financial_address_inactive'
         | 'insufficient_funds'
         | 'no_mandate'
         | 'stripe_rejected'
+        | 'transaction_limit_exceeded'
         | OtherString;
     }
 
     export namespace Returned {
-      export type Reason = 'originator_initiated' | OtherString;
+      export type Reason = 'dispute_won' | 'originator_initiated' | OtherString;
     }
   }
 }

@@ -125,7 +125,7 @@ export namespace Plan {
     days_after_charge: number;
 
     /**
-     * The number of days after the PaymentIntent's `fulfillment_date` to reserve funds before releasing. Charges without a `fulfillment_date` use `days_after_charge`.
+     * The number of days after a payment's `fulfillment_date` to reserve funds before releasing them. The hold releases at midnight UTC that many days after the fulfillment date. Charges without a `fulfillment_date` use `days_after_charge`.
      */
     days_after_fulfillment?: number | null;
 

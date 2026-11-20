@@ -140,6 +140,7 @@ export namespace TransactionEntry {
       | 'currency_conversion'
       | 'debit_dispute'
       | 'dispute'
+      | 'dispute_adjustment'
       | 'dispute_reversal'
       | 'earned_credit'
       | 'financing_paydown'
@@ -228,6 +229,11 @@ export namespace TransactionEntry {
        * If applicable, the ID of the Dispute that created this Transaction.
        */
       dispute?: string;
+
+      /**
+       * If applicable, the ID of the DisputeAdjustment that created this Transaction.
+       */
+      dispute_adjustment?: string;
 
       /**
        * If applicable, the ID of the EarnedCredit that created this Transaction.
@@ -374,6 +380,7 @@ export namespace TransactionEntry {
         | 'currency_conversion'
         | 'debit_dispute'
         | 'dispute'
+        | 'dispute_adjustment'
         | 'earned_credit'
         | 'fee_batch'
         | 'inbound_funding'

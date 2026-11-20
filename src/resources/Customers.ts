@@ -1660,6 +1660,16 @@ export namespace Customer {
        * Whether the customer consented to sending conversion data to an advertising platform.
        */
       consent_collected: boolean;
+
+      /**
+       * The URL of the web page where the customer converted.
+       */
+      source_url: string | null;
+
+      /**
+       * The user agent of the browser where the customer converted.
+       */
+      user_agent: string | null;
     }
   }
 
@@ -1998,6 +2008,16 @@ export namespace CustomerCreateParams {
        * Whether the customer consented to sending conversion data to an advertising platform.
        */
       consent_collected: boolean;
+
+      /**
+       * The URL of the web page where the customer converted.
+       */
+      source_url?: string;
+
+      /**
+       * The user agent of the browser where the customer converted.
+       */
+      user_agent?: string;
     }
   }
 
@@ -2425,6 +2445,16 @@ export namespace CustomerUpdateParams {
        * Whether the customer consented to sending conversion data to an advertising platform.
        */
       consent_collected: boolean;
+
+      /**
+       * The URL of the web page where the customer converted.
+       */
+      source_url?: string;
+
+      /**
+       * The user agent of the browser where the customer converted.
+       */
+      user_agent?: string;
     }
   }
 

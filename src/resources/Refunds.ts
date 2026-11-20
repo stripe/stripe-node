@@ -817,7 +817,7 @@ export namespace RefundCreateParams {
     /**
      * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
      */
-    type: PaymentMethodData.Type;
+    type: 'gift_card';
   }
 
   export interface PaymentMethodOptions {
@@ -840,85 +840,6 @@ export namespace RefundCreateParams {
        */
       gift_card: string;
     }
-
-    export type Type =
-      | 'acss_debit'
-      | 'aeon_pay'
-      | 'affirm'
-      | 'afterpay_clearpay'
-      | 'alipay'
-      | 'alma'
-      | 'amazon_pay'
-      | 'au_becs_debit'
-      | 'au_pay'
-      | 'bacs_debit'
-      | 'bancontact'
-      | 'billie'
-      | 'bizum'
-      | 'blik'
-      | 'boleto'
-      | 'card'
-      | 'carecredit'
-      | 'cashapp'
-      | 'crypto'
-      | 'custom'
-      | 'customer_balance'
-      | 'dbarai'
-      | 'eps'
-      | 'fpx'
-      | 'getflex'
-      | 'gift_card'
-      | 'giropay'
-      | 'gopay'
-      | 'grabpay'
-      | 'id_bank_transfer'
-      | 'ideal'
-      | 'kakao_pay'
-      | 'klarna'
-      | 'konbini'
-      | 'kr_card'
-      | 'link'
-      | 'mb_way'
-      | 'merpay'
-      | 'mobilepay'
-      | 'multibanco'
-      | 'naver_pay'
-      | 'nz_bank_account'
-      | 'oxxo'
-      | 'p24'
-      | 'pay_by_bank'
-      | 'payco'
-      | 'paynow'
-      | 'paypal'
-      | 'paypay'
-      | 'payto'
-      | 'pix'
-      | 'promptpay'
-      | 'qris'
-      | 'rakuten_pay'
-      | 'rechnung'
-      | 'revolut_pay'
-      | 'samsung_pay'
-      | 'satispay'
-      | 'scalapay'
-      | 'sepa_debit'
-      | 'sequra'
-      | 'sezzle'
-      | 'shopeepay'
-      | 'sofort'
-      | 'stripe_balance'
-      | 'sunbit'
-      | 'swish'
-      | 'tamara'
-      | 'toss_pay'
-      | 'twint'
-      | 'upi'
-      | 'us_bank_account'
-      | 'vipps'
-      | 'wechat_pay'
-      | 'wero'
-      | 'zip'
-      | OtherString;
   }
 
   export namespace PaymentMethodOptions {

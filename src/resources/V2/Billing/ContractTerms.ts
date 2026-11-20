@@ -1,6 +1,5 @@
 // File generated from our OpenAPI spec
 
-import {V2Amount} from './../V2Amounts.js';
 import {Metadata, OtherString, Decimal} from '../../../shared.js';
 export interface ContractTerm {
   /**
@@ -160,6 +159,21 @@ export namespace ContractTerm {
 
     export interface Overwrite {
       /**
+       * Whether the replacement pricing is per unit or tiered.
+       */
+      billing_scheme?: Overwrite.BillingScheme;
+
+      /**
+       * Replacement pricing tiers.
+       */
+      tiers?: Array<Overwrite.Tier>;
+
+      /**
+       * How the pricing tiers are applied.
+       */
+      tiers_mode?: Overwrite.TiersMode;
+
+      /**
        * The replacement per-unit amount in minor currency units.
        */
       unit_amount_decimal?: Decimal;
@@ -176,6 +190,29 @@ export namespace ContractTerm {
 
     export namespace Criterion {
       export type Type = 'exclude' | 'include' | OtherString;
+    }
+
+    export namespace Overwrite {
+      export type BillingScheme = 'per_unit' | 'tiered';
+
+      export interface Tier {
+        /**
+         * Flat amount in minor currency units.
+         */
+        flat_amount_decimal?: Decimal;
+
+        /**
+         * Per-unit amount in minor currency units.
+         */
+        unit_amount_decimal?: Decimal;
+
+        /**
+         * Inclusive whole-number upper bound. Omitted for an unbounded final tier.
+         */
+        up_to?: bigint;
+      }
+
+      export type TiersMode = 'graduated' | 'volume';
     }
   }
 
@@ -223,14 +260,19 @@ export namespace ContractTerm {
     export namespace BillSchedule {
       export interface Custom {
         /**
-         * Amount in the contract's currency.
-         */
-        amount: V2Amount;
-
-        /**
          * The resolved bill date.
          */
         bill_at: Custom.BillAt;
+
+        /**
+         * Resolved installment quantity. Always present; defaults to 1 when omitted on input.
+         */
+        quantity: Decimal;
+
+        /**
+         * Unit price in minor units of the contract's currency, before multiplying by quantity.
+         */
+        unit_amount_decimal: Decimal;
       }
 
       export type Type = 'custom' | OtherString;

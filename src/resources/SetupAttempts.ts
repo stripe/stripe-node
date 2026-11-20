@@ -132,6 +132,8 @@ export namespace SetupAttempt {
 
     cashapp?: PaymentMethodDetails.Cashapp;
 
+    getflex?: PaymentMethodDetails.Getflex;
+
     id_bank_transfer?: PaymentMethodDetails.IdBankTransfer;
 
     ideal?: PaymentMethodDetails.Ideal;
@@ -155,6 +157,8 @@ export namespace SetupAttempt {
     payto?: PaymentMethodDetails.Payto;
 
     pix?: PaymentMethodDetails.Pix;
+
+    rakuten_pay?: PaymentMethodDetails.RakutenPay;
 
     revolut_pay?: PaymentMethodDetails.RevolutPay;
 
@@ -454,6 +458,8 @@ export namespace SetupAttempt {
 
     export interface Cashapp {}
 
+    export interface Getflex {}
+
     export interface IdBankTransfer {
       /**
        * Bank where the account is located.
@@ -543,6 +549,8 @@ export namespace SetupAttempt {
        */
       fingerprint?: string | null;
     }
+
+    export interface RakutenPay {}
 
     export interface RevolutPay {}
 
