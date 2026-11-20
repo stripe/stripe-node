@@ -435,9 +435,14 @@ export namespace PaymentAttemptRecord {
     custom?: ProcessorDetails.Custom;
 
     /**
+     * Represents the Stripe processor. This resource consists of details specific to Stripe.
+     */
+    stripe?: ProcessorDetails.Stripe;
+
+    /**
      * The processor used for this payment attempt.
      */
-    type: 'custom';
+    type: ProcessorDetails.Type;
   }
 
   export type ReportedBy = 'self' | 'stripe' | OtherString;
@@ -2747,6 +2752,15 @@ export namespace PaymentAttemptRecord {
        */
       payment_reference: string | null;
     }
+
+    export interface Stripe {
+      /**
+       * Stripe balance transactions associated with this attempt, in no guaranteed order. References can appear at submission or after success. On a PaymentRecord, these references follow the latest attempt.
+       */
+      derived_balance_transactions?: Array<string> | null;
+    }
+
+    export type Type = 'custom' | 'stripe' | OtherString;
   }
 }
 export interface PaymentAttemptRecordRetrieveParams {

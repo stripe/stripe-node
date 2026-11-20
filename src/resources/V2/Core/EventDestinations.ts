@@ -395,6 +395,13 @@ export namespace V2 {
       snapshot_api_version?: string;
 
       /**
+       * The initial status of the destination. Defaults to `enabled`. A destination created as
+       * `disabled` receives no delivery attempts until it is enabled. After creation, use the enable
+       * and disable actions to change the status.
+       */
+      status?: EventDestinationCreateParams.Status;
+
+      /**
        * Delivery target for the webhook endpoint. Live mode requires HTTPS; sandbox mode also supports HTTP.
        */
       webhook_endpoint?: EventDestinationCreateParams.WebhookEndpoint;
@@ -442,6 +449,8 @@ export namespace V2 {
         | 'webhook_endpoint.signing_secret'
         | 'webhook_endpoint.url'
         | OtherString;
+
+      export type Status = 'disabled' | 'enabled';
 
       export interface WebhookEndpoint {
         /**

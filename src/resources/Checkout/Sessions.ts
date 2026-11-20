@@ -1272,6 +1272,7 @@ export namespace Session {
   }
 
   export type Locale =
+    | 'ar'
     | 'auto'
     | 'bg'
     | 'cs'
@@ -1287,6 +1288,7 @@ export namespace Session {
     | 'fil'
     | 'fr'
     | 'fr-CA'
+    | 'he'
     | 'hi-IN'
     | 'hr'
     | 'hu'
@@ -4769,6 +4771,7 @@ export namespace Checkout {
     }
 
     export type Locale =
+      | 'ar'
       | 'auto'
       | 'bg'
       | 'cs'
@@ -4784,6 +4787,7 @@ export namespace Checkout {
       | 'fil'
       | 'fr'
       | 'fr-CA'
+      | 'he'
       | 'hi-IN'
       | 'hr'
       | 'hu'

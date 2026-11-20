@@ -150,11 +150,6 @@ export interface OutboundPayment {
   purpose?: OutboundPayment.Purpose;
 
   /**
-   * A link to the Stripe-hosted receipt for this OutboundPayment. The receipt link remains active for 60 days from the OutboundPayment creation date. After this period, the link will expire and the receipt url value will be null.
-   */
-  receipt_url?: string;
-
-  /**
    * Details about the OutboundPayment notification settings for recipient.
    */
   recipient_notification: OutboundPayment.RecipientNotification;
@@ -395,6 +390,7 @@ export namespace OutboundPayment {
 
     export namespace Returned {
       export type Reason =
+        | 'payout_method_account_type_incorrect'
         | 'payout_method_canceled_by_customer'
         | 'payout_method_closed'
         | 'payout_method_currency_unsupported'
@@ -526,7 +522,7 @@ export namespace V2 {
       delivery_options?: OutboundPaymentCreateParams.DeliveryOptions;
 
       /**
-       * An arbitrary string attached to the OutboundPayment. Often useful for displaying to users.
+       * An arbitrary string attached to the OutboundPayment. Often useful for displaying to users. The description can not be longer than 100 characters and can only contain basic Latin characters and spaces. The following special characters are not allowed: <>\'"* .
        */
       description?: string;
 
