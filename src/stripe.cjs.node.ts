@@ -15733,6 +15733,7 @@ declare namespace StripeConstructor {
         export type AmazonEventbridge = Stripe_.V2.Core.EventDestinationCreateParams.AmazonEventbridge;
         export type AzureEventGrid = Stripe_.V2.Core.EventDestinationCreateParams.AzureEventGrid;
         export type Include = Stripe_.V2.Core.EventDestinationCreateParams.Include;
+        export type Status = Stripe_.V2.Core.EventDestinationCreateParams.Status;
         export type WebhookEndpoint = Stripe_.V2.Core.EventDestinationCreateParams.WebhookEndpoint;
       }
       export namespace EventDestination {
@@ -16359,6 +16360,12 @@ declare namespace StripeConstructor {
     export type V1ApplicationFeeRefundUpdatedEventNotification = Stripe_.V2.Core.Events.V1ApplicationFeeRefundUpdatedEventNotification;
     export type V1ApplicationFeeRefundedEvent = Stripe_.V2.Core.Events.V1ApplicationFeeRefundedEvent;
     export type V1ApplicationFeeRefundedEventNotification = Stripe_.V2.Core.Events.V1ApplicationFeeRefundedEventNotification;
+    export type V1AppsInstallCreatedEvent = Stripe_.V2.Core.Events.V1AppsInstallCreatedEvent;
+    export type V1AppsInstallCreatedEventNotification = Stripe_.V2.Core.Events.V1AppsInstallCreatedEventNotification;
+    export type V1AppsInstallDeletedEvent = Stripe_.V2.Core.Events.V1AppsInstallDeletedEvent;
+    export type V1AppsInstallDeletedEventNotification = Stripe_.V2.Core.Events.V1AppsInstallDeletedEventNotification;
+    export type V1AppsInstallUpdatedEvent = Stripe_.V2.Core.Events.V1AppsInstallUpdatedEvent;
+    export type V1AppsInstallUpdatedEventNotification = Stripe_.V2.Core.Events.V1AppsInstallUpdatedEventNotification;
     export type V1BalanceAvailableEvent = Stripe_.V2.Core.Events.V1BalanceAvailableEvent;
     export type V1BalanceAvailableEventNotification = Stripe_.V2.Core.Events.V1BalanceAvailableEventNotification;
     export type V1BalanceSettingsUpdatedEvent = Stripe_.V2.Core.Events.V1BalanceSettingsUpdatedEvent;
@@ -16645,8 +16652,6 @@ declare namespace StripeConstructor {
     export type V1InvoiceitemDiscountRemovedEventNotification = Stripe_.V2.Core.Events.V1InvoiceitemDiscountRemovedEventNotification;
     export type V1IssuingAuthorizationCreatedEvent = Stripe_.V2.Core.Events.V1IssuingAuthorizationCreatedEvent;
     export type V1IssuingAuthorizationCreatedEventNotification = Stripe_.V2.Core.Events.V1IssuingAuthorizationCreatedEventNotification;
-    export type V1IssuingAuthorizationRequestEvent = Stripe_.V2.Core.Events.V1IssuingAuthorizationRequestEvent;
-    export type V1IssuingAuthorizationRequestEventNotification = Stripe_.V2.Core.Events.V1IssuingAuthorizationRequestEventNotification;
     export type V1IssuingAuthorizationUpdatedEvent = Stripe_.V2.Core.Events.V1IssuingAuthorizationUpdatedEvent;
     export type V1IssuingAuthorizationUpdatedEventNotification = Stripe_.V2.Core.Events.V1IssuingAuthorizationUpdatedEventNotification;
     export type V1IssuingCardCreatedEvent = Stripe_.V2.Core.Events.V1IssuingCardCreatedEvent;

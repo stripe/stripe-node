@@ -237,12 +237,12 @@ export interface BalanceTransactionListParams extends PaginationParams {
   expand?: Array<string>;
 
   /**
-   * For automatic Stripe payouts only, only returns transactions that were paid out on the specified payout ID.
+   * For automatic Stripe payouts only, only returns transactions that were paid out on the specified payout ID. You can't combine this parameter with `source`.
    */
   payout?: string;
 
   /**
-   * Only returns transactions associated with the given object.
+   * Only returns transactions associated with the given object. You can't combine this parameter with `payout`.
    */
   source?: string;
 

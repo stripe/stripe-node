@@ -85,6 +85,9 @@ export interface FinancialAddress {
    */
   livemode: boolean;
 
+  /**
+   * Open Enum. The currency the FinancialAddress settles into the FinancialAccount.
+   */
   settlement_currency: string;
 
   /**
