@@ -1,3 +1,4 @@
+import {StripeInvalidRequestError} from './Error.js';
 import {RequestOptions} from './lib.js';
 import {
   BaseAddress,
@@ -459,6 +460,15 @@ export function jsonStringifyRequestData(data: RequestData | string): string {
  *
  * NodeHttpClient passes {host, path} to `http.request` individually, so it doesn't need the same checks
  * but the public `httpClient` needs the same security guarantees.
+ *
+ * We also reject "." and ".." path segments, including percent-encoded forms
+ * like "%2E". encodeURIComponent leaves dots alone, and FetchHttpClient (the
+ * default in browsers, workers, Deno, and Bun) builds a WHATWG URL, which
+ * removes these segments, so an ID of "." or ".." changes which endpoint is
+ * called: customers.retrievePaymentMethod('..', 'pm_123') would request
+ * /v1/payment_methods/pm_123. NodeHttpClient sends the path literally, but we
+ * check it anyway because a proxy, custom HTTP client, or server may normalize
+ * the path.
  */
 export function validatePath(path: string): void {
   if (
@@ -471,6 +481,23 @@ export function validatePath(path: string): void {
         path
       )}`
     );
+  }
+
+  const hasDotSegment = path
+    .split(/[?#]/, 1)[0]
+    .split('/')
+    .some((segment) => {
+      const decoded = segment.toLowerCase().replace(/%2e/g, '.');
+      return decoded === '.' || decoded === '..';
+    });
+  if (hasDotSegment) {
+    // A StripeInvalidRequestError rather than an Error, so that callers'
+    // existing handling for API errors keeps working.
+    throw new StripeInvalidRequestError({
+      message: `Request path may not contain a "." or ".." segment, got: ${JSON.stringify(
+        path
+      )}`,
+    });
   }
 }
 

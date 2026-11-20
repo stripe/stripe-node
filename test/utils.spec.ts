@@ -1,5 +1,6 @@
 // @ts-nocheck
 import * as utils from '../src/utils.js';
+import {StripeInvalidRequestError} from '../src/Error.js';
 import {expect} from 'chai';
 
 describe('utils', () => {
@@ -865,9 +866,44 @@ describe('utils', () => {
         '/v1/invoices/in_123@456',
         // A backslash does not open an authority: the '/' already closed it.
         '/v1/\\evil.example',
+        // Dots are fine anywhere other than a whole '.' or '..' segment.
+        '/v1/reporting/report_types/balance.summary.1',
+        '/v1/customers/...',
+        '/v1/customers/.cus_123',
+        '/v1/customers/cus_123..',
+        '/v1/customers?email=a..b%40example.com',
+        // A double-encoded dot reaches the API as the literal '%2E'.
+        '/v1/customers/%252E',
       ];
       valid.forEach((path) => {
         expect(() => utils.validatePath(path)).to.not.throw();
+      });
+    });
+
+    it('rejects paths with a "." or ".." segment', () => {
+      const dotSegments = [
+        // HTTP clients like FetchHttpClient remove these segments, so each
+        // request would reach a different endpoint than the one the path was
+        // built for.
+        '/v1/checkout/sessions/.',
+        '/v1/checkout/sessions/..',
+        '/v1/customers/../payment_methods/pm_123',
+        '/v1/customers/./payment_methods/pm_123',
+        '/v1/customers/cus_123/sources/..?expand[]=customer',
+        '/v2/core/accounts/.',
+        // WHATWG URL parsing also treats '%2E' as '.' when removing them.
+        '/v1/checkout/sessions/%2E',
+        '/v1/checkout/sessions/%2e%2E',
+        '/v1/checkout/sessions/.%2E',
+      ];
+      dotSegments.forEach((path) => {
+        expect(
+          () => utils.validatePath(path),
+          `expected to reject ${JSON.stringify(path)}`
+        ).to.throw(
+          StripeInvalidRequestError,
+          /may not contain a "\." or "\.\." segment/
+        );
       });
     });
 
