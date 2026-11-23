@@ -305,7 +305,10 @@ export namespace V2 {
           nationalities?: Array<string>;
 
           /**
-           * The individual's phone number.
+           * The individual's phone number. You can include a country calling code prefixed with `+`,
+           * for example `+12025550123`, or omit it, for example `2025550123`. Spaces, hyphens, periods,
+           * and parentheses are optional and accepted. Numbers beginning with `+` are checked against
+           * the numbering rules for their country calling code, including valid prefixes and number lengths.
            */
           phone?: string;
 

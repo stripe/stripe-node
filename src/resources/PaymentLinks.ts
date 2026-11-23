@@ -1235,6 +1235,11 @@ export namespace PaymentLink {
          * ID of the invoice rendering template to be used for the generated invoice.
          */
         template: string | null;
+
+        /**
+         * The version of the invoice rendering template to be used for the generated invoice. If null, the latest version of the template will be used. Only available in unified mode.
+         */
+        template_version?: number | null;
       }
 
       export namespace Issuer {

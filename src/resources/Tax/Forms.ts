@@ -269,6 +269,11 @@ export namespace Form {
     reporting_year: number;
 
     state_income_tax_withheld?: Us1099K.StateIncomeTaxWithheld;
+
+    /**
+     * The Treasury Tipped Occupation Code stored on the form's payee identity, returned when present regardless of reporting year. Contains one three-digit code or two codes separated by `|`, preserving leading zeros. Uses the selected identity for draft forms and the identity snapshot for finalized forms. Omitted when no code is recorded.
+     */
+    treasury_tipped_occupation_code?: string;
   }
 
   export interface Us1099Misc {
@@ -325,6 +330,11 @@ export namespace Form {
     state_tax_withheld?: Us1099Misc.StateTaxWithheld;
 
     substitute_payments?: Us1099Misc.SubstitutePayments;
+
+    /**
+     * The Treasury Tipped Occupation Code stored on the form's payee identity, returned when present regardless of reporting year. Contains one three-digit code or two codes separated by `|`, preserving leading zeros. Uses the selected identity for draft forms and the identity snapshot for finalized forms. Omitted when no code is recorded.
+     */
+    treasury_tipped_occupation_code?: string;
   }
 
   export interface Us1099Nec {
@@ -359,6 +369,11 @@ export namespace Form {
     state_income?: Us1099Nec.StateIncome;
 
     state_tax_withheld?: Us1099Nec.StateTaxWithheld;
+
+    /**
+     * The Treasury Tipped Occupation Code stored on the form's payee identity, returned when present regardless of reporting year. Contains one three-digit code or two codes separated by `|`, preserving leading zeros. Uses the selected identity for draft forms and the identity snapshot for finalized forms. Omitted when no code is recorded.
+     */
+    treasury_tipped_occupation_code?: string;
   }
 
   export namespace FilingStatus {

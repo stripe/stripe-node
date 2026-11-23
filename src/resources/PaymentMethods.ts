@@ -603,6 +603,8 @@ export namespace PaymentMethod {
   }
 
   export interface CardPresent {
+    benefits?: CardPresent.Benefits;
+
     /**
      * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
      */
@@ -1398,6 +1400,8 @@ export namespace PaymentMethod {
            */
           amount_authorized: number | null;
 
+          benefits?: CardPresent.Benefits;
+
           /**
            * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
            */
@@ -1548,6 +1552,15 @@ export namespace PaymentMethod {
         }
 
         export namespace CardPresent {
+          export interface Benefits {
+            fr_meal_voucher?: Benefits.FrMealVoucher;
+
+            /**
+             * Issuer of the benefit card utilized on this payment
+             */
+            issuer: string | null;
+          }
+
           export interface Fleet {
             /**
              * Fleet prompts and values collected for this transaction.
@@ -1646,6 +1659,15 @@ export namespace PaymentMethod {
              * The type of mobile wallet, one of `apple_pay`, `google_pay`, `samsung_pay`, or `unknown`.
              */
             type: Wallet.Type;
+          }
+
+          export namespace Benefits {
+            export interface FrMealVoucher {
+              /**
+               * The 14-digit SIRET of the meal voucher acceptor used for this charge.
+               */
+              siret: string;
+            }
           }
 
           export namespace Fleet {
@@ -1808,6 +1830,18 @@ export namespace PaymentMethod {
   }
 
   export namespace CardPresent {
+    export interface Benefits {
+      /**
+       * Issuer of this benefit card
+       */
+      issuer: string | null;
+
+      /**
+       * Available benefit programs for this card
+       */
+      programs: Array<string> | null;
+    }
+
     export interface Networks {
       /**
        * All networks available for selection via [payment_method_options.card.network](https://docs.stripe.com/api/payment_intents/confirm#confirm_payment_intent-payment_method_options-card-network).

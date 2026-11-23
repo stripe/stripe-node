@@ -86,8 +86,6 @@ export interface QuotePreviewInvoice {
    */
   application: string | Application | DeletedApplication | null;
 
-  applied_credit_memos?: QuotePreviewInvoice.AppliedCreditMemos;
-
   applies_to: QuotePreviewInvoice.AppliesTo;
 
   /**
@@ -457,13 +455,6 @@ export namespace QuotePreviewInvoice {
      * The status of the payment, one of `open`, `paid`, or `past_due`
      */
     status: AmountsDue.Status;
-  }
-
-  export interface AppliedCreditMemos {
-    /**
-     * The Credit Memos with credit currently applied to this invoice, with one entry per Credit Memo. An invoice can have credit applied from at most 10 Credit Memos, so the list is returned in full.
-     */
-    data: Array<AppliedCreditMemos.Data>;
   }
 
   export interface AppliesTo {
@@ -1012,20 +1003,6 @@ export namespace QuotePreviewInvoice {
 
   export namespace AmountsDue {
     export type Status = 'open' | 'paid' | 'past_due' | OtherString;
-  }
-
-  export namespace AppliedCreditMemos {
-    export interface Data {
-      /**
-       * The credit currently applied to this invoice from the Credit Memo, in cents (or local equivalent). Applying credit reduces `amount_due` and `amount_remaining` without changing `amount_paid`.
-       */
-      applied_amount: number;
-
-      /**
-       * The ID of the Credit Memo whose credit is applied to this invoice.
-       */
-      credit_memo: string;
-    }
   }
 
   export namespace AppliesTo {

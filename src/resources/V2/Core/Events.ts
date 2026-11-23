@@ -359,6 +359,7 @@ import {MoneyManagement} from './../MoneyManagement/index.js';
 import {OrchestratedCommerce} from './../OrchestratedCommerce/index.js';
 import {Payments} from './../Payments/index.js';
 import {Reporting} from './../Reporting/index.js';
+import {Risk} from './../Risk/index.js';
 import {Signals} from './../Signals/index.js';
 export type Event =
   | V1AccountApplicationAuthorizedEvent
@@ -799,6 +800,11 @@ export type Event =
   | V2MoneyManagementDebitDisputeFailedEvent
   | V2MoneyManagementDebitDisputeSubmittedEvent
   | V2MoneyManagementDebitDisputeSucceededEvent
+  | V2MoneyManagementDisputeCreatedEvent
+  | V2MoneyManagementDisputeLostEvent
+  | V2MoneyManagementDisputeUpdatedEvent
+  | V2MoneyManagementDisputeWonEvent
+  | V2MoneyManagementDisputeAdjustmentCreatedEvent
   | V2MoneyManagementEarnedCreditSucceededEvent
   | V2MoneyManagementFinancialAccountCreatedEvent
   | V2MoneyManagementFinancialAccountUpdatedEvent
@@ -913,6 +919,7 @@ export type Event =
   | V2ReportingReportRunFailedEvent
   | V2ReportingReportRunSucceededEvent
   | V2ReportingReportRunUpdatedEvent
+  | V2RiskEvaluationOutcomeDelinquencyReadyEvent
   | V2SignalsAccountEvaluationCompleteEvent
   | V2SignalsAccountSignalCustomerRiskReadyEvent
   | V2SignalsAccountSignalFraudulentMerchantReadyEvent
@@ -1365,6 +1372,11 @@ export type EventNotification =
   | V2MoneyManagementDebitDisputeFailedEventNotification
   | V2MoneyManagementDebitDisputeSubmittedEventNotification
   | V2MoneyManagementDebitDisputeSucceededEventNotification
+  | V2MoneyManagementDisputeCreatedEventNotification
+  | V2MoneyManagementDisputeLostEventNotification
+  | V2MoneyManagementDisputeUpdatedEventNotification
+  | V2MoneyManagementDisputeWonEventNotification
+  | V2MoneyManagementDisputeAdjustmentCreatedEventNotification
   | V2MoneyManagementEarnedCreditSucceededEventNotification
   | V2MoneyManagementFinancialAccountCreatedEventNotification
   | V2MoneyManagementFinancialAccountUpdatedEventNotification
@@ -1479,6 +1491,7 @@ export type EventNotification =
   | V2ReportingReportRunFailedEventNotification
   | V2ReportingReportRunSucceededEventNotification
   | V2ReportingReportRunUpdatedEventNotification
+  | V2RiskEvaluationOutcomeDelinquencyReadyEventNotification
   | V2SignalsAccountEvaluationCompleteEventNotification
   | V2SignalsAccountSignalCustomerRiskReadyEventNotification
   | V2SignalsAccountSignalFraudulentMerchantReadyEventNotification
@@ -8897,25 +8910,37 @@ export namespace V2CoreAccountIncludingConfigurationMoneyManagerCapabilityStatus
       | 'business_demand_deposit_account_fifth_third_storage.inbound.usd'
       | 'business_demand_deposit_account_fifth_third_storage.outbound.usd'
       | 'business_storage.inbound.cad'
+      | 'business_storage.inbound.chf'
       | 'business_storage.inbound.czk'
       | 'business_storage.inbound.eur'
       | 'business_storage.inbound.gbp'
+      | 'business_storage.inbound.hkd'
+      | 'business_storage.inbound.huf'
+      | 'business_storage.inbound.jpy'
       | 'business_storage.inbound.nok'
       | 'business_storage.inbound.ousd'
       | 'business_storage.inbound.pln'
+      | 'business_storage.inbound.ron'
       | 'business_storage.inbound.sek'
       | 'business_storage.inbound.usd'
       | 'business_storage.inbound.usdc'
+      | 'business_storage.inbound.zar'
       | 'business_storage.outbound.cad'
+      | 'business_storage.outbound.chf'
       | 'business_storage.outbound.czk'
       | 'business_storage.outbound.eur'
       | 'business_storage.outbound.gbp'
+      | 'business_storage.outbound.hkd'
+      | 'business_storage.outbound.huf'
+      | 'business_storage.outbound.jpy'
       | 'business_storage.outbound.nok'
       | 'business_storage.outbound.ousd'
       | 'business_storage.outbound.pln'
+      | 'business_storage.outbound.ron'
       | 'business_storage.outbound.sek'
       | 'business_storage.outbound.usd'
       | 'business_storage.outbound.usdc'
+      | 'business_storage.outbound.zar'
       | 'consumer_storage.inbound.usd'
       | 'consumer_storage.inbound.usdc'
       | 'consumer_storage.outbound.usd'
@@ -13552,6 +13577,107 @@ export interface V2MoneyManagementDebitDisputeSucceededEventNotification
 }
 
 /**
+ * Occurs when a Dispute is created and is under review.
+ */
+export interface V2MoneyManagementDisputeCreatedEvent extends EventBase {
+  type: 'v2.money_management.dispute.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.Dispute>;
+}
+export interface V2MoneyManagementDisputeCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.dispute.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.Dispute>;
+  fetchEvent(): Promise<V2MoneyManagementDisputeCreatedEvent>;
+}
+
+/**
+ * Occurs when a Dispute is resolved against the account holder.
+ */
+export interface V2MoneyManagementDisputeLostEvent extends EventBase {
+  type: 'v2.money_management.dispute.lost';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.Dispute>;
+}
+export interface V2MoneyManagementDisputeLostEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.dispute.lost';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.Dispute>;
+  fetchEvent(): Promise<V2MoneyManagementDisputeLostEvent>;
+}
+
+/**
+ * Occurs when a Dispute changes, including when it is won or lost.
+ */
+export interface V2MoneyManagementDisputeUpdatedEvent extends EventBase {
+  type: 'v2.money_management.dispute.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.Dispute>;
+}
+export interface V2MoneyManagementDisputeUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.dispute.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.Dispute>;
+  fetchEvent(): Promise<V2MoneyManagementDisputeUpdatedEvent>;
+}
+
+/**
+ * Occurs when a Dispute is resolved in the account holder's favor.
+ */
+export interface V2MoneyManagementDisputeWonEvent extends EventBase {
+  type: 'v2.money_management.dispute.won';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.Dispute>;
+}
+export interface V2MoneyManagementDisputeWonEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.dispute.won';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.Dispute>;
+  fetchEvent(): Promise<V2MoneyManagementDisputeWonEvent>;
+}
+
+/**
+ * Occurs when a DisputeAdjustment records a money movement on the FinancialAccount for a Dispute.
+ */
+export interface V2MoneyManagementDisputeAdjustmentCreatedEvent
+  extends EventBase {
+  type: 'v2.money_management.dispute_adjustment.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.DisputeAdjustment>;
+}
+export interface V2MoneyManagementDisputeAdjustmentCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.money_management.dispute_adjustment.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<MoneyManagement.DisputeAdjustment>;
+  fetchEvent(): Promise<V2MoneyManagementDisputeAdjustmentCreatedEvent>;
+}
+
+/**
  * Occurs when an EarnedCredit succeeds.
  */
 export interface V2MoneyManagementEarnedCreditSucceededEvent extends EventBase {
@@ -16479,6 +16605,27 @@ export interface V2ReportingReportRunUpdatedEventNotification
 }
 
 /**
+ * Occurs when a new Stripe-generated delinquency evaluation outcome is available.
+ */
+export interface V2RiskEvaluationOutcomeDelinquencyReadyEvent
+  extends EventBase {
+  type: 'v2.risk.evaluation_outcome.delinquency_ready';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Risk.EvaluationOutcome>;
+}
+export interface V2RiskEvaluationOutcomeDelinquencyReadyEventNotification
+  extends EventNotificationBase {
+  type: 'v2.risk.evaluation_outcome.delinquency_ready';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Risk.EvaluationOutcome>;
+  fetchEvent(): Promise<V2RiskEvaluationOutcomeDelinquencyReadyEvent>;
+}
+
+/**
  * Occurs when all requested signals for an account evaluation are complete.
  */
 export interface V2SignalsAccountEvaluationCompleteEvent extends EventBase {
@@ -17188,6 +17335,11 @@ export declare namespace Events {
     V2MoneyManagementDebitDisputeFailedEvent,
     V2MoneyManagementDebitDisputeSubmittedEvent,
     V2MoneyManagementDebitDisputeSucceededEvent,
+    V2MoneyManagementDisputeCreatedEvent,
+    V2MoneyManagementDisputeLostEvent,
+    V2MoneyManagementDisputeUpdatedEvent,
+    V2MoneyManagementDisputeWonEvent,
+    V2MoneyManagementDisputeAdjustmentCreatedEvent,
     V2MoneyManagementEarnedCreditSucceededEvent,
     V2MoneyManagementFinancialAccountCreatedEvent,
     V2MoneyManagementFinancialAccountUpdatedEvent,
@@ -17302,6 +17454,7 @@ export declare namespace Events {
     V2ReportingReportRunFailedEvent,
     V2ReportingReportRunSucceededEvent,
     V2ReportingReportRunUpdatedEvent,
+    V2RiskEvaluationOutcomeDelinquencyReadyEvent,
     V2SignalsAccountEvaluationCompleteEvent,
     V2SignalsAccountSignalCustomerRiskReadyEvent,
     V2SignalsAccountSignalFraudulentMerchantReadyEvent,
@@ -17752,6 +17905,11 @@ export declare namespace Events {
     V2MoneyManagementDebitDisputeFailedEventNotification,
     V2MoneyManagementDebitDisputeSubmittedEventNotification,
     V2MoneyManagementDebitDisputeSucceededEventNotification,
+    V2MoneyManagementDisputeCreatedEventNotification,
+    V2MoneyManagementDisputeLostEventNotification,
+    V2MoneyManagementDisputeUpdatedEventNotification,
+    V2MoneyManagementDisputeWonEventNotification,
+    V2MoneyManagementDisputeAdjustmentCreatedEventNotification,
     V2MoneyManagementEarnedCreditSucceededEventNotification,
     V2MoneyManagementFinancialAccountCreatedEventNotification,
     V2MoneyManagementFinancialAccountUpdatedEventNotification,
@@ -17866,6 +18024,7 @@ export declare namespace Events {
     V2ReportingReportRunFailedEventNotification,
     V2ReportingReportRunSucceededEventNotification,
     V2ReportingReportRunUpdatedEventNotification,
+    V2RiskEvaluationOutcomeDelinquencyReadyEventNotification,
     V2SignalsAccountEvaluationCompleteEventNotification,
     V2SignalsAccountSignalCustomerRiskReadyEventNotification,
     V2SignalsAccountSignalFraudulentMerchantReadyEventNotification,

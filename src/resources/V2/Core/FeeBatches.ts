@@ -6,7 +6,10 @@ import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class FeeBatchResource extends StripeResource {
   /**
-   * List FeeBatches optionally filtered by collection_record.
+   * Lists FeeBatches, optionally filtered by `collection_record`, `statuses`, or
+   * creation time. If `statuses` is omitted or empty, only pending and billed
+   * FeeBatches are returned. Canceled FeeBatches are returned only when explicitly
+   * requested.
    */
   list(
     params?: V2.Core.FeeBatchListParams,
@@ -157,13 +160,19 @@ export namespace FeeBatch {
     type: CollectionRecord.Type;
   }
 
-  export type Status = 'billed' | 'pending' | OtherString;
+  export type Status = 'billed' | 'canceled' | 'pending' | OtherString;
 
   export interface StatusTransitions {
     /**
      * Timestamp of when the batch transitioned to BILLED, if applicable.
      */
     billed_at?: string;
+
+    /**
+     * Present only when `status=canceled`;
+     * `billed_at` and `canceled_at` are mutually exclusive.
+     */
+    canceled_at?: string;
   }
 
   export interface Tax {
@@ -290,6 +299,17 @@ export namespace V2 {
        * Maximum number of results to return per page. Defaults to 20.
        */
       limit?: number;
+
+      /**
+       * Filters FeeBatches by status. Multiple values use OR semantics. When omitted or
+       * empty, returns `pending` and `billed` FeeBatches. To return canceled FeeBatches,
+       * include `canceled`.
+       */
+      statuses?: Array<FeeBatchListParams.Status>;
+    }
+
+    export namespace FeeBatchListParams {
+      export type Status = 'billed' | 'canceled' | 'pending' | OtherString;
     }
   }
 }

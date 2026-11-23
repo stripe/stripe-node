@@ -1749,6 +1749,27 @@ export class AccountResource extends StripeResource {
                                         },
                                       },
                                     },
+                                    chf: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
                                     czk: {
                                       kind: 'object',
                                       fields: {
@@ -1792,6 +1813,69 @@ export class AccountResource extends StripeResource {
                                       },
                                     },
                                     gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    hkd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    huf: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    jpy: {
                                       kind: 'object',
                                       fields: {
                                         protections: {
@@ -1875,6 +1959,27 @@ export class AccountResource extends StripeResource {
                                         },
                                       },
                                     },
+                                    ron: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
                                     sek: {
                                       kind: 'object',
                                       fields: {
@@ -1918,6 +2023,27 @@ export class AccountResource extends StripeResource {
                                       },
                                     },
                                     usdc: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    zar: {
                                       kind: 'object',
                                       fields: {
                                         protections: {
@@ -1985,6 +2111,27 @@ export class AccountResource extends StripeResource {
                                         },
                                       },
                                     },
+                                    chf: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
                                     czk: {
                                       kind: 'object',
                                       fields: {
@@ -2028,6 +2175,69 @@ export class AccountResource extends StripeResource {
                                       },
                                     },
                                     gbp: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    hkd: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    huf: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    jpy: {
                                       kind: 'object',
                                       fields: {
                                         protections: {
@@ -2111,6 +2321,27 @@ export class AccountResource extends StripeResource {
                                         },
                                       },
                                     },
+                                    ron: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
                                     sek: {
                                       kind: 'object',
                                       fields: {
@@ -2154,6 +2385,27 @@ export class AccountResource extends StripeResource {
                                       },
                                     },
                                     usdc: {
+                                      kind: 'object',
+                                      fields: {
+                                        protections: {
+                                          kind: 'object',
+                                          fields: {
+                                            psp_migration: {
+                                              kind: 'object',
+                                              fields: {
+                                                expires_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                                requested_at: {
+                                                  kind: 'int64_string',
+                                                },
+                                              },
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                    zar: {
                                       kind: 'object',
                                       fields: {
                                         protections: {
@@ -5420,6 +5672,23 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                               },
+                              chf: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
                               czk: {
                                 kind: 'object',
                                 fields: {
@@ -5455,6 +5724,57 @@ export class AccountResource extends StripeResource {
                                 },
                               },
                               gbp: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                              hkd: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                              huf: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                              jpy: {
                                 kind: 'object',
                                 fields: {
                                   protections: {
@@ -5522,6 +5842,23 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                               },
+                              ron: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
                               sek: {
                                 kind: 'object',
                                 fields: {
@@ -5557,6 +5894,23 @@ export class AccountResource extends StripeResource {
                                 },
                               },
                               usdc: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                              zar: {
                                 kind: 'object',
                                 fields: {
                                   protections: {
@@ -5612,6 +5966,23 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                               },
+                              chf: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
                               czk: {
                                 kind: 'object',
                                 fields: {
@@ -5647,6 +6018,57 @@ export class AccountResource extends StripeResource {
                                 },
                               },
                               gbp: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                              hkd: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                              huf: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                              jpy: {
                                 kind: 'object',
                                 fields: {
                                   protections: {
@@ -5714,6 +6136,23 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                               },
+                              ron: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
                               sek: {
                                 kind: 'object',
                                 fields: {
@@ -5749,6 +6188,23 @@ export class AccountResource extends StripeResource {
                                 },
                               },
                               usdc: {
+                                kind: 'object',
+                                fields: {
+                                  protections: {
+                                    kind: 'object',
+                                    fields: {
+                                      psp_migration: {
+                                        kind: 'object',
+                                        fields: {
+                                          expires_at: {kind: 'int64_string'},
+                                          requested_at: {kind: 'int64_string'},
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                              zar: {
                                 kind: 'object',
                                 fields: {
                                   protections: {
@@ -8967,6 +9423,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                chf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 czk: {
                                   kind: 'object',
                                   fields: {
@@ -9006,6 +9481,63 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 gbp: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                hkd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                huf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                jpy: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -9081,6 +9613,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                ron: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 sek: {
                                   kind: 'object',
                                   fields: {
@@ -9120,6 +9671,25 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                zar: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -9181,6 +9751,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                chf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 czk: {
                                   kind: 'object',
                                   fields: {
@@ -9220,6 +9809,63 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 gbp: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                hkd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                huf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                jpy: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -9295,6 +9941,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                ron: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 sek: {
                                   kind: 'object',
                                   fields: {
@@ -9334,6 +9999,25 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                zar: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -12582,6 +13266,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                chf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 czk: {
                                   kind: 'object',
                                   fields: {
@@ -12621,6 +13324,63 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 gbp: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                hkd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                huf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                jpy: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -12696,6 +13456,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                ron: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 sek: {
                                   kind: 'object',
                                   fields: {
@@ -12735,6 +13514,25 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                zar: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -12796,6 +13594,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                chf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 czk: {
                                   kind: 'object',
                                   fields: {
@@ -12835,6 +13652,63 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 gbp: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                hkd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                huf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                jpy: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -12910,6 +13784,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                ron: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 sek: {
                                   kind: 'object',
                                   fields: {
@@ -12949,6 +13842,25 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                zar: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -16178,6 +17090,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                chf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 czk: {
                                   kind: 'object',
                                   fields: {
@@ -16217,6 +17148,63 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 gbp: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                hkd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                huf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                jpy: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -16292,6 +17280,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                ron: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 sek: {
                                   kind: 'object',
                                   fields: {
@@ -16331,6 +17338,25 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                zar: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -16392,6 +17418,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                chf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 czk: {
                                   kind: 'object',
                                   fields: {
@@ -16431,6 +17476,63 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 gbp: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                hkd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                huf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                jpy: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -16506,6 +17608,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                ron: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 sek: {
                                   kind: 'object',
                                   fields: {
@@ -16545,6 +17666,25 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                zar: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -19774,6 +20914,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                chf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 czk: {
                                   kind: 'object',
                                   fields: {
@@ -19813,6 +20972,63 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 gbp: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                hkd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                huf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                jpy: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -19888,6 +21104,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                ron: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 sek: {
                                   kind: 'object',
                                   fields: {
@@ -19927,6 +21162,25 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                zar: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -19988,6 +21242,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                chf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 czk: {
                                   kind: 'object',
                                   fields: {
@@ -20027,6 +21300,63 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 gbp: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                hkd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                huf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                jpy: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -20102,6 +21432,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                ron: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 sek: {
                                   kind: 'object',
                                   fields: {
@@ -20141,6 +21490,25 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                zar: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -23370,6 +24738,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                chf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 czk: {
                                   kind: 'object',
                                   fields: {
@@ -23409,6 +24796,63 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 gbp: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                hkd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                huf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                jpy: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -23484,6 +24928,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                ron: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 sek: {
                                   kind: 'object',
                                   fields: {
@@ -23523,6 +24986,25 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                zar: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -23584,6 +25066,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                chf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 czk: {
                                   kind: 'object',
                                   fields: {
@@ -23623,6 +25124,63 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 gbp: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                hkd: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                huf: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                jpy: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -23698,6 +25256,25 @@ export class AccountResource extends StripeResource {
                                     },
                                   },
                                 },
+                                ron: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
                                 sek: {
                                   kind: 'object',
                                   fields: {
@@ -23737,6 +25314,25 @@ export class AccountResource extends StripeResource {
                                   },
                                 },
                                 usdc: {
+                                  kind: 'object',
+                                  fields: {
+                                    protections: {
+                                      kind: 'object',
+                                      fields: {
+                                        psp_migration: {
+                                          kind: 'object',
+                                          fields: {
+                                            expires_at: {kind: 'int64_string'},
+                                            requested_at: {
+                                              kind: 'int64_string',
+                                            },
+                                          },
+                                        },
+                                      },
+                                    },
+                                  },
+                                },
+                                zar: {
                                   kind: 'object',
                                   fields: {
                                     protections: {
@@ -35256,6 +36852,11 @@ export namespace Account {
             cad?: Inbound.Cad;
 
             /**
+             * Can receive business storage-type funds on Stripe in CHF.
+             */
+            chf?: Inbound.Chf;
+
+            /**
              * Can receive business storage-type funds on Stripe in CZK.
              */
             czk?: Inbound.Czk;
@@ -35269,6 +36870,21 @@ export namespace Account {
              * Can receive business storage-type funds on Stripe in GBP.
              */
             gbp?: Inbound.Gbp;
+
+            /**
+             * Can receive business storage-type funds on Stripe in HKD.
+             */
+            hkd?: Inbound.Hkd;
+
+            /**
+             * Can receive business storage-type funds on Stripe in HUF.
+             */
+            huf?: Inbound.Huf;
+
+            /**
+             * Can receive business storage-type funds on Stripe in JPY.
+             */
+            jpy?: Inbound.Jpy;
 
             /**
              * Can receive business storage-type funds on Stripe in NOK.
@@ -35286,6 +36902,11 @@ export namespace Account {
             pln?: Inbound.Pln;
 
             /**
+             * Can receive business storage-type funds on Stripe in RON.
+             */
+            ron?: Inbound.Ron;
+
+            /**
              * Can receive business storage-type funds on Stripe in SEK.
              */
             sek?: Inbound.Sek;
@@ -35299,6 +36920,11 @@ export namespace Account {
              * Can receive business storage-type funds on Stripe in USDC.
              */
             usdc?: Inbound.Usdc;
+
+            /**
+             * Can receive business storage-type funds on Stripe in ZAR.
+             */
+            zar?: Inbound.Zar;
           }
 
           export interface Outbound {
@@ -35311,6 +36937,11 @@ export namespace Account {
              * Can send business storage-type funds on Stripe in CAD.
              */
             cad?: Outbound.Cad;
+
+            /**
+             * Can send business storage-type funds on Stripe in CHF.
+             */
+            chf?: Outbound.Chf;
 
             /**
              * Can send business storage-type funds on Stripe in CZK.
@@ -35328,6 +36959,21 @@ export namespace Account {
             gbp?: Outbound.Gbp;
 
             /**
+             * Can send business storage-type funds on Stripe in HKD.
+             */
+            hkd?: Outbound.Hkd;
+
+            /**
+             * Can send business storage-type funds on Stripe in HUF.
+             */
+            huf?: Outbound.Huf;
+
+            /**
+             * Can send business storage-type funds on Stripe in JPY.
+             */
+            jpy?: Outbound.Jpy;
+
+            /**
              * Can send business storage-type funds on Stripe in NOK.
              */
             nok?: Outbound.Nok;
@@ -35343,6 +36989,11 @@ export namespace Account {
             pln?: Outbound.Pln;
 
             /**
+             * Can send business storage-type funds on Stripe in RON.
+             */
+            ron?: Outbound.Ron;
+
+            /**
              * Can send business storage-type funds on Stripe in SEK.
              */
             sek?: Outbound.Sek;
@@ -35356,6 +37007,11 @@ export namespace Account {
              * Can send business storage-type funds on Stripe in USDC.
              */
             usdc?: Outbound.Usdc;
+
+            /**
+             * Can send business storage-type funds on Stripe in ZAR.
+             */
+            zar?: Outbound.Zar;
           }
 
           export namespace Inbound {
@@ -35391,6 +37047,23 @@ export namespace Account {
                * Additional details about the capability's status. This value is empty when `status` is `active`.
                */
               status_details: Array<Cad.StatusDetail>;
+            }
+
+            export interface Chf {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Chf.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Chf.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Chf.StatusDetail>;
             }
 
             export interface Czk {
@@ -35444,6 +37117,57 @@ export namespace Account {
               status_details: Array<Gbp.StatusDetail>;
             }
 
+            export interface Hkd {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Hkd.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Hkd.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Hkd.StatusDetail>;
+            }
+
+            export interface Huf {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Huf.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Huf.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Huf.StatusDetail>;
+            }
+
+            export interface Jpy {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Jpy.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Jpy.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Jpy.StatusDetail>;
+            }
+
             export interface Nok {
               /**
                * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
@@ -35495,6 +37219,23 @@ export namespace Account {
               status_details: Array<Pln.StatusDetail>;
             }
 
+            export interface Ron {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Ron.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Ron.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Ron.StatusDetail>;
+            }
+
             export interface Sek {
               /**
                * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
@@ -35544,6 +37285,23 @@ export namespace Account {
                * Additional details about the capability's status. This value is empty when `status` is `active`.
                */
               status_details: Array<Usdc.StatusDetail>;
+            }
+
+            export interface Zar {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Zar.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Zar.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Zar.StatusDetail>;
             }
 
             export namespace Aud {
@@ -35626,6 +37384,85 @@ export namespace Account {
             }
 
             export namespace Cad {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Chf {
               export interface Protections {
                 /**
                  * Protection details for PSP migration.
@@ -35941,6 +37778,243 @@ export namespace Account {
               }
             }
 
+            export namespace Hkd {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Huf {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Jpy {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
             export namespace Nok {
               export interface Protections {
                 /**
@@ -36178,6 +38252,85 @@ export namespace Account {
               }
             }
 
+            export namespace Ron {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
             export namespace Sek {
               export interface Protections {
                 /**
@@ -36337,6 +38490,85 @@ export namespace Account {
             }
 
             export namespace Usdc {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Zar {
               export interface Protections {
                 /**
                  * Protection details for PSP migration.
@@ -36451,6 +38683,23 @@ export namespace Account {
               status_details: Array<Cad.StatusDetail>;
             }
 
+            export interface Chf {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Chf.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Chf.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Chf.StatusDetail>;
+            }
+
             export interface Czk {
               /**
                * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
@@ -36500,6 +38749,57 @@ export namespace Account {
                * Additional details about the capability's status. This value is empty when `status` is `active`.
                */
               status_details: Array<Gbp.StatusDetail>;
+            }
+
+            export interface Hkd {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Hkd.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Hkd.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Hkd.StatusDetail>;
+            }
+
+            export interface Huf {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Huf.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Huf.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Huf.StatusDetail>;
+            }
+
+            export interface Jpy {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Jpy.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Jpy.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Jpy.StatusDetail>;
             }
 
             export interface Nok {
@@ -36553,6 +38853,23 @@ export namespace Account {
               status_details: Array<Pln.StatusDetail>;
             }
 
+            export interface Ron {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Ron.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Ron.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Ron.StatusDetail>;
+            }
+
             export interface Sek {
               /**
                * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
@@ -36602,6 +38919,23 @@ export namespace Account {
                * Additional details about the capability's status. This value is empty when `status` is `active`.
                */
               status_details: Array<Usdc.StatusDetail>;
+            }
+
+            export interface Zar {
+              /**
+               * Protections applied to this capability, keyed by protection type (e.g. "psp_migration").
+               */
+              protections: Zar.Protections;
+
+              /**
+               * The status of the Capability.
+               */
+              status: Zar.Status;
+
+              /**
+               * Additional details about the capability's status. This value is empty when `status` is `active`.
+               */
+              status_details: Array<Zar.StatusDetail>;
             }
 
             export namespace Aud {
@@ -36684,6 +39018,85 @@ export namespace Account {
             }
 
             export namespace Cad {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Chf {
               export interface Protections {
                 /**
                  * Protection details for PSP migration.
@@ -36999,6 +39412,243 @@ export namespace Account {
               }
             }
 
+            export namespace Hkd {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Huf {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Jpy {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
             export namespace Nok {
               export interface Protections {
                 /**
@@ -37236,6 +39886,85 @@ export namespace Account {
               }
             }
 
+            export namespace Ron {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
             export namespace Sek {
               export interface Protections {
                 /**
@@ -37395,6 +40124,85 @@ export namespace Account {
             }
 
             export namespace Usdc {
+              export interface Protections {
+                /**
+                 * Protection details for PSP migration.
+                 */
+                psp_migration: Protections.PspMigration;
+              }
+
+              export type Status =
+                | 'active'
+                | 'pending'
+                | 'rejected'
+                | 'restricted'
+                | 'unsupported';
+
+              export interface StatusDetail {
+                /**
+                 * Machine-readable code explaining the reason for the Capability to be in its current status.
+                 */
+                code: StatusDetail.Code;
+
+                /**
+                 * Machine-readable code explaining how to make the Capability active.
+                 */
+                resolution: StatusDetail.Resolution;
+              }
+
+              export namespace Protections {
+                export interface PspMigration {
+                  /**
+                   * The time until which the protection will expire, as a Unix timestamp.
+                   */
+                  expires_at?: bigint;
+
+                  /**
+                   * The time at which the protection was requested, as a Unix timestamp.
+                   */
+                  requested_at: bigint;
+
+                  /**
+                   * The current status of the protection.
+                   */
+                  status: PspMigration.Status;
+                }
+
+                export namespace PspMigration {
+                  export type Status =
+                    | 'active'
+                    | 'disrupted'
+                    | 'expired'
+                    | 'inactive';
+                }
+              }
+
+              export namespace StatusDetail {
+                export type Code =
+                  | 'determining_status'
+                  | 'rejected_fraud'
+                  | 'rejected_incomplete_verification'
+                  | 'rejected_listed'
+                  | 'rejected_other'
+                  | 'rejected_platform_fraud'
+                  | 'rejected_platform_other'
+                  | 'rejected_platform_terms_of_service'
+                  | 'rejected_terms_of_service'
+                  | 'requirements_past_due'
+                  | 'requirements_pending_verification'
+                  | 'restricted_other'
+                  | 'unsupported_business'
+                  | 'unsupported_country'
+                  | 'unsupported_entity_type';
+
+                export type Resolution =
+                  | 'contact_stripe'
+                  | 'no_resolution'
+                  | 'provide_info';
+              }
+            }
+
+            export namespace Zar {
               export interface Protections {
                 /**
                  * Protection details for PSP migration.
@@ -45236,6 +48044,11 @@ export namespace Account {
 
       export interface Impact {
         /**
+         * Details about funds reserved if the requirement is not collected or satisfactory to Stripe.
+         */
+        reserves_funds?: Array<Impact.ReservesFund>;
+
+        /**
          * The Capabilities that will be restricted if the requirement is not collected and satisfactory to Stripe.
          */
         restricts_capabilities?: Array<Impact.RestrictsCapability>;
@@ -45377,6 +48190,23 @@ export namespace Account {
       }
 
       export namespace Impact {
+        export interface ReservesFund {
+          /**
+           * Details about when funds will be reserved.
+           */
+          deadline: ReservesFund.Deadline;
+
+          /**
+           * The balance destination for funds reserved as a result of this requirement.
+           */
+          destination: ReservesFund.Destination;
+
+          /**
+           * The v1 ReservePlan created as a result of this requirement. Null until the plan is available. Not expandable.
+           */
+          reserve_plan?: string;
+        }
+
         export interface RestrictsCapability {
           /**
            * The name of the Capability which will be restricted.
@@ -45392,6 +48222,27 @@ export namespace Account {
            * Details about when in the account lifecycle the requirement must be collected by the avoid the Capability restriction.
            */
           deadline: RestrictsCapability.Deadline;
+        }
+
+        export namespace ReservesFund {
+          export interface Deadline {
+            /**
+             * The current status of the requirement's impact.
+             */
+            status: Deadline.Status;
+          }
+
+          export type Destination =
+            | 'other'
+            | 'risk_reserved'
+            | 'settlement_reserved';
+
+          export namespace Deadline {
+            export type Status =
+              | 'currently_due'
+              | 'eventually_due'
+              | 'past_due';
+          }
         }
 
         export namespace RestrictsCapability {
@@ -45916,6 +48767,11 @@ export namespace Account {
          * Details on the Account's acceptance of Treasury-specific terms of service.
          */
         money_manager?: TermsOfService.MoneyManager;
+
+        /**
+         * Details on the Account's acceptance of self-custodial wallet terms of service. Absent when neither acceptance is recorded.
+         */
+        self_custodial_wallet?: TermsOfService.SelfCustodialWallet;
       }
 
       export namespace PersonsProvided {
@@ -46037,6 +48893,18 @@ export namespace Account {
            * The user agent of the browser from which the Account's representative accepted the terms of service.
            */
           user_agent?: string;
+        }
+
+        export interface SelfCustodialWallet {
+          /**
+           * Details on the Account's acceptance of the Privy End User Terms.
+           */
+          account?: SelfCustodialWallet.Account;
+
+          /**
+           * Details on the Account's acceptance of the platform's self-custodial wallet terms of service.
+           */
+          platform?: SelfCustodialWallet.Platform;
         }
 
         export namespace CardCreator {
@@ -47198,6 +50066,42 @@ export namespace Account {
                 }
               }
             }
+          }
+        }
+
+        export namespace SelfCustodialWallet {
+          export interface Account {
+            /**
+             * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+             */
+            date?: string;
+
+            /**
+             * The IP address from which the Account's representative accepted the terms of service.
+             */
+            ip?: string;
+
+            /**
+             * The user agent of the browser from which the Account's representative accepted the terms of service.
+             */
+            user_agent?: string;
+          }
+
+          export interface Platform {
+            /**
+             * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+             */
+            date?: string;
+
+            /**
+             * The IP address from which the Account's representative accepted the terms of service.
+             */
+            ip?: string;
+
+            /**
+             * The user agent of the browser from which the Account's representative accepted the terms of service.
+             */
+            user_agent?: string;
           }
         }
       }
@@ -48788,6 +51692,11 @@ export namespace Account {
 
       export interface Impact {
         /**
+         * Details about funds reserved if the requirement is not collected or satisfactory to Stripe.
+         */
+        reserves_funds?: Array<Impact.ReservesFund>;
+
+        /**
          * The Capabilities that will be restricted if the requirement is not collected and satisfactory to Stripe.
          */
         restricts_capabilities?: Array<Impact.RestrictsCapability>;
@@ -48929,6 +51838,23 @@ export namespace Account {
       }
 
       export namespace Impact {
+        export interface ReservesFund {
+          /**
+           * Details about when funds will be reserved.
+           */
+          deadline: ReservesFund.Deadline;
+
+          /**
+           * The balance destination for funds reserved as a result of this requirement.
+           */
+          destination: ReservesFund.Destination;
+
+          /**
+           * The v1 ReservePlan created as a result of this requirement. Null until the plan is available. Not expandable.
+           */
+          reserve_plan?: string;
+        }
+
         export interface RestrictsCapability {
           /**
            * The name of the Capability which will be restricted.
@@ -48944,6 +51870,27 @@ export namespace Account {
            * Details about when in the account lifecycle the requirement must be collected by the avoid the Capability restriction.
            */
           deadline: RestrictsCapability.Deadline;
+        }
+
+        export namespace ReservesFund {
+          export interface Deadline {
+            /**
+             * The current status of the requirement's impact.
+             */
+            status: Deadline.Status;
+          }
+
+          export type Destination =
+            | 'other'
+            | 'risk_reserved'
+            | 'settlement_reserved';
+
+          export namespace Deadline {
+            export type Status =
+              | 'currently_due'
+              | 'eventually_due'
+              | 'past_due';
+          }
         }
 
         export namespace RestrictsCapability {
@@ -53289,6 +56236,11 @@ export namespace V2 {
                 cad?: Inbound.Cad;
 
                 /**
+                 * Can receive business storage-type funds on Stripe in CHF.
+                 */
+                chf?: Inbound.Chf;
+
+                /**
                  * Can receive business storage-type funds on Stripe in CZK.
                  */
                 czk?: Inbound.Czk;
@@ -53302,6 +56254,21 @@ export namespace V2 {
                  * Can receive business storage-type funds on Stripe in GBP.
                  */
                 gbp?: Inbound.Gbp;
+
+                /**
+                 * Can receive business storage-type funds on Stripe in HKD.
+                 */
+                hkd?: Inbound.Hkd;
+
+                /**
+                 * Can receive business storage-type funds on Stripe in HUF.
+                 */
+                huf?: Inbound.Huf;
+
+                /**
+                 * Can receive business storage-type funds on Stripe in JPY.
+                 */
+                jpy?: Inbound.Jpy;
 
                 /**
                  * Can receive business storage-type funds on Stripe in NOK.
@@ -53319,6 +56286,11 @@ export namespace V2 {
                 pln?: Inbound.Pln;
 
                 /**
+                 * Can receive business storage-type funds on Stripe in RON.
+                 */
+                ron?: Inbound.Ron;
+
+                /**
                  * Can receive business storage-type funds on Stripe in SEK.
                  */
                 sek?: Inbound.Sek;
@@ -53332,6 +56304,11 @@ export namespace V2 {
                  * Can receive business storage-type funds on Stripe in USDC.
                  */
                 usdc?: Inbound.Usdc;
+
+                /**
+                 * Can receive business storage-type funds on Stripe in ZAR.
+                 */
+                zar?: Inbound.Zar;
               }
 
               export interface Outbound {
@@ -53344,6 +56321,11 @@ export namespace V2 {
                  * Can send business storage-type funds on Stripe in CAD.
                  */
                 cad?: Outbound.Cad;
+
+                /**
+                 * Can send business storage-type funds on Stripe in CHF.
+                 */
+                chf?: Outbound.Chf;
 
                 /**
                  * Can send business storage-type funds on Stripe in CZK.
@@ -53361,6 +56343,21 @@ export namespace V2 {
                 gbp?: Outbound.Gbp;
 
                 /**
+                 * Can send business storage-type funds on Stripe in HKD.
+                 */
+                hkd?: Outbound.Hkd;
+
+                /**
+                 * Can send business storage-type funds on Stripe in HUF.
+                 */
+                huf?: Outbound.Huf;
+
+                /**
+                 * Can send business storage-type funds on Stripe in JPY.
+                 */
+                jpy?: Outbound.Jpy;
+
+                /**
                  * Can send business storage-type funds on Stripe in NOK.
                  */
                 nok?: Outbound.Nok;
@@ -53376,6 +56373,11 @@ export namespace V2 {
                 pln?: Outbound.Pln;
 
                 /**
+                 * Can send business storage-type funds on Stripe in RON.
+                 */
+                ron?: Outbound.Ron;
+
+                /**
                  * Can send business storage-type funds on Stripe in SEK.
                  */
                 sek?: Outbound.Sek;
@@ -53389,6 +56391,11 @@ export namespace V2 {
                  * Can send business storage-type funds on Stripe in USDC.
                  */
                 usdc?: Outbound.Usdc;
+
+                /**
+                 * Can send business storage-type funds on Stripe in ZAR.
+                 */
+                zar?: Outbound.Zar;
               }
 
               export namespace Inbound {
@@ -53409,6 +56416,18 @@ export namespace V2 {
                    * Protection types to request for this capability (e.g. "psp_migration").
                    */
                   protections?: Cad.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export interface Chf {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Chf.Protections;
 
                   /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -53452,6 +56471,42 @@ export namespace V2 {
                   requested: boolean;
                 }
 
+                export interface Hkd {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Hkd.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export interface Huf {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Huf.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export interface Jpy {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Jpy.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
                 export interface Nok {
                   /**
                    * Protection types to request for this capability (e.g. "psp_migration").
@@ -53481,6 +56536,18 @@ export namespace V2 {
                    * Protection types to request for this capability (e.g. "psp_migration").
                    */
                   protections?: Pln.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export interface Ron {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Ron.Protections;
 
                   /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -53524,6 +56591,18 @@ export namespace V2 {
                   requested: boolean;
                 }
 
+                export interface Zar {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Zar.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
                 export namespace Aud {
                   export interface Protections {
                     /**
@@ -53543,6 +56622,24 @@ export namespace V2 {
                 }
 
                 export namespace Cad {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Chf {
                   export interface Protections {
                     /**
                      * Parameter to request psp_migration protection.
@@ -53614,6 +56711,60 @@ export namespace V2 {
                   }
                 }
 
+                export namespace Hkd {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Huf {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Jpy {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
                 export namespace Nok {
                   export interface Protections {
                     /**
@@ -53668,6 +56819,24 @@ export namespace V2 {
                   }
                 }
 
+                export namespace Ron {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
                 export namespace Sek {
                   export interface Protections {
                     /**
@@ -53705,6 +56874,24 @@ export namespace V2 {
                 }
 
                 export namespace Usdc {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Zar {
                   export interface Protections {
                     /**
                      * Parameter to request psp_migration protection.
@@ -53748,6 +56935,18 @@ export namespace V2 {
                   requested: boolean;
                 }
 
+                export interface Chf {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Chf.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
                 export interface Czk {
                   /**
                    * Protection types to request for this capability (e.g. "psp_migration").
@@ -53777,6 +56976,42 @@ export namespace V2 {
                    * Protection types to request for this capability (e.g. "psp_migration").
                    */
                   protections?: Gbp.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export interface Hkd {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Hkd.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export interface Huf {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Huf.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
+                export interface Jpy {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Jpy.Protections;
 
                   /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -53820,6 +57055,18 @@ export namespace V2 {
                   requested: boolean;
                 }
 
+                export interface Ron {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Ron.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
                 export interface Sek {
                   /**
                    * Protection types to request for this capability (e.g. "psp_migration").
@@ -53856,6 +57103,18 @@ export namespace V2 {
                   requested: boolean;
                 }
 
+                export interface Zar {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Zar.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested: boolean;
+                }
+
                 export namespace Aud {
                   export interface Protections {
                     /**
@@ -53875,6 +57134,24 @@ export namespace V2 {
                 }
 
                 export namespace Cad {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Chf {
                   export interface Protections {
                     /**
                      * Parameter to request psp_migration protection.
@@ -53946,6 +57223,60 @@ export namespace V2 {
                   }
                 }
 
+                export namespace Hkd {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Huf {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Jpy {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
                 export namespace Nok {
                   export interface Protections {
                     /**
@@ -54000,6 +57331,24 @@ export namespace V2 {
                   }
                 }
 
+                export namespace Ron {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
                 export namespace Sek {
                   export interface Protections {
                     /**
@@ -54037,6 +57386,24 @@ export namespace V2 {
                 }
 
                 export namespace Usdc {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Zar {
                   export interface Protections {
                     /**
                      * Parameter to request psp_migration protection.
@@ -57041,6 +60408,11 @@ export namespace V2 {
              * Details on the Account's acceptance of Treasury-specific terms of service.
              */
             money_manager?: TermsOfService.MoneyManager;
+
+            /**
+             * Details on the Account's acceptance of self-custodial wallet terms of service.
+             */
+            self_custodial_wallet?: TermsOfService.SelfCustodialWallet;
           }
 
           export namespace PersonsProvided {
@@ -57162,6 +60534,18 @@ export namespace V2 {
                * The user agent of the browser from which the Account's representative accepted the terms of service.
                */
               user_agent?: string;
+            }
+
+            export interface SelfCustodialWallet {
+              /**
+               * Details on the Account's acceptance of the Privy End User Terms.
+               */
+              account?: SelfCustodialWallet.Account;
+
+              /**
+               * Details on the Account's acceptance of the platform's self-custodial wallet terms of service.
+               */
+              platform?: SelfCustodialWallet.Platform;
             }
 
             export namespace CardCreator {
@@ -58169,6 +61553,42 @@ export namespace V2 {
                     }
                   }
                 }
+              }
+            }
+
+            export namespace SelfCustodialWallet {
+              export interface Account {
+                /**
+                 * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                 */
+                date: string;
+
+                /**
+                 * The IP address from which the Account's representative accepted the terms of service.
+                 */
+                ip: string;
+
+                /**
+                 * The user agent of the browser from which the Account's representative accepted the terms of service.
+                 */
+                user_agent?: string;
+              }
+
+              export interface Platform {
+                /**
+                 * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                 */
+                date: string;
+
+                /**
+                 * The IP address from which the Account's representative accepted the terms of service.
+                 */
+                ip: string;
+
+                /**
+                 * The user agent of the browser from which the Account's representative accepted the terms of service.
+                 */
+                user_agent?: string;
               }
             }
           }
@@ -63639,6 +67059,11 @@ export namespace V2 {
                 cad?: Inbound.Cad;
 
                 /**
+                 * Can receive business storage-type funds on Stripe in CHF.
+                 */
+                chf?: Inbound.Chf;
+
+                /**
                  * Can receive business storage-type funds on Stripe in CZK.
                  */
                 czk?: Inbound.Czk;
@@ -63652,6 +67077,21 @@ export namespace V2 {
                  * Can receive business storage-type funds on Stripe in GBP.
                  */
                 gbp?: Inbound.Gbp;
+
+                /**
+                 * Can receive business storage-type funds on Stripe in HKD.
+                 */
+                hkd?: Inbound.Hkd;
+
+                /**
+                 * Can receive business storage-type funds on Stripe in HUF.
+                 */
+                huf?: Inbound.Huf;
+
+                /**
+                 * Can receive business storage-type funds on Stripe in JPY.
+                 */
+                jpy?: Inbound.Jpy;
 
                 /**
                  * Can receive business storage-type funds on Stripe in NOK.
@@ -63669,6 +67109,11 @@ export namespace V2 {
                 pln?: Inbound.Pln;
 
                 /**
+                 * Can receive business storage-type funds on Stripe in RON.
+                 */
+                ron?: Inbound.Ron;
+
+                /**
                  * Can receive business storage-type funds on Stripe in SEK.
                  */
                 sek?: Inbound.Sek;
@@ -63682,6 +67127,11 @@ export namespace V2 {
                  * Can receive business storage-type funds on Stripe in USDC.
                  */
                 usdc?: Inbound.Usdc;
+
+                /**
+                 * Can receive business storage-type funds on Stripe in ZAR.
+                 */
+                zar?: Inbound.Zar;
               }
 
               export interface Outbound {
@@ -63694,6 +67144,11 @@ export namespace V2 {
                  * Can send business storage-type funds on Stripe in CAD.
                  */
                 cad?: Outbound.Cad;
+
+                /**
+                 * Can send business storage-type funds on Stripe in CHF.
+                 */
+                chf?: Outbound.Chf;
 
                 /**
                  * Can send business storage-type funds on Stripe in CZK.
@@ -63711,6 +67166,21 @@ export namespace V2 {
                 gbp?: Outbound.Gbp;
 
                 /**
+                 * Can send business storage-type funds on Stripe in HKD.
+                 */
+                hkd?: Outbound.Hkd;
+
+                /**
+                 * Can send business storage-type funds on Stripe in HUF.
+                 */
+                huf?: Outbound.Huf;
+
+                /**
+                 * Can send business storage-type funds on Stripe in JPY.
+                 */
+                jpy?: Outbound.Jpy;
+
+                /**
                  * Can send business storage-type funds on Stripe in NOK.
                  */
                 nok?: Outbound.Nok;
@@ -63726,6 +67196,11 @@ export namespace V2 {
                 pln?: Outbound.Pln;
 
                 /**
+                 * Can send business storage-type funds on Stripe in RON.
+                 */
+                ron?: Outbound.Ron;
+
+                /**
                  * Can send business storage-type funds on Stripe in SEK.
                  */
                 sek?: Outbound.Sek;
@@ -63739,6 +67214,11 @@ export namespace V2 {
                  * Can send business storage-type funds on Stripe in USDC.
                  */
                 usdc?: Outbound.Usdc;
+
+                /**
+                 * Can send business storage-type funds on Stripe in ZAR.
+                 */
+                zar?: Outbound.Zar;
               }
 
               export namespace Inbound {
@@ -63759,6 +67239,18 @@ export namespace V2 {
                    * Protection types to request for this capability (e.g. "psp_migration").
                    */
                   protections?: Cad.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export interface Chf {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Chf.Protections;
 
                   /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -63802,6 +67294,42 @@ export namespace V2 {
                   requested?: boolean;
                 }
 
+                export interface Hkd {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Hkd.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export interface Huf {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Huf.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export interface Jpy {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Jpy.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
                 export interface Nok {
                   /**
                    * Protection types to request for this capability (e.g. "psp_migration").
@@ -63831,6 +67359,18 @@ export namespace V2 {
                    * Protection types to request for this capability (e.g. "psp_migration").
                    */
                   protections?: Pln.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export interface Ron {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Ron.Protections;
 
                   /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -63874,6 +67414,18 @@ export namespace V2 {
                   requested?: boolean;
                 }
 
+                export interface Zar {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Zar.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
                 export namespace Aud {
                   export interface Protections {
                     /**
@@ -63893,6 +67445,24 @@ export namespace V2 {
                 }
 
                 export namespace Cad {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Chf {
                   export interface Protections {
                     /**
                      * Parameter to request psp_migration protection.
@@ -63964,6 +67534,60 @@ export namespace V2 {
                   }
                 }
 
+                export namespace Hkd {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Huf {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Jpy {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
                 export namespace Nok {
                   export interface Protections {
                     /**
@@ -64018,6 +67642,24 @@ export namespace V2 {
                   }
                 }
 
+                export namespace Ron {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
                 export namespace Sek {
                   export interface Protections {
                     /**
@@ -64055,6 +67697,24 @@ export namespace V2 {
                 }
 
                 export namespace Usdc {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Zar {
                   export interface Protections {
                     /**
                      * Parameter to request psp_migration protection.
@@ -64098,6 +67758,18 @@ export namespace V2 {
                   requested?: boolean;
                 }
 
+                export interface Chf {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Chf.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
                 export interface Czk {
                   /**
                    * Protection types to request for this capability (e.g. "psp_migration").
@@ -64127,6 +67799,42 @@ export namespace V2 {
                    * Protection types to request for this capability (e.g. "psp_migration").
                    */
                   protections?: Gbp.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export interface Hkd {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Hkd.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export interface Huf {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Huf.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
+                export interface Jpy {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Jpy.Protections;
 
                   /**
                    * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
@@ -64170,6 +67878,18 @@ export namespace V2 {
                   requested?: boolean;
                 }
 
+                export interface Ron {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Ron.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
                 export interface Sek {
                   /**
                    * Protection types to request for this capability (e.g. "psp_migration").
@@ -64206,6 +67926,18 @@ export namespace V2 {
                   requested?: boolean;
                 }
 
+                export interface Zar {
+                  /**
+                   * Protection types to request for this capability (e.g. "psp_migration").
+                   */
+                  protections?: Zar.Protections;
+
+                  /**
+                   * To request a new Capability for an account, pass true. There can be a delay before the requested Capability becomes active.
+                   */
+                  requested?: boolean;
+                }
+
                 export namespace Aud {
                   export interface Protections {
                     /**
@@ -64225,6 +67957,24 @@ export namespace V2 {
                 }
 
                 export namespace Cad {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Chf {
                   export interface Protections {
                     /**
                      * Parameter to request psp_migration protection.
@@ -64296,6 +68046,60 @@ export namespace V2 {
                   }
                 }
 
+                export namespace Hkd {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Huf {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Jpy {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
                 export namespace Nok {
                   export interface Protections {
                     /**
@@ -64350,6 +68154,24 @@ export namespace V2 {
                   }
                 }
 
+                export namespace Ron {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
                 export namespace Sek {
                   export interface Protections {
                     /**
@@ -64387,6 +68209,24 @@ export namespace V2 {
                 }
 
                 export namespace Usdc {
+                  export interface Protections {
+                    /**
+                     * Parameter to request psp_migration protection.
+                     */
+                    psp_migration: Protections.PspMigration;
+                  }
+
+                  export namespace Protections {
+                    export interface PspMigration {
+                      /**
+                       * To request a protection, pass true.
+                       */
+                      requested: boolean;
+                    }
+                  }
+                }
+
+                export namespace Zar {
                   export interface Protections {
                     /**
                      * Parameter to request psp_migration protection.
@@ -67252,7 +71092,10 @@ export namespace V2 {
           nationalities?: Array<string>;
 
           /**
-           * The individual's phone number.
+           * The individual's phone number. You can include a country calling code prefixed with `+`,
+           * for example `+12025550123`, or omit it, for example `2025550123`. Spaces, hyphens, periods,
+           * and parentheses are optional and accepted. Numbers beginning with `+` are checked against
+           * the numbering rules for their country calling code, including valid prefixes and number lengths.
            */
           phone?: string;
 
@@ -67391,6 +71234,11 @@ export namespace V2 {
              * Details on the Account's acceptance of Treasury-specific terms of service.
              */
             money_manager?: TermsOfService.MoneyManager;
+
+            /**
+             * Partial updates to the Account's self-custodial wallet terms of service acceptances.
+             */
+            self_custodial_wallet?: TermsOfService.SelfCustodialWallet;
           }
 
           export namespace PersonsProvided {
@@ -67512,6 +71360,18 @@ export namespace V2 {
                * The user agent of the browser from which the Account's representative accepted the terms of service.
                */
               user_agent?: string;
+            }
+
+            export interface SelfCustodialWallet {
+              /**
+               * Details on the Account's acceptance of the Privy End User Terms.
+               */
+              account?: SelfCustodialWallet.Account;
+
+              /**
+               * Details on the Account's acceptance of the platform's self-custodial wallet terms of service.
+               */
+              platform?: SelfCustodialWallet.Platform;
             }
 
             export namespace CardCreator {
@@ -68519,6 +72379,42 @@ export namespace V2 {
                     }
                   }
                 }
+              }
+            }
+
+            export namespace SelfCustodialWallet {
+              export interface Account {
+                /**
+                 * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                 */
+                date?: string;
+
+                /**
+                 * The IP address from which the Account's representative accepted the terms of service.
+                 */
+                ip?: string;
+
+                /**
+                 * The user agent of the browser from which the Account's representative accepted the terms of service.
+                 */
+                user_agent?: string;
+              }
+
+              export interface Platform {
+                /**
+                 * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+                 */
+                date?: string;
+
+                /**
+                 * The IP address from which the Account's representative accepted the terms of service.
+                 */
+                ip?: string;
+
+                /**
+                 * The user agent of the browser from which the Account's representative accepted the terms of service.
+                 */
+                user_agent?: string;
               }
             }
           }

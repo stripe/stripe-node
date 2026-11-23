@@ -424,6 +424,11 @@ export namespace Crypto {
     metadata?: MetadataParam;
 
     /**
+     * ID of a card PaymentMethod (pm_...) owned by the authenticated merchant. Only supported for headless sessions. Mutually exclusive with `payment_token`.
+     */
+    payment_method?: string;
+
+    /**
      * Speed at which the cryptocurrency is delivered to the wallet
      * One of:
      *  `instant` (default): crypto is delivered when payment is confirmed

@@ -61,6 +61,12 @@ export namespace TestHelpers {
       | 'tempo'
       | OtherString;
 
-    export type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
+    export type TokenCurrency =
+      | 'ousd'
+      | 'phantom_cash'
+      | 'usdc'
+      | 'usdg'
+      | 'usdp'
+      | OtherString;
   }
 }

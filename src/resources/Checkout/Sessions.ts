@@ -259,6 +259,25 @@ export class SessionResource extends StripeResource {
                     },
                   },
                 },
+                one_time_price: {
+                  kind: 'object',
+                  fields: {
+                    items: {
+                      kind: 'array',
+                      element: {
+                        kind: 'object',
+                        fields: {
+                          price_data: {
+                            kind: 'object',
+                            fields: {
+                              unit_amount_decimal: {kind: 'decimal_string'},
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
                 subscription: {
                   kind: 'object',
                   fields: {
@@ -661,7 +680,7 @@ export class SessionResource extends StripeResource {
   /**
    * Updates a Checkout Session object.
    *
-   * Related guide: [Dynamically update a Checkout Session](https://docs.stripe.com/payments/advanced/dynamic-updates)
+   * Related guide: [Dynamically update a Checkout Session](https://docs.stripe.com/payments/checkout/dynamic-updates)
    */
   update(
     id: string,
@@ -2104,6 +2123,8 @@ export namespace Session {
     key: string;
 
     metronome_commit?: Item.MetronomeCommit;
+
+    one_time_price?: Item.OneTimePrice;
 
     subscription?: Item.Subscription;
 
@@ -3569,6 +3590,11 @@ export namespace Session {
          * ID of the invoice rendering template to be used for the generated invoice.
          */
         template: string | null;
+
+        /**
+         * The version of the invoice rendering template to be used for the generated invoice. If null, the latest version of the template will be used. Only available in unified mode.
+         */
+        template_version?: number | null;
       }
 
       export namespace Issuer {
@@ -3595,6 +3621,23 @@ export namespace Session {
       metronome_customer: string | null;
 
       price_configuration: MetronomeCommit.PriceConfiguration;
+    }
+
+    export interface OneTimePrice {
+      /**
+       * The description for the one-time price.
+       */
+      description: string | null;
+
+      /**
+       * The items in the one-time price configuration.
+       */
+      items: Array<OneTimePrice.Item>;
+
+      /**
+       * Set of key-value pairs attached to the one-time price.
+       */
+      metadata: Metadata | null;
     }
 
     export interface Subscription {
@@ -3649,7 +3692,11 @@ export namespace Session {
       trial_settings: Subscription.TrialSettings | null;
     }
 
-    export type Type = 'metronome_commit' | 'subscription' | OtherString;
+    export type Type =
+      | 'metronome_commit'
+      | 'one_time_price'
+      | 'subscription'
+      | OtherString;
 
     export namespace MetronomeCommit {
       export interface Commit {
@@ -3889,6 +3936,49 @@ export namespace Session {
       }
     }
 
+    export namespace OneTimePrice {
+      export interface Item {
+        /**
+         * The adjustable quantity settings for this one-time price item.
+         */
+        adjustable_quantity: Item.AdjustableQuantity | null;
+
+        /**
+         * The price for this one-time price item.
+         */
+        price: string | Price;
+
+        /**
+         * The quantity for this one-time price item.
+         */
+        quantity: number;
+
+        /**
+         * The [tax rates](https://docs.stripe.com/api/tax_rates) which apply to this line item.
+         */
+        tax_rates: Array<string> | null;
+      }
+
+      export namespace Item {
+        export interface AdjustableQuantity {
+          /**
+           * Whether the quantity is adjustable.
+           */
+          enabled: boolean;
+
+          /**
+           * The maximum quantity the customer can purchase.
+           */
+          maximum: number | null;
+
+          /**
+           * The minimum quantity the customer can purchase.
+           */
+          minimum: number | null;
+        }
+      }
+    }
+
     export namespace Subscription {
       export interface Item {
         /**
@@ -3998,6 +4088,16 @@ export namespace Session {
        * Whether the customer consented to sending conversion data to an advertising platform.
        */
       consent_collected: boolean;
+
+      /**
+       * The URL of the web page where the customer converted.
+       */
+      source_url: string | null;
+
+      /**
+       * The user agent of the browser where the customer converted.
+       */
+      user_agent: string | null;
     }
   }
 
@@ -6745,6 +6845,11 @@ export namespace Checkout {
       metronome_commit?: Item.MetronomeCommit;
 
       /**
+       * Configuration for the one-time price item.
+       */
+      one_time_price?: Item.OneTimePrice;
+
+      /**
        * Configuration for the subscription item.
        */
       subscription?: Item.Subscription;
@@ -8001,6 +8106,11 @@ export namespace Checkout {
            * ID of the invoice rendering template to use for this invoice.
            */
           template?: string;
+
+          /**
+           * The specific version of the invoice rendering template to use for this invoice. If not specified, the latest version of the template will be used. Only available in unified mode.
+           */
+          template_version?: number;
         }
 
         export namespace Issuer {
@@ -8032,6 +8142,23 @@ export namespace Checkout {
          * The currency and tax behavior configuration for this commit purchase.
          */
         price_configuration: MetronomeCommit.PriceConfiguration;
+      }
+
+      export interface OneTimePrice {
+        /**
+         * The one-time price's description, meant to be displayable to the customer.
+         */
+        description?: string;
+
+        /**
+         * The list of items for the one-time price.
+         */
+        items: Array<OneTimePrice.Item>;
+
+        /**
+         * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: MetadataParam;
       }
 
       export interface Subscription {
@@ -8091,7 +8218,11 @@ export namespace Checkout {
         trial_settings?: Subscription.TrialSettings;
       }
 
-      export type Type = 'metronome_commit' | 'subscription' | OtherString;
+      export type Type =
+        | 'metronome_commit'
+        | 'one_time_price'
+        | 'subscription'
+        | OtherString;
 
       export namespace MetronomeCommit {
         export interface Commit {
@@ -8320,6 +8451,145 @@ export namespace Checkout {
 
         export namespace PriceConfiguration {
           export type TaxBehavior = 'exclusive' | 'inclusive' | OtherString;
+        }
+      }
+
+      export namespace OneTimePrice {
+        export interface Item {
+          /**
+           * When set, provides configuration for this item's quantity to be adjusted by the customer during Checkout.
+           */
+          adjustable_quantity?: Item.AdjustableQuantity;
+
+          /**
+           * The ID of the [Price](https://docs.stripe.com/api/prices). One of `price` or `price_data` is required.
+           */
+          price?: string;
+
+          /**
+           * Data used to generate a new [Price](https://docs.stripe.com/api/prices) object inline. One of `price` or `price_data` is required.
+           */
+          price_data?: Item.PriceData;
+
+          /**
+           * Quantity for this item.
+           */
+          quantity: number;
+
+          /**
+           * The [tax rates](https://docs.stripe.com/api/tax_rates) which apply to this line item.
+           */
+          tax_rates?: Array<string>;
+        }
+
+        export namespace Item {
+          export interface AdjustableQuantity {
+            /**
+             * Set to true if the quantity can be adjusted to any non-negative integer.
+             */
+            enabled: boolean;
+
+            /**
+             * The maximum quantity the customer can purchase for the Checkout Session. By default this value is 99. You can specify a value up to 999999.
+             */
+            maximum?: number;
+
+            /**
+             * The minimum quantity the customer must purchase for the Checkout Session. By default this value is 0.
+             */
+            minimum?: number;
+          }
+
+          export interface PriceData {
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to. One of `product` or `product_data` is required.
+             */
+            product?: string;
+
+            /**
+             * Data used to generate a new [Product](https://docs.stripe.com/api/products) object inline. One of `product` or `product_data` is required.
+             */
+            product_data?: PriceData.ProductData;
+
+            /**
+             * Only required if a [default tax behavior](https://docs.stripe.com/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+             */
+            tax_behavior?: PriceData.TaxBehavior;
+
+            /**
+             * A non-negative integer in cents (or local equivalent) representing how much to charge. One of `unit_amount` or `unit_amount_decimal` is required.
+             */
+            unit_amount?: number;
+
+            /**
+             * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+             */
+            unit_amount_decimal?: Decimal;
+          }
+
+          export namespace PriceData {
+            export interface ProductData {
+              /**
+               * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
+               */
+              description?: string;
+
+              /**
+               * A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
+               */
+              images?: Array<string>;
+
+              /**
+               * Set of [key-value pairs](https://docs.stripe.com/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+               */
+              metadata?: MetadataParam;
+
+              /**
+               * The product's name, meant to be displayable to the customer.
+               */
+              name: string;
+
+              /**
+               * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+               */
+              tax_code?: string;
+
+              /**
+               * Tax details for this product, including the [tax code](https://docs.stripe.com/tax/tax-codes) and an optional performance location.
+               */
+              tax_details?: ProductData.TaxDetails;
+
+              /**
+               * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
+               */
+              unit_label?: string;
+            }
+
+            export type TaxBehavior =
+              | 'exclusive'
+              | 'inclusive'
+              | 'unspecified'
+              | OtherString;
+
+            export namespace ProductData {
+              export interface TaxDetails {
+                /**
+                 * A tax location ID. Depending on the [tax code](https://docs.stripe.com/tax/tax-for-tickets/reference/tax-location-performance), this is required, optional, or not supported.
+                 */
+                performance_location?: string;
+
+                /**
+                 * A [tax code](https://docs.stripe.com/tax/tax-categories) ID.
+                 */
+                tax_code?: Emptyable<string>;
+              }
+            }
+          }
         }
       }
 
@@ -8752,6 +9022,16 @@ export namespace Checkout {
          * Whether the customer consented to sending conversion data to an advertising platform.
          */
         consent_collected: boolean;
+
+        /**
+         * The URL of the web page where the customer converted.
+         */
+        source_url?: string;
+
+        /**
+         * The user agent of the browser where the customer converted.
+         */
+        user_agent?: string;
       }
     }
 
@@ -9044,6 +9324,15 @@ export namespace Checkout {
          */
         mandate_options?: Blik.MandateOptions;
 
+        /**
+         * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+         *
+         * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+         *
+         * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+         *
+         * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+         */
         setup_future_usage?: Emptyable<Blik.SetupFutureUsage>;
       }
 

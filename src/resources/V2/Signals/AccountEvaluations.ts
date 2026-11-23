@@ -32,6 +32,10 @@ export class AccountEvaluationResource extends StripeResource {
                   kind: 'object',
                   fields: {score: {kind: 'decimal_string'}},
                 },
+                user_buyer_classification: {
+                  kind: 'object',
+                  fields: {buyer_type_score: {kind: 'decimal_string'}},
+                },
                 user_multi_accounting: {
                   kind: 'object',
                   fields: {score: {kind: 'decimal_string'}},
@@ -70,6 +74,10 @@ export class AccountEvaluationResource extends StripeResource {
                 user_affinity: {
                   kind: 'object',
                   fields: {score: {kind: 'decimal_string'}},
+                },
+                user_buyer_classification: {
+                  kind: 'object',
+                  fields: {buyer_type_score: {kind: 'decimal_string'}},
                 },
                 user_multi_accounting: {
                   kind: 'object',
@@ -176,6 +184,11 @@ export namespace AccountEvaluation {
     user_affinity?: EvaluatedSignals.UserAffinity;
 
     /**
+     * User buyer classification result for the evaluation, when available.
+     */
+    user_buyer_classification?: EvaluatedSignals.UserBuyerClassification;
+
+    /**
      * User multi-accounting result for the evaluation, when available.
      */
     user_multi_accounting?: EvaluatedSignals.UserMultiAccounting;
@@ -186,6 +199,7 @@ export namespace AccountEvaluation {
     | 'fraudulent_website'
     | 'user_account_sharing'
     | 'user_affinity'
+    | 'user_buyer_classification'
     | 'user_multi_accounting'
     | OtherString;
 
@@ -194,6 +208,7 @@ export namespace AccountEvaluation {
     | 'fraudulent_website'
     | 'user_account_sharing'
     | 'user_affinity'
+    | 'user_buyer_classification'
     | 'user_multi_accounting'
     | OtherString;
 
@@ -344,6 +359,28 @@ export namespace AccountEvaluation {
       signal?: string;
     }
 
+    export interface UserBuyerClassification {
+      /**
+       * Predicted type of buyer behind the user.
+       */
+      buyer_type: UserBuyerClassification.BuyerType;
+
+      /**
+       * The score for the predicted buyer type, between 0.00 and 100.00. Absent when buyer_type is unknown.
+       */
+      buyer_type_score?: Decimal;
+
+      /**
+       * Timestamp at which the signal was evaluated.
+       */
+      evaluated_at?: string;
+
+      /**
+       * The account signal ID containing the full user buyer classification signal result.
+       */
+      signal?: string;
+    }
+
     export interface UserMultiAccounting {
       /**
        * Timestamp at which the signal was evaluated.
@@ -402,6 +439,10 @@ export namespace AccountEvaluation {
         | OtherString;
     }
 
+    export namespace UserBuyerClassification {
+      export type BuyerType = 'business' | 'unknown' | OtherString;
+    }
+
     export namespace UserMultiAccounting {
       export type RiskLevel =
         | 'elevated'
@@ -454,6 +495,7 @@ export namespace V2 {
         | 'fraudulent_website'
         | 'user_account_sharing'
         | 'user_affinity'
+        | 'user_buyer_classification'
         | 'user_multi_accounting'
         | OtherString;
 

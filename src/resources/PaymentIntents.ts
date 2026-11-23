@@ -1205,6 +1205,8 @@ export namespace PaymentIntent {
   export interface PaymentMethodOptions {
     acss_debit?: PaymentMethodOptions.AcssDebit;
 
+    aeon_pay?: PaymentMethodOptions.AeonPay;
+
     affirm?: PaymentMethodOptions.Affirm;
 
     afterpay_clearpay?: PaymentMethodOptions.AfterpayClearpay;
@@ -1216,6 +1218,8 @@ export namespace PaymentIntent {
     amazon_pay?: PaymentMethodOptions.AmazonPay;
 
     au_becs_debit?: PaymentMethodOptions.AuBecsDebit;
+
+    au_pay?: PaymentMethodOptions.AuPay;
 
     bacs_debit?: PaymentMethodOptions.BacsDebit;
 
@@ -1240,6 +1244,8 @@ export namespace PaymentIntent {
     crypto?: PaymentMethodOptions.Crypto;
 
     customer_balance?: PaymentMethodOptions.CustomerBalance;
+
+    dbarai?: PaymentMethodOptions.Dbarai;
 
     eps?: PaymentMethodOptions.Eps;
 
@@ -1273,6 +1279,8 @@ export namespace PaymentIntent {
 
     mb_way?: PaymentMethodOptions.MbWay;
 
+    merpay?: PaymentMethodOptions.Merpay;
+
     mobilepay?: PaymentMethodOptions.Mobilepay;
 
     multibanco?: PaymentMethodOptions.Multibanco;
@@ -1302,6 +1310,8 @@ export namespace PaymentIntent {
     promptpay?: PaymentMethodOptions.Promptpay;
 
     qris?: PaymentMethodOptions.Qris;
+
+    rakuten_pay?: PaymentMethodOptions.RakutenPay;
 
     rechnung?: PaymentMethodOptions.Rechnung;
 
@@ -1374,9 +1384,9 @@ export namespace PaymentIntent {
 
   export interface RadarOptions {
     /**
-     * The value you provided for whether this transaction starts a free trial. This is null if you haven't explicitly set it.
+     * The value you provided for whether this transaction starts a free trial. This field is omitted if you haven't explicitly set it.
      */
-    is_free_trial_transaction?: boolean | null;
+    is_free_trial_transaction?: boolean;
   }
 
   export interface Redaction {
@@ -2419,7 +2429,13 @@ export namespace PaymentIntent {
           }
 
           export namespace SupportedToken {
-            export type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
+            export type TokenCurrency =
+              | 'ousd'
+              | 'phantom_cash'
+              | 'usdc'
+              | 'usdg'
+              | 'usdp'
+              | OtherString;
           }
         }
 
@@ -2437,7 +2453,13 @@ export namespace PaymentIntent {
           }
 
           export namespace SupportedToken {
-            export type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
+            export type TokenCurrency =
+              | 'ousd'
+              | 'phantom_cash'
+              | 'usdc'
+              | 'usdg'
+              | 'usdp'
+              | OtherString;
           }
         }
 
@@ -2455,7 +2477,13 @@ export namespace PaymentIntent {
           }
 
           export namespace SupportedToken {
-            export type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
+            export type TokenCurrency =
+              | 'ousd'
+              | 'phantom_cash'
+              | 'usdc'
+              | 'usdg'
+              | 'usdp'
+              | OtherString;
           }
         }
 
@@ -2473,7 +2501,13 @@ export namespace PaymentIntent {
           }
 
           export namespace SupportedToken {
-            export type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
+            export type TokenCurrency =
+              | 'ousd'
+              | 'phantom_cash'
+              | 'usdc'
+              | 'usdg'
+              | 'usdp'
+              | OtherString;
           }
         }
 
@@ -2491,7 +2525,13 @@ export namespace PaymentIntent {
           }
 
           export namespace SupportedToken {
-            export type TokenCurrency = 'usdc' | 'usdg' | 'usdp';
+            export type TokenCurrency =
+              | 'ousd'
+              | 'phantom_cash'
+              | 'usdc'
+              | 'usdg'
+              | 'usdp'
+              | OtherString;
           }
         }
       }
@@ -4485,6 +4525,19 @@ export namespace PaymentIntent {
       verification_method?: AcssDebit.VerificationMethod;
     }
 
+    export interface AeonPay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: AeonPay.SetupFutureUsage;
+    }
+
     export interface Affirm {
       /**
        * Controls when the funds will be captured from the customer's account.
@@ -4586,6 +4639,19 @@ export namespace PaymentIntent {
        * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
        */
       target_date?: string;
+    }
+
+    export interface AuPay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: AuPay.SetupFutureUsage;
     }
 
     export interface BacsDebit {
@@ -4924,6 +4990,19 @@ export namespace PaymentIntent {
       setup_future_usage?: 'none';
     }
 
+    export interface Dbarai {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Dbarai.SetupFutureUsage;
+    }
+
     export interface Eps {
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -5191,6 +5270,19 @@ export namespace PaymentIntent {
       setup_future_usage?: 'none';
     }
 
+    export interface Merpay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Merpay.SetupFutureUsage;
+    }
+
     export interface Mobilepay {
       /**
        * Controls when the funds will be captured from the customer's account.
@@ -5452,6 +5544,19 @@ export namespace PaymentIntent {
        * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
        */
       setup_future_usage?: 'none';
+    }
+
+    export interface RakutenPay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: RakutenPay.SetupFutureUsage;
     }
 
     export interface Rechnung {}
@@ -5838,6 +5943,10 @@ export namespace PaymentIntent {
       }
     }
 
+    export namespace AeonPay {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace Alipay {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
@@ -5852,6 +5961,10 @@ export namespace PaymentIntent {
         | 'off_session'
         | 'on_session'
         | OtherString;
+    }
+
+    export namespace AuPay {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace BacsDebit {
@@ -6547,6 +6660,10 @@ export namespace PaymentIntent {
       }
     }
 
+    export namespace Dbarai {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace Getflex {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
@@ -6583,6 +6700,10 @@ export namespace PaymentIntent {
     }
 
     export namespace Link {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
+    export namespace Merpay {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
@@ -6794,6 +6915,10 @@ export namespace PaymentIntent {
           | 'yearly'
           | OtherString;
       }
+    }
+
+    export namespace RakutenPay {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace RevolutPay {
@@ -8030,6 +8155,11 @@ export namespace PaymentIntentCreateParams {
     acss_debit?: Emptyable<PaymentMethodOptions.AcssDebit>;
 
     /**
+     * If this is a `aeon_pay` PaymentMethod, this sub-hash contains details about the AEON Pay payment method options.
+     */
+    aeon_pay?: Emptyable<PaymentMethodOptions.AeonPay>;
+
+    /**
      * If this is an `affirm` PaymentMethod, this sub-hash contains details about the Affirm payment method options.
      */
     affirm?: Emptyable<PaymentMethodOptions.Affirm>;
@@ -8058,6 +8188,11 @@ export namespace PaymentIntentCreateParams {
      * If this is a `au_becs_debit` PaymentMethod, this sub-hash contains details about the AU BECS Direct Debit payment method options.
      */
     au_becs_debit?: Emptyable<PaymentMethodOptions.AuBecsDebit>;
+
+    /**
+     * If this is a `au_pay` PaymentMethod, this sub-hash contains details about the au PAY payment method options.
+     */
+    au_pay?: Emptyable<PaymentMethodOptions.AuPay>;
 
     /**
      * If this is a `bacs_debit` PaymentMethod, this sub-hash contains details about the BACS Debit payment method options.
@@ -8118,6 +8253,11 @@ export namespace PaymentIntentCreateParams {
      * If this is a `customer balance` PaymentMethod, this sub-hash contains details about the customer balance payment method options.
      */
     customer_balance?: Emptyable<PaymentMethodOptions.CustomerBalance>;
+
+    /**
+     * If this is a `dbarai` PaymentMethod, this sub-hash contains details about the d-Barai payment method options.
+     */
+    dbarai?: Emptyable<PaymentMethodOptions.Dbarai>;
 
     /**
      * If this is a `eps` PaymentMethod, this sub-hash contains details about the EPS payment method options.
@@ -8200,6 +8340,11 @@ export namespace PaymentIntentCreateParams {
     mb_way?: Emptyable<PaymentMethodOptions.MbWay>;
 
     /**
+     * If this is a `merpay` PaymentMethod, this sub-hash contains details about the Merpay payment method options.
+     */
+    merpay?: Emptyable<PaymentMethodOptions.Merpay>;
+
+    /**
      * If this is a `MobilePay` PaymentMethod, this sub-hash contains details about the MobilePay payment method options.
      */
     mobilepay?: Emptyable<PaymentMethodOptions.Mobilepay>;
@@ -8273,6 +8418,11 @@ export namespace PaymentIntentCreateParams {
      * If this is a `qris` PaymentMethod, this sub-hash contains details about the QRIS payment method options.
      */
     qris?: Emptyable<PaymentMethodOptions.Qris>;
+
+    /**
+     * If this is a `rakuten_pay` PaymentMethod, this sub-hash contains details about the Rakuten Pay payment method options.
+     */
+    rakuten_pay?: Emptyable<PaymentMethodOptions.RakutenPay>;
 
     /**
      * If this is a `rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
@@ -12209,6 +12359,19 @@ export namespace PaymentIntentCreateParams {
       verification_method?: AcssDebit.VerificationMethod;
     }
 
+    export interface AeonPay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<AeonPay.SetupFutureUsage>;
+    }
+
     export interface Affirm {
       /**
        * Controls when the funds are captured from the customer's account.
@@ -12334,6 +12497,19 @@ export namespace PaymentIntentCreateParams {
        * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
        */
       target_date?: string;
+    }
+
+    export interface AuPay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<AuPay.SetupFutureUsage>;
     }
 
     export interface BacsDebit {
@@ -12786,6 +12962,19 @@ export namespace PaymentIntentCreateParams {
       setup_future_usage?: 'none';
     }
 
+    export interface Dbarai {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<Dbarai.SetupFutureUsage>;
+    }
+
     export interface Eps {
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -13110,6 +13299,19 @@ export namespace PaymentIntentCreateParams {
       setup_future_usage?: 'none';
     }
 
+    export interface Merpay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<Merpay.SetupFutureUsage>;
+    }
+
     export interface Mobilepay {
       /**
        * Controls when the funds are captured from the customer's account.
@@ -13419,6 +13621,19 @@ export namespace PaymentIntentCreateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: 'none';
+    }
+
+    export interface RakutenPay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<RakutenPay.SetupFutureUsage>;
     }
 
     export interface Rechnung {}
@@ -13877,6 +14092,10 @@ export namespace PaymentIntentCreateParams {
       }
     }
 
+    export namespace AeonPay {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace Alipay {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
@@ -13891,6 +14110,10 @@ export namespace PaymentIntentCreateParams {
         | 'off_session'
         | 'on_session'
         | OtherString;
+    }
+
+    export namespace AuPay {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace BacsDebit {
@@ -14633,6 +14856,10 @@ export namespace PaymentIntentCreateParams {
           | 'us_bank_transfer'
           | OtherString;
       }
+    }
+
+    export namespace Dbarai {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Getflex {
@@ -15988,6 +16215,10 @@ export namespace PaymentIntentCreateParams {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
+    export namespace Merpay {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace NaverPay {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
@@ -16223,6 +16454,10 @@ export namespace PaymentIntentCreateParams {
           | 'yearly'
           | OtherString;
       }
+    }
+
+    export namespace RakutenPay {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace RevolutPay {
@@ -17408,6 +17643,11 @@ export namespace PaymentIntentUpdateParams {
     acss_debit?: Emptyable<PaymentMethodOptions.AcssDebit>;
 
     /**
+     * If this is a `aeon_pay` PaymentMethod, this sub-hash contains details about the AEON Pay payment method options.
+     */
+    aeon_pay?: Emptyable<PaymentMethodOptions.AeonPay>;
+
+    /**
      * If this is an `affirm` PaymentMethod, this sub-hash contains details about the Affirm payment method options.
      */
     affirm?: Emptyable<PaymentMethodOptions.Affirm>;
@@ -17436,6 +17676,11 @@ export namespace PaymentIntentUpdateParams {
      * If this is a `au_becs_debit` PaymentMethod, this sub-hash contains details about the AU BECS Direct Debit payment method options.
      */
     au_becs_debit?: Emptyable<PaymentMethodOptions.AuBecsDebit>;
+
+    /**
+     * If this is a `au_pay` PaymentMethod, this sub-hash contains details about the au PAY payment method options.
+     */
+    au_pay?: Emptyable<PaymentMethodOptions.AuPay>;
 
     /**
      * If this is a `bacs_debit` PaymentMethod, this sub-hash contains details about the BACS Debit payment method options.
@@ -17496,6 +17741,11 @@ export namespace PaymentIntentUpdateParams {
      * If this is a `customer balance` PaymentMethod, this sub-hash contains details about the customer balance payment method options.
      */
     customer_balance?: Emptyable<PaymentMethodOptions.CustomerBalance>;
+
+    /**
+     * If this is a `dbarai` PaymentMethod, this sub-hash contains details about the d-Barai payment method options.
+     */
+    dbarai?: Emptyable<PaymentMethodOptions.Dbarai>;
 
     /**
      * If this is a `eps` PaymentMethod, this sub-hash contains details about the EPS payment method options.
@@ -17578,6 +17828,11 @@ export namespace PaymentIntentUpdateParams {
     mb_way?: Emptyable<PaymentMethodOptions.MbWay>;
 
     /**
+     * If this is a `merpay` PaymentMethod, this sub-hash contains details about the Merpay payment method options.
+     */
+    merpay?: Emptyable<PaymentMethodOptions.Merpay>;
+
+    /**
      * If this is a `MobilePay` PaymentMethod, this sub-hash contains details about the MobilePay payment method options.
      */
     mobilepay?: Emptyable<PaymentMethodOptions.Mobilepay>;
@@ -17651,6 +17906,11 @@ export namespace PaymentIntentUpdateParams {
      * If this is a `qris` PaymentMethod, this sub-hash contains details about the QRIS payment method options.
      */
     qris?: Emptyable<PaymentMethodOptions.Qris>;
+
+    /**
+     * If this is a `rakuten_pay` PaymentMethod, this sub-hash contains details about the Rakuten Pay payment method options.
+     */
+    rakuten_pay?: Emptyable<PaymentMethodOptions.RakutenPay>;
 
     /**
      * If this is a `rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
@@ -21524,6 +21784,19 @@ export namespace PaymentIntentUpdateParams {
       verification_method?: AcssDebit.VerificationMethod;
     }
 
+    export interface AeonPay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<AeonPay.SetupFutureUsage>;
+    }
+
     export interface Affirm {
       /**
        * Controls when the funds are captured from the customer's account.
@@ -21649,6 +21922,19 @@ export namespace PaymentIntentUpdateParams {
        * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
        */
       target_date?: string;
+    }
+
+    export interface AuPay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<AuPay.SetupFutureUsage>;
     }
 
     export interface BacsDebit {
@@ -22101,6 +22387,19 @@ export namespace PaymentIntentUpdateParams {
       setup_future_usage?: 'none';
     }
 
+    export interface Dbarai {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<Dbarai.SetupFutureUsage>;
+    }
+
     export interface Eps {
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -22425,6 +22724,19 @@ export namespace PaymentIntentUpdateParams {
       setup_future_usage?: 'none';
     }
 
+    export interface Merpay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<Merpay.SetupFutureUsage>;
+    }
+
     export interface Mobilepay {
       /**
        * Controls when the funds are captured from the customer's account.
@@ -22734,6 +23046,19 @@ export namespace PaymentIntentUpdateParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: 'none';
+    }
+
+    export interface RakutenPay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<RakutenPay.SetupFutureUsage>;
     }
 
     export interface Rechnung {}
@@ -23192,6 +23517,10 @@ export namespace PaymentIntentUpdateParams {
       }
     }
 
+    export namespace AeonPay {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace Alipay {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
@@ -23206,6 +23535,10 @@ export namespace PaymentIntentUpdateParams {
         | 'off_session'
         | 'on_session'
         | OtherString;
+    }
+
+    export namespace AuPay {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace BacsDebit {
@@ -23948,6 +24281,10 @@ export namespace PaymentIntentUpdateParams {
           | 'us_bank_transfer'
           | OtherString;
       }
+    }
+
+    export namespace Dbarai {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Getflex {
@@ -25303,6 +25640,10 @@ export namespace PaymentIntentUpdateParams {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
+    export namespace Merpay {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace NaverPay {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
@@ -25538,6 +25879,10 @@ export namespace PaymentIntentUpdateParams {
           | 'yearly'
           | OtherString;
       }
+    }
+
+    export namespace RakutenPay {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace RevolutPay {
@@ -29735,6 +30080,11 @@ export namespace PaymentIntentConfirmParams {
     acss_debit?: Emptyable<PaymentMethodOptions.AcssDebit>;
 
     /**
+     * If this is a `aeon_pay` PaymentMethod, this sub-hash contains details about the AEON Pay payment method options.
+     */
+    aeon_pay?: Emptyable<PaymentMethodOptions.AeonPay>;
+
+    /**
      * If this is an `affirm` PaymentMethod, this sub-hash contains details about the Affirm payment method options.
      */
     affirm?: Emptyable<PaymentMethodOptions.Affirm>;
@@ -29763,6 +30113,11 @@ export namespace PaymentIntentConfirmParams {
      * If this is a `au_becs_debit` PaymentMethod, this sub-hash contains details about the AU BECS Direct Debit payment method options.
      */
     au_becs_debit?: Emptyable<PaymentMethodOptions.AuBecsDebit>;
+
+    /**
+     * If this is a `au_pay` PaymentMethod, this sub-hash contains details about the au PAY payment method options.
+     */
+    au_pay?: Emptyable<PaymentMethodOptions.AuPay>;
 
     /**
      * If this is a `bacs_debit` PaymentMethod, this sub-hash contains details about the BACS Debit payment method options.
@@ -29823,6 +30178,11 @@ export namespace PaymentIntentConfirmParams {
      * If this is a `customer balance` PaymentMethod, this sub-hash contains details about the customer balance payment method options.
      */
     customer_balance?: Emptyable<PaymentMethodOptions.CustomerBalance>;
+
+    /**
+     * If this is a `dbarai` PaymentMethod, this sub-hash contains details about the d-Barai payment method options.
+     */
+    dbarai?: Emptyable<PaymentMethodOptions.Dbarai>;
 
     /**
      * If this is a `eps` PaymentMethod, this sub-hash contains details about the EPS payment method options.
@@ -29905,6 +30265,11 @@ export namespace PaymentIntentConfirmParams {
     mb_way?: Emptyable<PaymentMethodOptions.MbWay>;
 
     /**
+     * If this is a `merpay` PaymentMethod, this sub-hash contains details about the Merpay payment method options.
+     */
+    merpay?: Emptyable<PaymentMethodOptions.Merpay>;
+
+    /**
      * If this is a `MobilePay` PaymentMethod, this sub-hash contains details about the MobilePay payment method options.
      */
     mobilepay?: Emptyable<PaymentMethodOptions.Mobilepay>;
@@ -29978,6 +30343,11 @@ export namespace PaymentIntentConfirmParams {
      * If this is a `qris` PaymentMethod, this sub-hash contains details about the QRIS payment method options.
      */
     qris?: Emptyable<PaymentMethodOptions.Qris>;
+
+    /**
+     * If this is a `rakuten_pay` PaymentMethod, this sub-hash contains details about the Rakuten Pay payment method options.
+     */
+    rakuten_pay?: Emptyable<PaymentMethodOptions.RakutenPay>;
 
     /**
      * If this is a `rechnung` PaymentMethod, this sub-hash contains details about the Rechnung payment method options.
@@ -33860,6 +34230,19 @@ export namespace PaymentIntentConfirmParams {
       verification_method?: AcssDebit.VerificationMethod;
     }
 
+    export interface AeonPay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<AeonPay.SetupFutureUsage>;
+    }
+
     export interface Affirm {
       /**
        * Controls when the funds are captured from the customer's account.
@@ -33985,6 +34368,19 @@ export namespace PaymentIntentConfirmParams {
        * Controls when Stripe will attempt to debit the funds from the customer's account. The date must be a string in YYYY-MM-DD format. The date must be in the future and between 3 and 15 calendar days from now.
        */
       target_date?: string;
+    }
+
+    export interface AuPay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<AuPay.SetupFutureUsage>;
     }
 
     export interface BacsDebit {
@@ -34437,6 +34833,19 @@ export namespace PaymentIntentConfirmParams {
       setup_future_usage?: 'none';
     }
 
+    export interface Dbarai {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<Dbarai.SetupFutureUsage>;
+    }
+
     export interface Eps {
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -34761,6 +35170,19 @@ export namespace PaymentIntentConfirmParams {
       setup_future_usage?: 'none';
     }
 
+    export interface Merpay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<Merpay.SetupFutureUsage>;
+    }
+
     export interface Mobilepay {
       /**
        * Controls when the funds are captured from the customer's account.
@@ -35070,6 +35492,19 @@ export namespace PaymentIntentConfirmParams {
        * If you've already set `setup_future_usage` and you're performing a request using a publishable key, you can only update the value from `on_session` to `off_session`.
        */
       setup_future_usage?: 'none';
+    }
+
+    export interface RakutenPay {
+      /**
+       * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+       *
+       * If you provide a Customer with the PaymentIntent, you can use this parameter to [attach the payment method](https://docs.stripe.com/payments/save-during-payment) to the Customer after the PaymentIntent is confirmed and the customer completes any required actions. If you don't provide a Customer, you can still [attach](https://docs.stripe.com/api/payment_methods/attach) the payment method to a Customer after the transaction completes.
+       *
+       * If the payment method is `card_present` and isn't a digital wallet, Stripe creates and attaches a [generated_card](https://docs.stripe.com/api/charges/object#charge_object-payment_method_details-card_present-generated_card) payment method representing the card to the Customer instead.
+       *
+       * When processing card payments, Stripe uses `setup_future_usage` to help you comply with regional legislation and network rules, such as [SCA](https://docs.stripe.com/strong-customer-authentication).
+       */
+      setup_future_usage?: Emptyable<RakutenPay.SetupFutureUsage>;
     }
 
     export interface Rechnung {}
@@ -35528,6 +35963,10 @@ export namespace PaymentIntentConfirmParams {
       }
     }
 
+    export namespace AeonPay {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace Alipay {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
@@ -35542,6 +35981,10 @@ export namespace PaymentIntentConfirmParams {
         | 'off_session'
         | 'on_session'
         | OtherString;
+    }
+
+    export namespace AuPay {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace BacsDebit {
@@ -36284,6 +36727,10 @@ export namespace PaymentIntentConfirmParams {
           | 'us_bank_transfer'
           | OtherString;
       }
+    }
+
+    export namespace Dbarai {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace Getflex {
@@ -37639,6 +38086,10 @@ export namespace PaymentIntentConfirmParams {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
+    export namespace Merpay {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
+    }
+
     export namespace NaverPay {
       export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
@@ -37874,6 +38325,10 @@ export namespace PaymentIntentConfirmParams {
           | 'yearly'
           | OtherString;
       }
+    }
+
+    export namespace RakutenPay {
+      export type SetupFutureUsage = 'none' | 'off_session' | OtherString;
     }
 
     export namespace RevolutPay {

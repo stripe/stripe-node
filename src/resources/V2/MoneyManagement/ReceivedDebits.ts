@@ -87,6 +87,12 @@ export interface ReceivedDebit {
   dispute_details?: ReceivedDebit.DisputeDetails;
 
   /**
+   * Has the value `true` if the object has an associated Dispute otherwise or the value `false`.
+   * Use the Disputes List API with `target` to see details.
+   */
+  disputed: boolean;
+
+  /**
    * The amount and currency of the original/external debit request.
    */
   external_amount?: V2Amount;
@@ -350,7 +356,7 @@ export namespace ReceivedDebit {
       sort_code?: string;
     }
 
-    export type Network = 'ach' | 'bacs' | OtherString;
+    export type Network = 'ach' | 'bacs' | 'sepa' | OtherString;
 
     export interface NetworkDetails {
       /**
@@ -361,6 +367,7 @@ export namespace ReceivedDebit {
 
     export type OriginType =
       | 'gb_bank_account'
+      | 'sepa_bank_account'
       | 'us_bank_account'
       | OtherString;
 
@@ -369,6 +376,11 @@ export namespace ReceivedDebit {
        * Details of the originating account. Present when type is `aba`.
        */
       aba?: OriginatingBankAccount.Aba;
+
+      /**
+       * Creditor details. Present when type is `iban`.
+       */
+      iban?: OriginatingBankAccount.Iban;
 
       /**
        * Details of the originating account. Present when type is `sort_code`.
@@ -383,6 +395,7 @@ export namespace ReceivedDebit {
 
     export type PaymentMethodType =
       | 'gb_bank_account'
+      | 'sepa_bank_account'
       | 'us_bank_account'
       | OtherString;
 
@@ -482,6 +495,33 @@ export namespace ReceivedDebit {
         routing_number?: string;
       }
 
+      export interface Iban {
+        /**
+         * The creditor's name.
+         */
+        account_holder_name?: string;
+
+        /**
+         * The name of the creditor's bank.
+         */
+        bank_name?: string;
+
+        /**
+         * The Bank Identifier Code (BIC) of the creditor's bank.
+         */
+        bic?: string;
+
+        /**
+         * Uppercase ISO 3166-1 alpha-2 country code of the creditor's bank account.
+         */
+        country?: string;
+
+        /**
+         * The creditor's IBAN, masked with X except for the country code and last four characters.
+         */
+        iban?: string;
+      }
+
       export interface SortCode {
         /**
          * The name of the account holder that originated the debit.
@@ -504,7 +544,7 @@ export namespace ReceivedDebit {
         sort_code?: string;
       }
 
-      export type Type = 'aba' | 'sort_code' | OtherString;
+      export type Type = 'aba' | 'iban' | 'sort_code' | OtherString;
     }
 
     export namespace UsBankAccount {
@@ -556,15 +596,17 @@ export namespace ReceivedDebit {
     export namespace Failed {
       export type Reason =
         | 'capability_inactive'
+        | 'debits_disabled'
         | 'financial_address_inactive'
         | 'insufficient_funds'
         | 'no_mandate'
         | 'stripe_rejected'
+        | 'transaction_limit_exceeded'
         | OtherString;
     }
 
     export namespace Returned {
-      export type Reason = 'originator_initiated' | OtherString;
+      export type Reason = 'dispute_won' | 'originator_initiated' | OtherString;
     }
   }
 }

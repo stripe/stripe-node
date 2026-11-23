@@ -114,9 +114,13 @@ export namespace SetupAttempt {
   export interface PaymentMethodDetails {
     acss_debit?: PaymentMethodDetails.AcssDebit;
 
+    aeon_pay?: PaymentMethodDetails.AeonPay;
+
     amazon_pay?: PaymentMethodDetails.AmazonPay;
 
     au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
+
+    au_pay?: PaymentMethodDetails.AuPay;
 
     bacs_debit?: PaymentMethodDetails.BacsDebit;
 
@@ -130,7 +134,13 @@ export namespace SetupAttempt {
 
     card_present?: PaymentMethodDetails.CardPresent;
 
+    carecredit?: PaymentMethodDetails.Carecredit;
+
     cashapp?: PaymentMethodDetails.Cashapp;
+
+    dbarai?: PaymentMethodDetails.Dbarai;
+
+    getflex?: PaymentMethodDetails.Getflex;
 
     id_bank_transfer?: PaymentMethodDetails.IdBankTransfer;
 
@@ -144,6 +154,8 @@ export namespace SetupAttempt {
 
     link?: PaymentMethodDetails.Link;
 
+    merpay?: PaymentMethodDetails.Merpay;
+
     naver_pay?: PaymentMethodDetails.NaverPay;
 
     nz_bank_account?: PaymentMethodDetails.NzBankAccount;
@@ -155,6 +167,8 @@ export namespace SetupAttempt {
     payto?: PaymentMethodDetails.Payto;
 
     pix?: PaymentMethodDetails.Pix;
+
+    rakuten_pay?: PaymentMethodDetails.RakutenPay;
 
     revolut_pay?: PaymentMethodDetails.RevolutPay;
 
@@ -302,9 +316,13 @@ export namespace SetupAttempt {
   export namespace PaymentMethodDetails {
     export interface AcssDebit {}
 
+    export interface AeonPay {}
+
     export interface AmazonPay {}
 
     export interface AuBecsDebit {}
+
+    export interface AuPay {}
 
     export interface BacsDebit {}
 
@@ -452,7 +470,13 @@ export namespace SetupAttempt {
       offline: CardPresent.Offline | null;
     }
 
+    export interface Carecredit {}
+
     export interface Cashapp {}
+
+    export interface Dbarai {}
+
+    export interface Getflex {}
 
     export interface IdBankTransfer {
       /**
@@ -517,6 +541,8 @@ export namespace SetupAttempt {
 
     export interface Link {}
 
+    export interface Merpay {}
+
     export interface NaverPay {
       /**
        * Uniquely identifies this particular Naver Pay account. You can use this attribute to check whether two Naver Pay accounts are the same.
@@ -543,6 +569,8 @@ export namespace SetupAttempt {
        */
       fingerprint?: string | null;
     }
+
+    export interface RakutenPay {}
 
     export interface RevolutPay {}
 

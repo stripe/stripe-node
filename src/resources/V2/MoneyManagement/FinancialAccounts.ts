@@ -255,6 +255,11 @@ export interface FinancialAccount {
   display_name?: string;
 
   /**
+   * Settings that control behavior for money movement flows.
+   */
+  flow_settings?: FinancialAccount.FlowSettings;
+
+  /**
    * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
    */
   livemode: boolean;
@@ -353,6 +358,13 @@ export namespace FinancialAccount {
      * The currencies supported by this credit FinancialAccount.
      */
     supported_currencies: Array<string>;
+  }
+
+  export interface FlowSettings {
+    /**
+     * Settings for received debit flows.
+     */
+    received_debits?: FlowSettings.ReceivedDebits;
   }
 
   export interface MultiprocessorSettlement {
@@ -476,6 +488,39 @@ export namespace FinancialAccount {
       }
 
       export type Type = 'platform' | 'stripe' | OtherString;
+    }
+  }
+
+  export namespace FlowSettings {
+    export interface ReceivedDebits {
+      /**
+       * Settings for ACH received debits.
+       */
+      ach?: ReceivedDebits.Ach;
+    }
+
+    export namespace ReceivedDebits {
+      export interface Ach {
+        /**
+         * Whether ACH received debits are enabled. Defaults to true. Other restrictions still apply.
+         */
+        enabled: boolean;
+
+        /**
+         * Controls whether ACH debits without a matching active SpendingMandate are allowed or rejected
+         * Defaults to `optional`. Other restrictions still apply.
+         */
+        mandate_behavior: Ach.MandateBehavior;
+
+        /**
+         * Account-level per-debit limit. Set to null to clear the limit.
+         */
+        transaction_limit?: V2Amount;
+      }
+
+      export namespace Ach {
+        export type MandateBehavior = 'optional' | 'required';
+      }
     }
   }
 
@@ -789,6 +834,11 @@ export namespace V2 {
       display_name?: string;
 
       /**
+       * Sparse flow setting updates. Omitting a field leaves its current value unchanged.
+       */
+      flow_settings?: FinancialAccountUpdateParams.FlowSettings;
+
+      /**
        * Forwarding settings for a closed FinancialAccount. Post-close forwarding updates are not yet implemented.
        */
       forwarding_settings?: FinancialAccountUpdateParams.ForwardingSettings;
@@ -806,6 +856,13 @@ export namespace V2 {
     }
 
     export namespace FinancialAccountUpdateParams {
+      export interface FlowSettings {
+        /**
+         * Settings for received debit flows.
+         */
+        received_debits?: FlowSettings.ReceivedDebits;
+      }
+
       export interface ForwardingSettings {
         /**
          * ID of the FinancialAccount that supplies funds to cover negative balances
@@ -837,6 +894,38 @@ export namespace V2 {
          * Removing currencies is not supported as of March 2026.
          */
         holds_currencies?: Array<string>;
+      }
+
+      export namespace FlowSettings {
+        export interface ReceivedDebits {
+          /**
+           * Settings for ACH received debits.
+           */
+          ach?: ReceivedDebits.Ach;
+        }
+
+        export namespace ReceivedDebits {
+          export interface Ach {
+            /**
+             * Whether ACH received debits are enabled. Omit to preserve the current setting, which defaults to true. Other restrictions still apply.
+             */
+            enabled?: boolean;
+
+            /**
+             * Controls whether ACH debits without a matching active mandate are allowed or rejected.
+             */
+            mandate_behavior?: Ach.MandateBehavior;
+
+            /**
+             * Account-level per-debit limit. Set to null to clear the limit.
+             */
+            transaction_limit?: V2Amount;
+          }
+
+          export namespace Ach {
+            export type MandateBehavior = 'optional' | 'required';
+          }
+        }
       }
 
       export namespace Storage {

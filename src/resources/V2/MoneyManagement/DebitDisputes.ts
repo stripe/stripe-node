@@ -24,6 +24,7 @@ export class DebitDisputeResource extends StripeResource {
     ) as any;
   }
   /**
+   * Deprecated: Use CreateDispute to create a Dispute instead.
    * Creates a new DebitDispute for a ReceivedDebit.
    */
   create(

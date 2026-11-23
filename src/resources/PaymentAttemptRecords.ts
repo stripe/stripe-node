@@ -619,6 +619,11 @@ export namespace PaymentAttemptRecord {
     givex?: ProcessorDetails.Givex;
 
     /**
+     * Represents the Stripe processor. This resource consists of details specific to Stripe.
+     */
+    stripe?: ProcessorDetails.Stripe;
+
+    /**
      * Represents the SVS gift card processor.
      */
     svs?: ProcessorDetails.Svs;
@@ -1109,6 +1114,8 @@ export namespace PaymentAttemptRecord {
        * The authorized amount
        */
       amount_authorized: number | null;
+
+      benefits?: CardPresent.Benefits;
 
       /**
        * Card brand. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.
@@ -2558,6 +2565,15 @@ export namespace PaymentAttemptRecord {
     }
 
     export namespace CardPresent {
+      export interface Benefits {
+        fr_meal_voucher?: Benefits.FrMealVoucher;
+
+        /**
+         * Issuer of the benefit card utilized on this payment
+         */
+        issuer: string | null;
+      }
+
       export interface Fleet {
         /**
          * Fleet prompts and values collected for this transaction.
@@ -2656,6 +2672,15 @@ export namespace PaymentAttemptRecord {
          * The type of mobile wallet, one of `apple_pay`, `google_pay`, `samsung_pay`, or `unknown`.
          */
         type: Wallet.Type;
+      }
+
+      export namespace Benefits {
+        export interface FrMealVoucher {
+          /**
+           * The 14-digit SIRET of the meal voucher acceptor used for this charge.
+           */
+          siret: string;
+        }
       }
 
       export namespace Fleet {
@@ -3219,6 +3244,13 @@ export namespace PaymentAttemptRecord {
       payment_reference: string;
     }
 
+    export interface Stripe {
+      /**
+       * Stripe balance transactions associated with this attempt, in no guaranteed order. References can appear at submission or after success. On a PaymentRecord, these references follow the latest attempt.
+       */
+      derived_balance_transactions?: Array<string> | null;
+    }
+
     export interface Svs {
       /**
        * An opaque string for manual reconciliation of this payment, for example a check number or a payment processor ID.
@@ -3230,6 +3262,7 @@ export namespace PaymentAttemptRecord {
       | 'custom'
       | 'fiserv_valuelink'
       | 'givex'
+      | 'stripe'
       | 'svs'
       | OtherString;
   }
