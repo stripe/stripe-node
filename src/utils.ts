@@ -483,19 +483,19 @@ export function validatePath(path: string): void {
     );
   }
 
-  const hasDotSegment = path
-    .split(/[?#]/, 1)[0]
-    .split('/')
-    .some((segment) => {
-      const decoded = segment.toLowerCase().replace(/%2e/g, '.');
-      return decoded === '.' || decoded === '..';
-    });
+  const pathOnly = path.split(/[?#]/, 1)[0];
+  const hasDotSegment = pathOnly.split('/').some((segment) => {
+    const decoded = segment.toLowerCase().replace(/%2e/g, '.');
+    return decoded === '.' || decoded === '..';
+  });
   if (hasDotSegment) {
     // A StripeInvalidRequestError rather than an Error, so that callers'
-    // existing handling for API errors keeps working.
+    // existing handling for API errors keeps working. The message leaves out
+    // the query string, which carries a request's GET parameters, such as a
+    // client_secret.
     throw new StripeInvalidRequestError({
       message: `Request path may not contain a "." or ".." segment, got: ${JSON.stringify(
-        path
+        pathOnly
       )}`,
     });
   }

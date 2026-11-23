@@ -907,6 +907,17 @@ describe('utils', () => {
       });
     });
 
+    it('leaves the query string out of the dot segment error', () => {
+      expect(() =>
+        utils.validatePath(
+          '/v1/payment_intents/..?client_secret=pi_123_secret_456'
+        )
+      )
+        .to.throw(StripeInvalidRequestError, '"/v1/payment_intents/.."')
+        .with.property('message')
+        .that.does.not.include('pi_123_secret_456');
+    });
+
     it('rejects paths that could move the request authority', () => {
       const hostile = [
         '@evil.example/v1/leak',

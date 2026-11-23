@@ -696,6 +696,20 @@ describe('RequestSender', () => {
           });
         }
 
+        it('leaves GET params out of the error message', async () => {
+          const {client, requestedUrls} = getRecordingStripe();
+
+          const err = await client.paymentIntents
+            .retrieve('..', {client_secret: 'pi_123_secret_456'})
+            .then(
+              () => expect.fail('expected the request to be rejected'),
+              (e) => e
+            );
+          expect(err).to.be.an.instanceOf(StripeInvalidRequestError);
+          expect(err.message).to.not.include('pi_123_secret_456');
+          expect(requestedUrls).to.deep.equal([]);
+        });
+
         it('rejects .. as a parent ID for nested resources without sending a request', async () => {
           const {client, requestedUrls} = getRecordingStripe();
 
