@@ -1,6 +1,6 @@
 // @ts-nocheck
 import * as utils from '../src/utils.js';
-import {StripeInvalidRequestError} from '../src/Error.js';
+import {StripeError} from '../src/Error.js';
 import {expect} from 'chai';
 
 describe('utils', () => {
@@ -900,11 +900,19 @@ describe('utils', () => {
         expect(
           () => utils.validatePath(path),
           `expected to reject ${JSON.stringify(path)}`
-        ).to.throw(
-          StripeInvalidRequestError,
-          /may not contain a "\." or "\.\." segment/
-        );
+        ).to.throw(Error, /may not contain a "\." or "\.\." segment/);
       });
+    });
+
+    it('throws a plain Error for a dot segment, like the other path checks', () => {
+      let err;
+      try {
+        utils.validatePath('/v1/checkout/sessions/..');
+      } catch (e) {
+        err = e;
+      }
+      expect(err).to.be.an.instanceOf(Error);
+      expect(err).to.not.be.an.instanceOf(StripeError);
     });
 
     it('leaves the query string out of the dot segment error', () => {
@@ -913,7 +921,7 @@ describe('utils', () => {
           '/v1/payment_intents/..?client_secret=pi_123_secret_456'
         )
       )
-        .to.throw(StripeInvalidRequestError, '"/v1/payment_intents/.."')
+        .to.throw(Error, '"/v1/payment_intents/.."')
         .with.property('message')
         .that.does.not.include('pi_123_secret_456');
     });

@@ -686,12 +686,12 @@ describe('RequestSender', () => {
             const {client, requestedUrls} = getRecordingStripe();
 
             await expect(client.customers.retrieve(id)).to.be.rejectedWith(
-              StripeInvalidRequestError,
+              Error,
               DOT_SEGMENT_ERROR
             );
             await expect(
               client.checkout.sessions.retrieve(id)
-            ).to.be.rejectedWith(StripeInvalidRequestError, DOT_SEGMENT_ERROR);
+            ).to.be.rejectedWith(Error, DOT_SEGMENT_ERROR);
             expect(requestedUrls).to.deep.equal([]);
           });
         }
@@ -705,7 +705,7 @@ describe('RequestSender', () => {
               () => expect.fail('expected the request to be rejected'),
               (e) => e
             );
-          expect(err).to.be.an.instanceOf(StripeInvalidRequestError);
+          expect(err).to.be.an.instanceOf(Error);
           expect(err.message).to.not.include('pi_123_secret_456');
           expect(requestedUrls).to.deep.equal([]);
         });
@@ -715,7 +715,7 @@ describe('RequestSender', () => {
 
           await expect(
             client.customers.retrievePaymentMethod('..', 'pm_123')
-          ).to.be.rejectedWith(StripeInvalidRequestError, DOT_SEGMENT_ERROR);
+          ).to.be.rejectedWith(Error, DOT_SEGMENT_ERROR);
           expect(requestedUrls).to.deep.equal([]);
         });
 
@@ -728,7 +728,7 @@ describe('RequestSender', () => {
             const {client, requestedUrls} = getRecordingStripe();
 
             await expect(client.rawRequest('GET', path)).to.be.rejectedWith(
-              StripeInvalidRequestError,
+              Error,
               DOT_SEGMENT_ERROR
             );
             expect(requestedUrls).to.deep.equal([]);

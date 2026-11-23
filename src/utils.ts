@@ -1,4 +1,3 @@
-import {StripeInvalidRequestError} from './Error.js';
 import {RequestOptions} from './lib.js';
 import {
   BaseAddress,
@@ -489,15 +488,13 @@ export function validatePath(path: string): void {
     return decoded === '.' || decoded === '..';
   });
   if (hasDotSegment) {
-    // A StripeInvalidRequestError rather than an Error, so that callers'
-    // existing handling for API errors keeps working. The message leaves out
-    // the query string, which carries a request's GET parameters, such as a
-    // client_secret.
-    throw new StripeInvalidRequestError({
-      message: `Request path may not contain a "." or ".." segment, got: ${JSON.stringify(
+    // The message leaves out the query string, which carries a request's GET
+    // parameters, such as a client_secret.
+    throw new Error(
+      `Request path may not contain a "." or ".." segment, got: ${JSON.stringify(
         pathOnly
-      )}`,
-    });
+      )}`
+    );
   }
 }
 
