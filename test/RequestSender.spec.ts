@@ -710,6 +710,15 @@ describe('RequestSender', () => {
           expect(requestedUrls).to.deep.equal([]);
         });
 
+        it('rejects an ID with encoded dot segments without sending a request', async () => {
+          const {client, requestedUrls} = getRecordingStripe();
+
+          await expect(
+            client.coupons.retrieve('x/../../customers/cus_B')
+          ).to.be.rejectedWith(Error, DOT_SEGMENT_ERROR);
+          expect(requestedUrls).to.deep.equal([]);
+        });
+
         it('rejects .. as a parent ID for nested resources without sending a request', async () => {
           const {client, requestedUrls} = getRecordingStripe();
 

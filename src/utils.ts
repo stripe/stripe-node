@@ -467,7 +467,9 @@ export function jsonStringifyRequestData(data: RequestData | string): string {
  * called: customers.retrievePaymentMethod('..', 'pm_123') would request
  * /v1/payment_methods/pm_123. NodeHttpClient sends the path literally, but we
  * check it anyway because a proxy, custom HTTP client, or server may normalize
- * the path.
+ * the path. An encoded slash ("%2F") also counts as a separator for this
+ * check, because a proxy that decodes the path before normalizing it (nginx's
+ * proxy_pass, for example) turns it into a real one.
  */
 export function validatePath(path: string): void {
   if (
@@ -483,7 +485,7 @@ export function validatePath(path: string): void {
   }
 
   const pathOnly = path.split(/[?#]/, 1)[0];
-  const hasDotSegment = pathOnly.split('/').some((segment) => {
+  const hasDotSegment = pathOnly.split(/\/|%2f/i).some((segment) => {
     const decoded = segment.toLowerCase().replace(/%2e/g, '.');
     return decoded === '.' || decoded === '..';
   });

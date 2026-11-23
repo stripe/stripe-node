@@ -874,6 +874,8 @@ describe('utils', () => {
         '/v1/customers?email=a..b%40example.com',
         // A double-encoded dot reaches the API as the literal '%2E'.
         '/v1/customers/%252E',
+        // An encoded slash is fine as long as no piece around it is a dot segment.
+        '/v1/coupons/summer%2F2017',
       ];
       valid.forEach((path) => {
         expect(() => utils.validatePath(path)).to.not.throw();
@@ -895,6 +897,11 @@ describe('utils', () => {
         '/v1/checkout/sessions/%2E',
         '/v1/checkout/sessions/%2e%2E',
         '/v1/checkout/sessions/.%2E',
+        // A proxy that decodes '%2F' before removing dot segments turns these
+        // into real path separators.
+        '/v1/coupons/x%2F..%2F..%2Fcustomers%2Fcus_B',
+        '/v1/customers/cus_123/sources/..%2F..%2Fcus_B',
+        '/v1/coupons/..%2fsummer',
       ];
       dotSegments.forEach((path) => {
         expect(
