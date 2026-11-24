@@ -459,6 +459,11 @@ export function jsonStringifyRequestData(data: RequestData | string): string {
  *
  * NodeHttpClient passes {host, path} to `http.request` individually, so it doesn't need the same checks
  * but the public `httpClient` needs the same security guarantees.
+ *
+ * We also reject "." and ".." segments, which an ID of "." or ".." would
+ * otherwise produce: FetchHttpClient's WHATWG URL, a proxy, or the server can
+ * remove them and send the request to a different endpoint. Encoded forms count
+ * too ("%2E", and "%2F" as a separator), since some of those decode first.
  */
 export function validatePath(path: string): void {
   if (
@@ -469,6 +474,21 @@ export function validatePath(path: string): void {
     throw new Error(
       `Request path must be a string beginning with a single "/", got: ${JSON.stringify(
         path
+      )}`
+    );
+  }
+
+  const pathOnly = path.split(/[?#]/, 1)[0];
+  const hasDotSegment = pathOnly.split(/\/|%2f/i).some((segment) => {
+    const decoded = segment.toLowerCase().replace(/%2e/g, '.');
+    return decoded === '.' || decoded === '..';
+  });
+  if (hasDotSegment) {
+    // The message leaves out the query string, which carries a request's GET
+    // parameters, such as a client_secret.
+    throw new Error(
+      `Request path may not contain a "." or ".." segment, got: ${JSON.stringify(
+        pathOnly
       )}`
     );
   }

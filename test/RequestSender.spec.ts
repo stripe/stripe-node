@@ -665,50 +665,84 @@ describe('RequestSender', () => {
       //   });
       // });
 
-      it('handles . as a query param', (done) => {
-        let requestUrl;
-        return getTestServerStripe(
-          {},
-          (req, res) => {
-            requestUrl = req.url;
-            res.end('{}');
-          },
-          (err, stripe) => {
-            if (err) {
-              return done(err);
-            }
-            stripe.customers
-              .retrieve('.')
-              .then(() => {
-                expect(requestUrl).to.equal('/v1/customers/.');
-                done();
-              })
-              .catch(done);
-          }
-        );
-      });
+      describe('with a "." or ".." path segment', () => {
+        const DOT_SEGMENT_ERROR = /may not contain a "\." or "\.\." segment/;
 
-      it('handles .. as a query param', (done) => {
-        let requestUrl;
-        return getTestServerStripe(
-          {},
-          (req, res) => {
-            requestUrl = req.url;
-            res.end('{}');
-          },
-          (err, stripe) => {
-            if (err) {
-              return done(err);
-            }
-            stripe.customers
-              .retrieve('..')
-              .then(() => {
-                expect(requestUrl).to.equal('/v1/customers/..');
-                done();
-              })
-              .catch(done);
-          }
-        );
+        // FetchHttpClient builds a WHATWG URL, which removes dot segments, so
+        // any request that got this far would reach a different endpoint.
+        const getRecordingStripe = () => {
+          const requestedUrls = [];
+          const client = require('../src/stripe.cjs.node.js')(FAKE_API_KEY, {
+            httpClient: new FetchHttpClient((url) => {
+              requestedUrls.push(url);
+              return Promise.resolve(new Response('{}', {status: 200}));
+            }),
+          });
+          return {client, requestedUrls};
+        };
+
+        for (const id of ['.', '..']) {
+          it(`rejects ${id} as an ID without sending a request`, async () => {
+            const {client, requestedUrls} = getRecordingStripe();
+
+            await expect(client.customers.retrieve(id)).to.be.rejectedWith(
+              Error,
+              DOT_SEGMENT_ERROR
+            );
+            await expect(
+              client.checkout.sessions.retrieve(id)
+            ).to.be.rejectedWith(Error, DOT_SEGMENT_ERROR);
+            expect(requestedUrls).to.deep.equal([]);
+          });
+        }
+
+        it('leaves GET params out of the error message', async () => {
+          const {client, requestedUrls} = getRecordingStripe();
+
+          const err = await client.paymentIntents
+            .retrieve('..', {client_secret: 'pi_123_secret_456'})
+            .then(
+              () => expect.fail('expected the request to be rejected'),
+              (e) => e
+            );
+          expect(err).to.be.an.instanceOf(Error);
+          expect(err.message).to.not.include('pi_123_secret_456');
+          expect(requestedUrls).to.deep.equal([]);
+        });
+
+        it('rejects an ID with encoded dot segments without sending a request', async () => {
+          const {client, requestedUrls} = getRecordingStripe();
+
+          await expect(
+            client.coupons.retrieve('x/../../customers/cus_B')
+          ).to.be.rejectedWith(Error, DOT_SEGMENT_ERROR);
+          expect(requestedUrls).to.deep.equal([]);
+        });
+
+        it('rejects .. as a parent ID for nested resources without sending a request', async () => {
+          const {client, requestedUrls} = getRecordingStripe();
+
+          await expect(
+            client.customers.retrievePaymentMethod('..', 'pm_123')
+          ).to.be.rejectedWith(Error, DOT_SEGMENT_ERROR);
+          expect(requestedUrls).to.deep.equal([]);
+        });
+
+        for (const path of [
+          '/v1/customers/../payment_methods/pm_123',
+          '/v1/customers/cus_123/sources/..?expand[]=customer',
+          '/v1/checkout/sessions/%2E',
+        ]) {
+          it(`rejects a raw request to ${path} without sending a request`, async () => {
+            const {client, requestedUrls} = getRecordingStripe();
+
+            await expect(client.rawRequest('GET', path)).to.be.rejectedWith(
+              Error,
+              DOT_SEGMENT_ERROR
+            );
+            expect(requestedUrls).to.deep.equal([]);
+          });
+        }
       });
 
       it('handles empty string as a query param', (done) => {
