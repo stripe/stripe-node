@@ -862,6 +862,49 @@ describe('Stripe Module', function() {
       }).to.throw(StripeSignatureVerificationError);
     });
 
+    describe('tolerance', () => {
+      const payload = JSON.stringify({
+        object: 'v2.core.event',
+        type: 'account.created',
+        data: 'hello',
+        related_object: {id: '123', url: 'hello_again'},
+      });
+      const oldHeader = (): string =>
+        stripe.webhooks.generateTestHeaderString({
+          payload,
+          secret,
+          timestamp: Math.floor(Date.now() / 1000) - 1000,
+        });
+
+      it('rejects a timestamp older than the default tolerance when tolerance is omitted', () => {
+        expect(() => {
+          stripe.parseEventNotification(payload, oldHeader(), secret);
+        }).to.throw(StripeSignatureVerificationError);
+      });
+
+      it('rejects a timestamp older than the default tolerance when tolerance is undefined', () => {
+        expect(() => {
+          stripe.parseEventNotification(
+            payload,
+            oldHeader(),
+            secret,
+            undefined
+          );
+        }).to.throw(StripeSignatureVerificationError);
+      });
+
+      it('skips the timestamp check when tolerance is 0', () => {
+        const event = stripe.parseEventNotification(
+          payload,
+          oldHeader(),
+          secret,
+          0
+        );
+
+        expect(event.type).to.equal('account.created');
+      });
+    });
+
     it('throws an error when a v1 webhook payload is passed', () => {
       const jsonPayload = {
         id: 'evt_test_webhook',
@@ -1488,6 +1531,60 @@ describe('Stripe Module', function() {
       } catch (e) {
         expect(e).to.be.instanceOf(StripeSignatureVerificationError);
       }
+    });
+
+    describe('tolerance', () => {
+      const payload = JSON.stringify({
+        object: 'v2.core.event',
+        type: 'account.created',
+        data: 'hello',
+        related_object: {id: '123', url: 'hello_again'},
+      });
+      const oldHeader = (): Promise<string> =>
+        stripe.webhooks.generateTestHeaderStringAsync({
+          payload,
+          secret,
+          timestamp: Math.floor(Date.now() / 1000) - 1000,
+        });
+
+      it('rejects a timestamp older than the default tolerance when tolerance is omitted', async () => {
+        const header = await oldHeader();
+
+        try {
+          await stripe.parseEventNotificationAsync(payload, header, secret);
+          expect.fail('Expected an error to be thrown');
+        } catch (e) {
+          expect(e).to.be.instanceOf(StripeSignatureVerificationError);
+        }
+      });
+
+      it('rejects a timestamp older than the default tolerance when tolerance is undefined', async () => {
+        const header = await oldHeader();
+
+        try {
+          await stripe.parseEventNotificationAsync(
+            payload,
+            header,
+            secret,
+            undefined
+          );
+          expect.fail('Expected an error to be thrown');
+        } catch (e) {
+          expect(e).to.be.instanceOf(StripeSignatureVerificationError);
+        }
+      });
+
+      it('skips the timestamp check when tolerance is 0', async () => {
+        const header = await oldHeader();
+        const event = await stripe.parseEventNotificationAsync(
+          payload,
+          header,
+          secret,
+          0
+        );
+
+        expect(event.type).to.equal('account.created');
+      });
     });
 
     it('throws an error when a v1 webhook payload is passed', async () => {
