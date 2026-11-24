@@ -460,16 +460,10 @@ export function jsonStringifyRequestData(data: RequestData | string): string {
  * NodeHttpClient passes {host, path} to `http.request` individually, so it doesn't need the same checks
  * but the public `httpClient` needs the same security guarantees.
  *
- * We also reject "." and ".." path segments, including percent-encoded forms
- * like "%2E". encodeURIComponent leaves dots alone, and FetchHttpClient (the
- * default in browsers, workers, Deno, and Bun) builds a WHATWG URL, which
- * removes these segments, so an ID of "." or ".." changes which endpoint is
- * called: customers.retrievePaymentMethod('..', 'pm_123') would request
- * /v1/payment_methods/pm_123. NodeHttpClient sends the path literally, but we
- * check it anyway because a proxy, custom HTTP client, or server may normalize
- * the path. An encoded slash ("%2F") also counts as a separator for this
- * check, because a proxy that decodes the path before normalizing it (nginx's
- * proxy_pass, for example) turns it into a real one.
+ * We also reject "." and ".." segments, which an ID of "." or ".." would
+ * otherwise produce: FetchHttpClient's WHATWG URL, a proxy, or the server can
+ * remove them and send the request to a different endpoint. Encoded forms count
+ * too ("%2E", and "%2F" as a separator), since some of those decode first.
  */
 export function validatePath(path: string): void {
   if (
