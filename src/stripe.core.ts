@@ -1721,7 +1721,7 @@ export class Stripe {
       payload,
       header,
       secret,
-      tolerance || this.webhooks.DEFAULT_TOLERANCE,
+      tolerance ?? this.webhooks.DEFAULT_TOLERANCE,
       cryptoProvider || this._platformFunctions.createDefaultCryptoProvider(),
       receivedAt
     );
@@ -1748,7 +1748,7 @@ export class Stripe {
       payload,
       header,
       secret,
-      tolerance || this.webhooks.DEFAULT_TOLERANCE,
+      tolerance ?? this.webhooks.DEFAULT_TOLERANCE,
       cryptoProvider || this._platformFunctions.createDefaultCryptoProvider(),
       receivedAt
     );
