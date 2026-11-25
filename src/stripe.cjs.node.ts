@@ -1,56 +1,16 @@
 import {NodePlatformFunctions} from './platform/NodePlatformFunctions.js';
 import * as Stripe_ from './stripe.barrel.js';
 import {Stripe as StripeClass} from './stripe.core.js';
-import {StripeConfig} from './lib.js';
 
 // Initialize the Stripe class with Node platform functions
 StripeClass.initialize(new NodePlatformFunctions());
 
-// Callable constructor: supports both `new Stripe()` and `Stripe()` for CJS consumers.
-// typeof Stripe provides the construct signature and static members; the intersection
-// adds a call signature for backward compatibility.
-type StripeCallableConstructor = typeof StripeClass & {
-  (key: string, config?: StripeConfig): StripeClass;
-};
-
-// The ambient namespace below supplies nested types on the exported callable value.
-// eslint-disable-next-line func-style
-const StripeConstructor: StripeCallableConstructor = (function(
-  this: any,
-  key: string,
-  config?: StripeConfig
-): StripeClass {
-  // Support calling without `new`
-  if (!(this instanceof StripeConstructor)) {
-    return new StripeClass(key, config);
-  }
-  return new StripeClass(key, config);
-} as unknown) as StripeCallableConstructor;
-
-// Copy all static properties from Stripe to the wrapper
-Object.setPrototypeOf(StripeConstructor, StripeClass);
-Object.setPrototypeOf(StripeConstructor.prototype, StripeClass.prototype);
-
-// Copy static properties explicitly
-for (const key of Object.getOwnPropertyNames(StripeClass)) {
-  if (key !== 'length' && key !== 'prototype' && key !== 'name') {
-    Object.defineProperty(StripeConstructor, key, {
-      value: (StripeClass as any)[key],
-      writable: true,
-      enumerable: true,
-      configurable: true,
-    });
-  }
-}
-
-// `new Stripe()` plus `Stripe()` call compat: the implementation is a function, so we merge
-// callable + construct signatures here (see https://github.com/stripe/stripe-node/issues/2683).
-// StripeInterfaceCJSRuntime: The beginning of the section generated from our OpenAPI spec
-// StripeInterfaceCJSRuntime: The end of the section generated from our OpenAPI spec
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface StripeConstructor extends StripeClass {}
-declare namespace StripeConstructor {
+// Extension-point SDKs export a plain class so the namespace below can carry the
+// generated extension namespaces as values (`export import`), which TypeScript only
+// merges with a class, not with a const. Unlike stripe-node, `Stripe(key)` without
+// `new` is not supported.
+class StripeConstructor extends StripeClass {}
+namespace StripeConstructor {
   export type Stripe = StripeClass;
   // StripeInterfaceCJSExports: The beginning of the section generated from our OpenAPI spec
   // StripeInterfaceCJSExports: The end of the section generated from our OpenAPI spec
