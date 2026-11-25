@@ -55,7 +55,7 @@ try {
 
 async function exampleFunction(args) {
   try {
-    await stripe.paymentIntents.create(args);
+    await stripe.v1.paymentIntents.create(args);
   } catch (e) {
     if (e instanceof stripe.errors.StripeInvalidRequestError) {
       console.log('Caught StripeInvalidRequestError');

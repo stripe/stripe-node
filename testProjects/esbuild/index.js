@@ -22,7 +22,7 @@ try {
 
 async function exampleFunction(args) {
   try {
-    await stripe.paymentIntents.create(args);
+    await stripe.v1.paymentIntents.create(args);
     throw new Error('Expected an error');
   } catch (e) {
     assert(e instanceof stripe.errors.StripeAuthenticationError);

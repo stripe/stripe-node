@@ -188,7 +188,7 @@ stripeClient.customers
   })
   .then((customer) => {
     // have access to the customer object
-    return stripe.invoiceItems
+    return stripe.v1.invoiceItems
       .create({
         customer: customer.id, // set the customer id
         amount: 2500, // 25
@@ -196,7 +196,7 @@ stripeClient.customers
         description: 'One-time setup fee',
       })
       .then((invoiceItem) => {
-        return stripe.invoices.create({
+        return stripe.v1.invoices.create({
           collection_method: 'send_invoice',
           customer: invoiceItem.customer,
         });
