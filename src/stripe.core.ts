@@ -18,6 +18,7 @@ import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import * as resources from './resources.js';
 import {
   createApiKeyAuthenticator,
+  decodePayload,
   detectAIAgent,
   maybeExtractFromCloudProviderEnvelope,
   parsePayload,
@@ -1717,8 +1718,9 @@ export class Stripe {
     if (!this.webhooks.signature) {
       throw new Error('ERR: missing signature helper, unable to verify');
     }
+    const decodedPayload = decodePayload(payload);
     this.webhooks.signature.verifyHeader(
-      payload,
+      decodedPayload,
       header,
       secret,
       tolerance || this.webhooks.DEFAULT_TOLERANCE,
@@ -1726,7 +1728,7 @@ export class Stripe {
       receivedAt
     );
 
-    return this._buildEventNotification(parsePayload(payload));
+    return this._buildEventNotification(parsePayload(decodedPayload));
   }
 
   async parseEventNotificationAsync(
@@ -1744,8 +1746,9 @@ export class Stripe {
     if (!this.webhooks.signature) {
       throw new Error('ERR: missing signature helper, unable to verify');
     }
+    const decodedPayload = decodePayload(payload);
     await this.webhooks.signature.verifyHeaderAsync(
-      payload,
+      decodedPayload,
       header,
       secret,
       tolerance || this.webhooks.DEFAULT_TOLERANCE,
@@ -1753,7 +1756,7 @@ export class Stripe {
       receivedAt
     );
 
-    return this._buildEventNotification(parsePayload(payload));
+    return this._buildEventNotification(parsePayload(decodedPayload));
   }
 
   /**

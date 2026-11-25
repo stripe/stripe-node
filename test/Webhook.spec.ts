@@ -2,7 +2,11 @@
 
 import {expect} from 'chai';
 import {StripeSignatureVerificationError} from '../src/Error.js';
-import {FakeCryptoProvider, getSpyableStripe} from './testUtils.js';
+import {
+  FakeCryptoProvider,
+  OverwritingCryptoProvider,
+  getSpyableStripe,
+} from './testUtils.js';
 import {CryptoProviderOnlySupportsAsyncError} from '../src/crypto/CryptoProvider.js';
 import {createWebhooks} from '../src/Webhooks.js';
 import {WebPlatformFunctions} from '../src/platform/WebPlatformFunctions.js';
@@ -15,6 +19,11 @@ const EVENT_PAYLOAD = {
   object: 'event',
 };
 const EVENT_PAYLOAD_STRING = JSON.stringify(EVENT_PAYLOAD, null, 2);
+// Same length as EVENT_PAYLOAD_STRING, so it can overwrite a buffer in place.
+const UNSIGNED_EVENT_PAYLOAD_STRING = EVENT_PAYLOAD_STRING.replace(
+  'evt_test_webhook',
+  'evt_fake_webhook'
+);
 
 const V2_EVENT_PAYLOAD = {
   id: 'evt_test_webhook',
@@ -224,6 +233,40 @@ function createWebhooksTestSuite(stripe) {
         expect(event.id).to.equal(EVENT_PAYLOAD.id);
       });
 
+      it('should return the verified event if the payload buffer changes during verification', async () => {
+        const header = stripe.webhooks.generateTestHeaderString({
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+        const payload = Buffer.from(EVENT_PAYLOAD_STRING);
+
+        const event = await constructEventFn(
+          payload,
+          header,
+          SECRET,
+          undefined,
+          new OverwritingCryptoProvider(payload, UNSIGNED_EVENT_PAYLOAD_STRING)
+        );
+
+        expect(payload.toString()).to.equal(UNSIGNED_EVENT_PAYLOAD_STRING);
+        expect(event.id).to.equal(EVENT_PAYLOAD.id);
+      });
+
+      it('should reject the replacement payload when it is passed directly', async () => {
+        const header = stripe.webhooks.generateTestHeaderString({
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+
+        await expect(
+          constructEventFn(
+            Buffer.from(UNSIGNED_EVENT_PAYLOAD_STRING),
+            header,
+            SECRET
+          )
+        ).to.be.rejectedWith(StripeSignatureVerificationError);
+      });
+
       it('should throw when a v2 webhook payload is passed', async () => {
         const header = stripe.webhooks.generateTestHeaderString({
           payload: V2_EVENT_PAYLOAD_STRING,
@@ -261,12 +304,28 @@ function createWebhooksTestSuite(stripe) {
     });
   });
 
-  describe(
-    '.constructEventAsync',
+  describe('.constructEventAsync', () => {
     makeConstructEventTests((...args: any) =>
       stripe.webhooks.constructEventAsync(...args)
-    )
-  );
+    )();
+    it('should return the verified event if the payload buffer changes after the call', async () => {
+      const header = stripe.webhooks.generateTestHeaderString({
+        payload: EVENT_PAYLOAD_STRING,
+        secret: SECRET,
+      });
+      const payload = Buffer.from(EVENT_PAYLOAD_STRING);
+
+      const eventPromise = stripe.webhooks.constructEventAsync(
+        payload,
+        header,
+        SECRET
+      );
+      payload.write(UNSIGNED_EVENT_PAYLOAD_STRING);
+      const event = await eventPromise;
+
+      expect(event.id).to.equal(EVENT_PAYLOAD.id);
+    });
+  });
 
   const makeVerifySignatureHeaderTests = (
     verifyHeaderFn: typeof stripe.webhooks.verify

@@ -522,16 +522,24 @@ export function parseHeadersForFetch(
 }
 
 /**
+ * Decodes a webhook payload (string or Uint8Array) into a string.
+ *
+ * Webhook helpers decode once and use the result for both signature
+ * verification and parsing, so a caller-owned Uint8Array is only read once.
+ */
+export function decodePayload(payload: string | Uint8Array): string {
+  return payload instanceof Uint8Array
+    ? new TextDecoder('utf8').decode(payload)
+    : payload;
+}
+
+/**
  * Parses a webhook payload (string or Uint8Array) into a plain object.
  */
 export function parsePayload(
   payload: string | Uint8Array
 ): Record<string, unknown> {
-  const raw =
-    payload instanceof Uint8Array
-      ? new TextDecoder('utf8').decode(payload)
-      : payload;
-  return JSON.parse(raw) as Record<string, unknown>;
+  return JSON.parse(decodePayload(payload)) as Record<string, unknown>;
 }
 
 export function isBlankWebhookSecret(secret: string): boolean {

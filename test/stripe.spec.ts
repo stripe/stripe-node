@@ -12,6 +12,7 @@ import {NodePlatformFunctions} from '../src/platform/NodePlatformFunctions.js';
 import {Stripe as StripeCore} from '../src/stripe.core.js';
 import {
   FAKE_API_KEY,
+  OverwritingCryptoProvider,
   getRandomString,
   getStripeMockClient,
   getTestServerStripe,
@@ -862,6 +863,36 @@ describe('Stripe Module', function() {
       }).to.throw(StripeSignatureVerificationError);
     });
 
+    it('returns the verified event if the payload buffer changes during verification', () => {
+      const signed = JSON.stringify({
+        id: 'evt_signed',
+        object: 'v2.core.event',
+      });
+      const unsigned = JSON.stringify({
+        id: 'evt_unsign',
+        object: 'v2.core.event',
+      });
+      const header = stripe.webhooks.generateTestHeaderString({
+        payload: signed,
+        secret,
+      });
+      const payload = Buffer.from(signed);
+
+      const event = stripe.parseEventNotification(
+        payload,
+        header,
+        secret,
+        undefined,
+        new OverwritingCryptoProvider(payload, unsigned)
+      );
+
+      expect(payload.toString()).to.equal(unsigned);
+      expect(event.id).to.equal('evt_signed');
+      expect(() => {
+        stripe.parseEventNotification(Buffer.from(unsigned), header, secret);
+      }).to.throw(StripeSignatureVerificationError);
+    });
+
     it('throws an error when a v1 webhook payload is passed', () => {
       const jsonPayload = {
         id: 'evt_test_webhook',
@@ -1488,6 +1519,67 @@ describe('Stripe Module', function() {
       } catch (e) {
         expect(e).to.be.instanceOf(StripeSignatureVerificationError);
       }
+    });
+
+    describe('when the payload buffer changes', () => {
+      const signed = JSON.stringify({
+        id: 'evt_signed',
+        object: 'v2.core.event',
+      });
+      const unsigned = JSON.stringify({
+        id: 'evt_unsign',
+        object: 'v2.core.event',
+      });
+      let header;
+
+      beforeEach(async () => {
+        header = await stripe.webhooks.generateTestHeaderStringAsync({
+          payload: signed,
+          secret,
+        });
+      });
+
+      it('returns the verified event if it changes during verification', async () => {
+        const payload = Buffer.from(signed);
+
+        const event = await stripe.parseEventNotificationAsync(
+          payload,
+          header,
+          secret,
+          undefined,
+          new OverwritingCryptoProvider(payload, unsigned)
+        );
+
+        expect(payload.toString()).to.equal(unsigned);
+        expect(event.id).to.equal('evt_signed');
+      });
+
+      it('returns the verified event if it changes after the call', async () => {
+        const payload = Buffer.from(signed);
+
+        const eventPromise = stripe.parseEventNotificationAsync(
+          payload,
+          header,
+          secret
+        );
+        payload.write(unsigned);
+        const event = await eventPromise;
+
+        expect(event.id).to.equal('evt_signed');
+      });
+
+      it('rejects the replacement payload when it is passed directly', async () => {
+        try {
+          await stripe.parseEventNotificationAsync(
+            Buffer.from(unsigned),
+            header,
+            secret
+          );
+          expect.fail('Expected an error to be thrown');
+        } catch (e) {
+          expect(e).to.be.instanceOf(StripeSignatureVerificationError);
+        }
+      });
     });
 
     it('throws an error when a v1 webhook payload is passed', async () => {
