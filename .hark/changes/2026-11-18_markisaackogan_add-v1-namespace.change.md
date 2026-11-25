@@ -8,7 +8,6 @@ All top-level, non-[v2 API services](https://docs.stripe.com/api-v2-overview) on
 ```diff
 const stripe = new Stripe('sk_test_...');
 
-// Access V1 API services through the V1 namespace
-- stripe.customers.list();
-+ stripe.v1.customers.list(); // preferred way to access services
+- stripe.customers.list(); // existing way to access v1 endpoints
++ stripe.v1.customers.list(); // recommended way to access services
 ```
