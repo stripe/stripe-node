@@ -6,6 +6,7 @@ import {
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import {Event} from './resources/Events.js';
 import {
+  decodePayload,
   isBlankWebhookSecret,
   maybeExtractFromCloudProviderEnvelope,
   parsePayload,
@@ -159,6 +160,7 @@ export function createWebhooks(
       cryptoProvider?: CryptoProvider,
       receivedAt?: number
     ): Event {
+      const decodedPayload = decodePayload(payload);
       try {
         if (!this.signature) {
           throw new Error('ERR: missing signature helper, unable to verify');
@@ -167,7 +169,7 @@ export function createWebhooks(
         cryptoProvider = cryptoProvider || getCryptoProvider();
 
         this.signature.verifyHeader(
-          payload,
+          decodedPayload,
           header,
           secret,
           tolerance ?? Webhook.DEFAULT_TOLERANCE,
@@ -182,7 +184,7 @@ export function createWebhooks(
         throw e;
       }
 
-      return buildEvent(parsePayload(payload));
+      return buildEvent(parsePayload(decodedPayload));
     },
 
     async constructEventAsync(
@@ -199,8 +201,9 @@ export function createWebhooks(
 
       cryptoProvider = cryptoProvider || getCryptoProvider();
 
+      const decodedPayload = decodePayload(payload);
       await this.signature.verifyHeaderAsync(
-        payload,
+        decodedPayload,
         header,
         secret,
         tolerance ?? Webhook.DEFAULT_TOLERANCE,
@@ -208,7 +211,7 @@ export function createWebhooks(
         receivedAt
       );
 
-      return buildEvent(parsePayload(payload));
+      return buildEvent(parsePayload(decodedPayload));
     },
 
     constructEventWithoutVerification(payload: string): Event {
@@ -396,10 +399,7 @@ export function createWebhooks(
       !(encodedPayload instanceof Uint8Array);
 
     const textDecoder = new TextDecoder('utf8');
-    const decodedPayload =
-      encodedPayload instanceof Uint8Array
-        ? textDecoder.decode(encodedPayload)
-        : encodedPayload;
+    const decodedPayload = decodePayload(encodedPayload);
 
     if (encodedHeader == null || encodedHeader == '') {
       throw new StripeSignatureVerificationError(

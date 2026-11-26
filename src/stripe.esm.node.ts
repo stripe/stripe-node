@@ -19,6 +19,7 @@ import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import * as resources from './resources.js';
 import {
   createApiKeyAuthenticator,
+  decodePayload,
   detectAIAgent,
   maybeExtractFromCloudProviderEnvelope,
   pascalToCamelCase,
@@ -1689,8 +1690,9 @@ export class Stripe {
     if (!this.webhooks.signature) {
       throw new Error('ERR: missing signature helper, unable to verify');
     }
+    const decodedPayload = decodePayload(payload);
     this.webhooks.signature.verifyHeader(
-      payload,
+      decodedPayload,
       header,
       secret,
       tolerance || this.webhooks.DEFAULT_TOLERANCE,
@@ -1698,10 +1700,7 @@ export class Stripe {
       receivedAt
     );
 
-    const eventNotification =
-      payload instanceof Uint8Array
-        ? JSON.parse(new TextDecoder('utf8').decode(payload))
-        : JSON.parse(payload as string);
+    const eventNotification = JSON.parse(decodedPayload);
 
     if (eventNotification.object === 'event') {
       throw new Error(
@@ -1732,8 +1731,9 @@ export class Stripe {
     if (!this.webhooks.signature) {
       throw new Error('ERR: missing signature helper, unable to verify');
     }
+    const decodedPayload = decodePayload(payload);
     await this.webhooks.signature.verifyHeaderAsync(
-      payload,
+      decodedPayload,
       header,
       secret,
       tolerance || this.webhooks.DEFAULT_TOLERANCE,
@@ -1741,10 +1741,7 @@ export class Stripe {
       receivedAt
     );
 
-    const eventNotification =
-      payload instanceof Uint8Array
-        ? JSON.parse(new TextDecoder('utf8').decode(payload))
-        : JSON.parse(payload as string);
+    const eventNotification = JSON.parse(decodedPayload);
 
     if (eventNotification && eventNotification.object === 'event') {
       throw new Error(

@@ -731,6 +731,25 @@ describe('StripeEventNotificationHandler', () => {
       expect(errorThrown).to.be.true;
     });
 
+    it('should dispatch the verified notification if the payload buffer changes after the call', async () => {
+      const signed = v1BillingMeterNoMeterFoundPayload;
+      const unsigned = signed.replace('evt_456', 'evt_789');
+      let receivedId;
+      const handler = stripe.notificationHandler(
+        DUMMY_WEBHOOK_SECRET,
+        async (notif: any) => {
+          receivedId = notif.id;
+        }
+      );
+      const payload = Buffer.from(signed);
+
+      const handled = handler.handle(payload, generateHeader(signed));
+      payload.write(unsigned);
+      await handled;
+
+      expect(receivedId).to.equal('evt_456');
+    });
+
     it('should reject blank webhook secrets', () => {
       const blankSecrets = [
         '',

@@ -4,6 +4,7 @@ require('mocha');
 import http = require('http');
 
 import {CryptoProvider} from '../src/crypto/CryptoProvider.js';
+import {NodeCryptoProvider} from '../src/crypto/NodeCryptoProvider.js';
 import {NodePlatformFunctions} from '../src/platform/NodePlatformFunctions.js';
 import {RequestSender} from '../src/RequestSender.js';
 import {Stripe} from '../src/stripe.core.js';
@@ -257,5 +258,32 @@ export class FakeCryptoProvider extends CryptoProvider {
 
   computeHMACSignatureAsync(payload: string, secret: string): Promise<string> {
     return Promise.resolve('fake signature');
+  }
+}
+
+/**
+ * Computes real signatures, but first overwrites `target` with `replacement`,
+ * simulating a caller-owned buffer changing while verification is in progress.
+ */
+export class OverwritingCryptoProvider extends NodeCryptoProvider {
+  constructor(
+    private readonly target: Uint8Array,
+    private readonly replacement: string
+  ) {
+    super();
+  }
+
+  private overwrite(): void {
+    this.target.set(new TextEncoder().encode(this.replacement));
+  }
+
+  computeHMACSignature(payload: string, secret: string): string {
+    this.overwrite();
+    return super.computeHMACSignature(payload, secret);
+  }
+
+  computeHMACSignatureAsync(payload: string, secret: string): Promise<string> {
+    this.overwrite();
+    return super.computeHMACSignatureAsync(payload, secret);
   }
 }
