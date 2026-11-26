@@ -11,7 +11,7 @@ const expect = require('chai').expect;
 
 describe('Generated tests', function() {
   it('test_account_links_post', async function() {
-    const accountLink = await stripe.accountLinks.create({
+    const accountLink = await stripe.v1.accountLinks.create({
       account: 'acct_xxxxxxxxxxxxx',
       refresh_url: 'https://example.com/reauth',
       return_url: 'https://example.com/return',
@@ -21,14 +21,14 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_capabilities_get', async function() {
-    const capabilities = await stripe.accounts.listCapabilities(
+    const capabilities = await stripe.v1.accounts.listCapabilities(
       'acct_xxxxxxxxxxxxx'
     );
     expect(capabilities).not.to.be.null;
   });
 
   it('test_accounts_capabilities_get_2', async function() {
-    const capability = await stripe.accounts.retrieveCapability(
+    const capability = await stripe.v1.accounts.retrieveCapability(
       'acct_xxxxxxxxxxxxx',
       'card_payments'
     );
@@ -36,7 +36,7 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_capabilities_post', async function() {
-    const capability = await stripe.accounts.updateCapability(
+    const capability = await stripe.v1.accounts.updateCapability(
       'acct_xxxxxxxxxxxxx',
       'card_payments',
       {
@@ -47,12 +47,12 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_delete', async function() {
-    const deleted = await stripe.accounts.del('acct_xxxxxxxxxxxxx');
+    const deleted = await stripe.v1.accounts.del('acct_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
   it('test_accounts_external_accounts_delete', async function() {
-    const deleted = await stripe.accounts.deleteExternalAccount(
+    const deleted = await stripe.v1.accounts.deleteExternalAccount(
       'acct_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx'
     );
@@ -60,7 +60,7 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_external_accounts_delete_2', async function() {
-    const deleted = await stripe.accounts.deleteExternalAccount(
+    const deleted = await stripe.v1.accounts.deleteExternalAccount(
       'acct_xxxxxxxxxxxxx',
       'card_xxxxxxxxxxxxx'
     );
@@ -68,7 +68,7 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_external_accounts_get', async function() {
-    const externalAccounts = await stripe.accounts.listExternalAccounts(
+    const externalAccounts = await stripe.v1.accounts.listExternalAccounts(
       'acct_xxxxxxxxxxxxx',
       {
         limit: 3,
@@ -78,7 +78,7 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_external_accounts_get_2', async function() {
-    const externalAccounts = await stripe.accounts.listExternalAccounts(
+    const externalAccounts = await stripe.v1.accounts.listExternalAccounts(
       'acct_xxxxxxxxxxxxx',
       {
         object: 'bank_account',
@@ -89,7 +89,7 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_external_accounts_get_3', async function() {
-    const externalAccounts = await stripe.accounts.listExternalAccounts(
+    const externalAccounts = await stripe.v1.accounts.listExternalAccounts(
       'acct_xxxxxxxxxxxxx',
       {
         object: 'card',
@@ -100,7 +100,7 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_external_accounts_get_4', async function() {
-    const externalAccount = await stripe.accounts.retrieveExternalAccount(
+    const externalAccount = await stripe.v1.accounts.retrieveExternalAccount(
       'acct_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx'
     );
@@ -108,7 +108,7 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_external_accounts_get_5', async function() {
-    const externalAccount = await stripe.accounts.retrieveExternalAccount(
+    const externalAccount = await stripe.v1.accounts.retrieveExternalAccount(
       'acct_xxxxxxxxxxxxx',
       'card_xxxxxxxxxxxxx'
     );
@@ -116,7 +116,7 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_external_accounts_post', async function() {
-    const externalAccount = await stripe.accounts.createExternalAccount(
+    const externalAccount = await stripe.v1.accounts.createExternalAccount(
       'acct_xxxxxxxxxxxxx',
       {
         external_account: 'btok_xxxxxxxxxxxxx',
@@ -126,7 +126,7 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_external_accounts_post_2', async function() {
-    const externalAccount = await stripe.accounts.createExternalAccount(
+    const externalAccount = await stripe.v1.accounts.createExternalAccount(
       'acct_xxxxxxxxxxxxx',
       {
         external_account: 'tok_xxxx_debit',
@@ -136,7 +136,7 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_external_accounts_post_3', async function() {
-    const externalAccount = await stripe.accounts.updateExternalAccount(
+    const externalAccount = await stripe.v1.accounts.updateExternalAccount(
       'acct_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx',
       {
@@ -149,7 +149,7 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_external_accounts_post_4', async function() {
-    const externalAccount = await stripe.accounts.updateExternalAccount(
+    const externalAccount = await stripe.v1.accounts.updateExternalAccount(
       'acct_xxxxxxxxxxxxx',
       'card_xxxxxxxxxxxxx',
       {
@@ -162,14 +162,14 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_get', async function() {
-    const accounts = await stripe.accounts.list({
+    const accounts = await stripe.v1.accounts.list({
       limit: 3,
     });
     expect(accounts).not.to.be.null;
   });
 
   it('test_accounts_get_2', async function() {
-    const account = await stripe.accounts.retrieve('acct_xxxxxxxxxxxxx');
+    const account = await stripe.v1.accounts.retrieve('acct_xxxxxxxxxxxxx');
     expect(account).not.to.be.null;
   });
 
@@ -182,19 +182,19 @@ describe('Generated tests', function() {
           '{"object":"account","business_profile":{"annual_revenue":{"amount":1413853096,"currency":"usd","fiscal_year_end":"fiscal_year_end"},"estimated_worker_count":884794319,"mcc":"mcc","minority_owned_business_designation":["prefer_not_to_answer"],"monthly_estimated_revenue":{"amount":1413853096,"currency":"usd"},"name":"name","product_description":"product_description","specified_commercial_transactions_act_url":"specified_commercial_transactions_act_url","support_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"support_email":"support_email","support_phone":"support_phone","support_url":"support_url","url":"url"},"business_type":"government_entity","capabilities":{"acss_debit_payments":"inactive","affirm_payments":"pending","afterpay_clearpay_payments":"inactive","alma_payments":"pending","amazon_pay_payments":"inactive","app_distribution":"inactive","au_becs_debit_payments":"active","automatic_indirect_tax":"pending","bacs_debit_payments":"active","bancontact_payments":"inactive","bank_transfer_payments":"pending","billie_payments":"active","bizum_payments":"active","blik_payments":"inactive","blik_recurring_payments":"inactive","boleto_payments":"inactive","card_issuing":"active","card_payments":"active","cartes_bancaires_payments":"active","cashapp_payments":"active","crypto_payments":"inactive","eps_payments":"inactive","fpx_payments":"active","gb_bank_transfer_payments":"pending","giropay_payments":"active","gopay_payments":"active","grabpay_payments":"pending","id_bank_transfer_payments":"pending","id_bank_transfer_payments_bca":"active","ideal_payments":"inactive","india_international_payments":"inactive","jcb_payments":"inactive","jp_bank_transfer_payments":"pending","kakao_pay_payments":"active","klarna_payments":"active","konbini_payments":"active","kr_card_payments":"inactive","legacy_payments":"active","link_payments":"inactive","mb_way_payments":"active","mobilepay_payments":"pending","multibanco_payments":"inactive","mx_bank_transfer_payments":"pending","naver_pay_payments":"active","nz_bank_account_becs_debit_payments":"active","oxxo_payments":"pending","p24_payments":"inactive","pay_by_bank_payments":"active","payco_payments":"inactive","paynow_payments":"active","paypal_payments":"inactive","paypay_payments":"inactive","payto_payments":"pending","pix_payments":"inactive","promptpay_payments":"active","qris_payments":"pending","rechnung_payments":"inactive","revolut_pay_payments":"inactive","samsung_pay_payments":"pending","satispay_payments":"pending","scalapay_payments":"inactive","sepa_bank_transfer_payments":"pending","sepa_debit_payments":"inactive","sequra_payments":"inactive","shopeepay_payments":"active","sofort_payments":"active","stripe_balance_payments":"active","sunbit_payments":"pending","swish_payments":"inactive","tax_reporting_us_1099_k":"inactive","tax_reporting_us_1099_misc":"pending","transfers":"inactive","treasury":"pending","treasury_evolve":"inactive","treasury_fifth_third":"inactive","treasury_goldman_sachs":"active","twint_payments":"inactive","upi_payments":"pending","us_bank_account_ach_payments":"pending","us_bank_transfer_payments":"pending","wero_payments":"pending","zip_payments":"pending"},"charges_enabled":true,"company":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"address_kana":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"address_kanji":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"administrative_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"directors_provided":true,"directorship_declaration":{"date":3076014,"ip":"ip","user_agent":"user_agent"},"executives_provided":true,"export_license_id":"export_license_id","export_purpose_code":"export_purpose_code","name":"name","name_kana":"name_kana","name_kanji":"name_kanji","owners_provided":true,"ownership_declaration":{"date":3076014,"ip":"ip","user_agent":"user_agent"},"ownership_exemption_reason":"qualified_entity_exceeds_ownership_threshold","phone":"phone","physical_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"principal_place_of_business":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"registration_date":{"day":99228,"month":104080000,"year":3704893},"representative_declaration":{"date":3076014,"ip":"ip","user_agent":"user_agent"},"structure":"single_member_llc","tax_id_provided":true,"tax_id_registrar":"tax_id_registrar","vat_id_provided":true,"verification":{"document":{"back":{"object":"file","created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"object":"file_link","created":1028554472,"expired":true,"expires_at":833811170,"file":{"object":"file","created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"purpose":"customer_signature","size":3530753,"title":"title","type":"type","url":"url"},"id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"url":"url"}]},"purpose":"customer_signature","size":3530753,"title":"title","type":"type","url":"url"},"details":"details","details_code":"details_code","front":{"object":"file","created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"object":"file_link","created":1028554472,"expired":true,"expires_at":833811170,"file":{"object":"file","created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"purpose":"customer_signature","size":3530753,"title":"title","type":"type","url":"url"},"id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"url":"url"}]},"purpose":"customer_signature","size":3530753,"title":"title","type":"type","url":"url"}}}},"controller":{"application":{"loss_liable":true,"onboarding_owner":true,"pricing_controls":true},"dashboard":{"type":"express"},"fees":{"payer":"account"},"is_controller":true,"losses":{"payments":"stripe"},"requirement_collection":"application","stripe_dashboard":{"type":"express"},"type":"account"},"country":"country","created":1028554472,"default_currency":"usd","details_submitted":true,"email":"email","external_accounts":{"object":"list","has_more":false,"data":[{"object":"bank_account","account":{"object":"account","business_profile":{"annual_revenue":{"amount":1413853096,"currency":"usd","fiscal_year_end":"fiscal_year_end"},"estimated_worker_count":884794319,"mcc":"mcc","minority_owned_business_designation":["prefer_not_to_answer"],"monthly_estimated_revenue":{"amount":1413853096,"currency":"usd"},"name":"name","product_description":"product_description","specified_commercial_transactions_act_url":"specified_commercial_transactions_act_url","support_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"support_email":"support_email","support_phone":"support_phone","support_url":"support_url","url":"url"},"business_type":"government_entity","capabilities":{"acss_debit_payments":"inactive","affirm_payments":"pending","afterpay_clearpay_payments":"inactive","alma_payments":"pending","amazon_pay_payments":"inactive","app_distribution":"inactive","au_becs_debit_payments":"active","automatic_indirect_tax":"pending","bacs_debit_payments":"active","bancontact_payments":"inactive","bank_transfer_payments":"pending","billie_payments":"active","bizum_payments":"active","blik_payments":"inactive","blik_recurring_payments":"inactive","boleto_payments":"inactive","card_issuing":"active","card_payments":"active","cartes_bancaires_payments":"active","cashapp_payments":"active","crypto_payments":"inactive","eps_payments":"inactive","fpx_payments":"active","gb_bank_transfer_payments":"pending","giropay_payments":"active","gopay_payments":"active","grabpay_payments":"pending","id_bank_transfer_payments":"pending","id_bank_transfer_payments_bca":"active","ideal_payments":"inactive","india_international_payments":"inactive","jcb_payments":"inactive","jp_bank_transfer_payments":"pending","kakao_pay_payments":"active","klarna_payments":"active","konbini_payments":"active","kr_card_payments":"inactive","legacy_payments":"active","link_payments":"inactive","mb_way_payments":"active","mobilepay_payments":"pending","multibanco_payments":"inactive","mx_bank_transfer_payments":"pending","naver_pay_payments":"active","nz_bank_account_becs_debit_payments":"active","oxxo_payments":"pending","p24_payments":"inactive","pay_by_bank_payments":"active","payco_payments":"inactive","paynow_payments":"active","paypal_payments":"inactive","paypay_payments":"inactive","payto_payments":"pending","pix_payments":"inactive","promptpay_payments":"active","qris_payments":"pending","rechnung_payments":"inactive","revolut_pay_payments":"inactive","samsung_pay_payments":"pending","satispay_payments":"pending","scalapay_payments":"inactive","sepa_bank_transfer_payments":"pending","sepa_debit_payments":"inactive","sequra_payments":"inactive","shopeepay_payments":"active","sofort_payments":"active","stripe_balance_payments":"active","sunbit_payments":"pending","swish_payments":"inactive","tax_reporting_us_1099_k":"inactive","tax_reporting_us_1099_misc":"pending","transfers":"inactive","treasury":"pending","treasury_evolve":"inactive","treasury_fifth_third":"inactive","treasury_goldman_sachs":"active","twint_payments":"inactive","upi_payments":"pending","us_bank_account_ach_payments":"pending","us_bank_transfer_payments":"pending","wero_payments":"pending","zip_payments":"pending"},"charges_enabled":true,"company":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"address_kana":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"address_kanji":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"administrative_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"directors_provided":true,"directorship_declaration":{"date":3076014,"ip":"ip","user_agent":"user_agent"},"executives_provided":true,"export_license_id":"export_license_id","export_purpose_code":"export_purpose_code","name":"name","name_kana":"name_kana","name_kanji":"name_kanji","owners_provided":true,"ownership_declaration":{"date":3076014,"ip":"ip","user_agent":"user_agent"},"ownership_exemption_reason":"qualified_entity_exceeds_ownership_threshold","phone":"phone","physical_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"principal_place_of_business":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"registration_date":{"day":99228,"month":104080000,"year":3704893},"representative_declaration":{"date":3076014,"ip":"ip","user_agent":"user_agent"},"structure":"single_member_llc","tax_id_provided":true,"tax_id_registrar":"tax_id_registrar","vat_id_provided":true,"verification":{"document":{"back":null,"details":"details","details_code":"details_code","front":null}}},"controller":{"application":{"loss_liable":true,"onboarding_owner":true,"pricing_controls":true},"dashboard":{"type":"express"},"fees":{"payer":"account"},"is_controller":true,"losses":{"payments":"stripe"},"requirement_collection":"application","stripe_dashboard":{"type":"express"},"type":"account"},"country":"country","created":1028554472,"default_currency":"usd","details_submitted":true,"email":"email","external_accounts":{"object":"list","has_more":false,"data":[null]},"future_requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"current_deadline":270965154,"currently_due":["currently_due"],"disabled_reason":"rejected.listed","errors":[{"code":"verification_failed_business_iec_number","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"groups":{"payments_pricing":"payments_pricing"},"id":"obj_123","individual":null,"metadata":{"key":"metadata"},"payouts_enabled":true,"requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"current_deadline":270965154,"currently_due":["currently_due"],"disabled_reason":"rejected.listed","errors":[{"code":"verification_failed_business_iec_number","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"risk_controls":{"charges":{"pause_requested":true},"payouts":{"pause_requested":true},"rejected_reason":"fraud_other"},"settings":{"bacs_debit_payments":{"display_name":"display_name","service_user_number":"service_user_number"},"bank_bca_onboarding":{"account_holder_name":"account_holder_name","business_account_number":"business_account_number"},"branding":{"icon":null,"logo":null,"primary_color":"primary_color","secondary_color":"secondary_color"},"card_issuing":{"tos_acceptance":{"date":3076014,"ip":"ip","user_agent":"user_agent"}},"card_payments":{"decline_on":{"avs_failure":true,"cvc_failure":true},"statement_descriptor_prefix":"statement_descriptor_prefix","statement_descriptor_prefix_kana":"statement_descriptor_prefix_kana","statement_descriptor_prefix_kanji":"statement_descriptor_prefix_kanji"},"dashboard":{"display_name":"display_name","timezone":"timezone"},"invoices":{"default_account_tax_ids":[null],"hosted_payment_method_save":"offer"},"payments":{"email_customers_on_successful_payment":true,"statement_descriptor":"statement_descriptor","statement_descriptor_kana":"statement_descriptor_kana","statement_descriptor_kanji":"statement_descriptor_kanji","statement_descriptor_prefix_kana":"statement_descriptor_prefix_kana","statement_descriptor_prefix_kanji":"statement_descriptor_prefix_kanji"},"payouts":{"debit_negative_balances":true,"schedule":{"delay_days":1647351405,"interval":"interval","monthly_anchor":1920305369,"monthly_payout_days":[656202210],"weekly_anchor":"weekly_anchor","weekly_payout_days":["friday"]},"statement_descriptor":"statement_descriptor"},"paypay_payments":{"additional_files":["additional_files"],"goods_type":"other","site":{"accessible":{},"in_development":{"password_provided":true,"username":"username"},"restricted":{"payment_flow_file":"payment_flow_file"},"type":"accessible"}},"sepa_debit_payments":{"creditor_id":"creditor_id"},"smart_disputes":{"auto_respond":{"preference":"on","value":"on"}},"tax_forms":{"consented_to_paperless_delivery":true},"treasury":{"tos_acceptance":{"date":3076014,"ip":"ip","user_agent":"user_agent"}}},"tos_acceptance":{"date":3076014,"ip":"ip","service_agreement":"service_agreement","user_agent":"user_agent"},"type":"none"},"account_holder_name":"account_holder_name","account_holder_type":"account_holder_type","account_type":"account_type","available_payout_methods":["standard"],"bank_name":"bank_name","country":"country","currency":"usd","customer":{"object":"customer","address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"balance":339185956,"business_name":"business_name","cash_balance":null,"created":1028554472,"currency":"usd","customer_account":"customer_account","default_source":null,"delinquent":true,"description":"description","discount":null,"email":"email","id":"obj_123","individual_name":"individual_name","invoice_credit_balance":{"key":1267696360},"invoice_prefix":"invoice_prefix","invoice_settings":{"custom_fields":[{"name":"name","value":"value"}],"default_payment_method":null,"footer":"footer","rendering_options":{"amount_tax_display":"amount_tax_display","template":"template"}},"livemode":true,"metadata":{"key":"metadata"},"name":"name","next_invoice_sequence":1356358751,"phone":"phone","preferred_locales":["preferred_locales"],"redaction":{"status":"processing"},"shipping":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"carrier":"carrier","name":"name","phone":"phone","tracking_number":"tracking_number"},"sources":{"object":"list","has_more":false,"data":[null]},"subscriptions":{"object":"list","has_more":false,"data":[null]},"tax":{"automatic_tax":"unrecognized_location","ip_address":"ip_address","location":{"country":"country","source":"ip_address","state":"state"},"provider":"stripe"},"tax_exempt":"reverse","tax_ids":{"object":"list","has_more":false,"data":[null]},"test_clock":null},"default_for_currency":true,"fingerprint":"fingerprint","future_requirements":{"currently_due":["currently_due"],"errors":[{"code":"verification_failed_business_iec_number","reason":"reason","requirement":"requirement"}],"past_due":["past_due"],"pending_verification":["pending_verification"]},"id":"obj_123","last4":"last4","metadata":{"key":"metadata"},"requirements":{"currently_due":["currently_due"],"errors":[{"code":"verification_failed_business_iec_number","reason":"reason","requirement":"requirement"}],"past_due":["past_due"],"pending_verification":["pending_verification"]},"routing_number":"routing_number","status":"status"}]},"future_requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"current_deadline":270965154,"currently_due":["currently_due"],"disabled_reason":"rejected.listed","errors":[{"code":"verification_failed_business_iec_number","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"groups":{"payments_pricing":"payments_pricing"},"id":"obj_123","individual":{"object":"person","account":"account","additional_tos_acceptances":{"account":{"date":3076014,"ip":"ip","user_agent":"user_agent"}},"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"address_kana":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"address_kanji":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"created":1028554472,"dob":{"day":99228,"month":104080000,"year":3704893},"email":"email","first_name":"first_name","first_name_kana":"first_name_kana","first_name_kanji":"first_name_kanji","full_name_aliases":["full_name_aliases"],"future_requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"currently_due":["currently_due"],"errors":[{"code":"verification_failed_business_iec_number","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"gender":"gender","id":"obj_123","id_number_provided":true,"id_number_secondary_provided":true,"last_name":"last_name","last_name_kana":"last_name_kana","last_name_kanji":"last_name_kanji","maiden_name":"maiden_name","metadata":{"key":"metadata"},"nationality":"nationality","phone":"phone","political_exposure":"none","registered_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"relationship":{"authorizer":true,"director":true,"executive":true,"legal_guardian":true,"owner":true,"percent_ownership":760989685,"representative":true,"title":"title"},"requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"currently_due":["currently_due"],"errors":[{"code":"verification_failed_business_iec_number","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"ssn_last_4_provided":true,"us_cfpb_data":{"ethnicity_details":{"ethnicity":["not_hispanic_or_latino"],"ethnicity_other":"ethnicity_other"},"race_details":{"race":["haitian"],"race_other":"race_other"},"self_identified_gender":"self_identified_gender"},"verification":{"additional_document":{"back":{"object":"file","created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"object":"file_link","created":1028554472,"expired":true,"expires_at":833811170,"file":null,"id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"url":"url"}]},"purpose":"customer_signature","size":3530753,"title":"title","type":"type","url":"url"},"details":"details","details_code":"details_code","front":{"object":"file","created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"object":"file_link","created":1028554472,"expired":true,"expires_at":833811170,"file":null,"id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"url":"url"}]},"purpose":"customer_signature","size":3530753,"title":"title","type":"type","url":"url"}},"details":"details","details_code":"details_code","document":{"back":{"object":"file","created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"object":"file_link","created":1028554472,"expired":true,"expires_at":833811170,"file":null,"id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"url":"url"}]},"purpose":"customer_signature","size":3530753,"title":"title","type":"type","url":"url"},"details":"details","details_code":"details_code","front":{"object":"file","created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"object":"file_link","created":1028554472,"expired":true,"expires_at":833811170,"file":null,"id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"url":"url"}]},"purpose":"customer_signature","size":3530753,"title":"title","type":"type","url":"url"}},"status":"status"}},"metadata":{"key":"metadata"},"payouts_enabled":true,"requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"current_deadline":270965154,"currently_due":["currently_due"],"disabled_reason":"rejected.listed","errors":[{"code":"verification_failed_business_iec_number","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"risk_controls":{"charges":{"pause_requested":true},"payouts":{"pause_requested":true},"rejected_reason":"fraud_other"},"settings":{"bacs_debit_payments":{"display_name":"display_name","service_user_number":"service_user_number"},"bank_bca_onboarding":{"account_holder_name":"account_holder_name","business_account_number":"business_account_number"},"branding":{"icon":{"object":"file","created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"object":"file_link","created":1028554472,"expired":true,"expires_at":833811170,"file":{"object":"file","created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"purpose":"customer_signature","size":3530753,"title":"title","type":"type","url":"url"},"id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"url":"url"}]},"purpose":"customer_signature","size":3530753,"title":"title","type":"type","url":"url"},"logo":{"object":"file","created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[{"object":"file_link","created":1028554472,"expired":true,"expires_at":833811170,"file":{"object":"file","created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"purpose":"customer_signature","size":3530753,"title":"title","type":"type","url":"url"},"id":"obj_123","livemode":true,"metadata":{"key":"metadata"},"url":"url"}]},"purpose":"customer_signature","size":3530753,"title":"title","type":"type","url":"url"},"primary_color":"primary_color","secondary_color":"secondary_color"},"card_issuing":{"tos_acceptance":{"date":3076014,"ip":"ip","user_agent":"user_agent"}},"card_payments":{"decline_on":{"avs_failure":true,"cvc_failure":true},"statement_descriptor_prefix":"statement_descriptor_prefix","statement_descriptor_prefix_kana":"statement_descriptor_prefix_kana","statement_descriptor_prefix_kanji":"statement_descriptor_prefix_kanji"},"dashboard":{"display_name":"display_name","timezone":"timezone"},"invoices":{"default_account_tax_ids":[{"object":"tax_id","country":"country","created":1028554472,"customer":{"object":"customer","address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"balance":339185956,"business_name":"business_name","cash_balance":{"object":"cash_balance","available":{"key":733902135},"customer":"customer","customer_account":"customer_account","livemode":true,"settings":{"reconciliation_mode":"manual","using_merchant_default":true}},"created":1028554472,"currency":"usd","customer_account":"customer_account","default_source":null,"delinquent":true,"description":"description","discount":{"object":"discount","checkout_session":"checkout_session","customer":null,"customer_account":"customer_account","end":100571,"id":"obj_123","invoice":"invoice","invoice_item":"invoice_item","promotion_code":null,"source":{"coupon":null,"type":"coupon"},"start":109757538,"subscription":"subscription","subscription_item":"subscription_item"},"email":"email","id":"obj_123","individual_name":"individual_name","invoice_credit_balance":{"key":1267696360},"invoice_prefix":"invoice_prefix","invoice_settings":{"custom_fields":[{"name":"name","value":"value"}],"default_payment_method":{"object":"payment_method","acss_debit":{"account_number":"account_number","bank_name":"bank_name","fingerprint":"fingerprint","institution_number":"institution_number","last4":"last4","transit_number":"transit_number"},"affirm":{},"afterpay_clearpay":{},"alipay":{},"allow_redisplay":"unspecified","alma":{},"amazon_pay":{},"au_becs_debit":{"bsb_number":"bsb_number","fingerprint":"fingerprint","last4":"last4"},"bacs_debit":{"fingerprint":"fingerprint","last4":"last4","sort_code":"sort_code"},"bancontact":{},"billie":{},"billing_details":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"email":"email","name":"name","phone":"phone","tax_id":"tax_id"},"bizum":{"buyer_id":"buyer_id"},"blik":{"buyer_id":"buyer_id"},"boleto":{"tax_id":"tax_id"},"card":{"brand":"brand","checks":{"address_line1_check":"address_line1_check","address_postal_code_check":"address_postal_code_check","cvc_check":"cvc_check"},"country":"country","description":"description","display_brand":"display_brand","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","generated_from":{"charge":"charge","payment_method_details":{"card_present":{"amount_authorized":1406151710,"brand":"brand","brand_product":"brand_product","capture_before":2079401320,"cardholder_name":"cardholder_name","country":"country","description":"description","emv_auth_data":"emv_auth_data","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","generated_card":"generated_card","iin":"iin","incremental_authorization_supported":true,"issuer":"issuer","last4":"last4","location":"location","network":"network","network_transaction_id":"network_transaction_id","offline":{"stored_at":1692436047,"type":"deferred"},"overcapture_supported":true,"preferred_locales":["preferred_locales"],"read_method":"magnetic_stripe_track2","reader":"reader","receipt":{"account_type":"checking","application_cryptogram":"application_cryptogram","application_preferred_name":"application_preferred_name","authorization_code":"authorization_code","authorization_response_code":"authorization_response_code","cardholder_verification_method":"cardholder_verification_method","dedicated_file_name":"dedicated_file_name","terminal_verification_results":"terminal_verification_results","transaction_status_information":"transaction_status_information"},"wallet":{"type":"samsung_pay"}},"type":"type"},"setup_attempt":null},"iin":"iin","issuer":"issuer","last4":"last4","networks":{"available":["available"],"preferred":"preferred"},"regulated_status":"regulated","three_d_secure_usage":{"supported":true},"wallet":{"amex_express_checkout":{},"apple_pay":{},"dynamic_last4":"dynamic_last4","google_pay":{},"link":{},"masterpass":{"billing_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"email":"email","name":"name","shipping_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"}},"samsung_pay":{},"type":"link","visa_checkout":{"billing_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"email":"email","name":"name","shipping_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"}}}},"card_present":{"brand":"brand","brand_product":"brand_product","cardholder_name":"cardholder_name","country":"country","description":"description","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","iin":"iin","issuer":"issuer","last4":"last4","networks":{"available":["available"],"preferred":"preferred"},"offline":{"stored_at":1692436047,"type":"deferred"},"preferred_locales":["preferred_locales"],"read_method":"magnetic_stripe_track2","wallet":{"type":"samsung_pay"}},"cashapp":{"buyer_id":"buyer_id","cashtag":"cashtag"},"created":1028554472,"crypto":{},"custom":{"display_name":"display_name","logo":{"content_type":"content_type","url":"url"},"type":"type"},"customer":null,"customer_account":"customer_account","customer_balance":{},"eps":{"bank":"btv_vier_lander_bank"},"fpx":{"account_holder_type":"individual","bank":"alliance_bank"},"giropay":{},"gopay":{},"grabpay":{},"id":"obj_123","id_bank_transfer":{"bank":"mandiri","bank_code":"bank_code","bank_name":"bank_name","display_name":"display_name"},"ideal":{"bank":"nn","bic":"HANDNL2A"},"interac_present":{"brand":"brand","cardholder_name":"cardholder_name","country":"country","description":"description","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","iin":"iin","issuer":"issuer","last4":"last4","networks":{"available":["available"],"preferred":"preferred"},"preferred_locales":["preferred_locales"],"read_method":"magnetic_stripe_track2"},"kakao_pay":{},"klarna":{"dob":{"day":99228,"month":104080000,"year":3704893}},"konbini":{},"kr_card":{"brand":"lotte","last4":"last4"},"latest_active_mandate":null,"link":{"email":"email","persistent_token":"persistent_token"},"livemode":true,"mb_way":{},"metadata":{"key":"metadata"},"mobilepay":{},"multibanco":{},"naver_pay":{"buyer_id":"buyer_id","funding":"points"},"nz_bank_account":{"account_holder_name":"account_holder_name","bank_code":"bank_code","bank_name":"bank_name","branch_code":"branch_code","last4":"last4","suffix":"suffix"},"oxxo":{},"p24":{"bank":"noble_pay"},"pay_by_bank":{},"payco":{},"paynow":{},"paypal":{"country":"country","fingerprint":"fingerprint","payer_email":"payer_email","payer_id":"payer_id","verified_email":"verified_email"},"paypay":{},"payto":{"bsb_number":"bsb_number","last4":"last4","pay_id":"pay_id"},"pix":{"fingerprint":"fingerprint"},"promptpay":{},"qris":{},"radar_options":{"session":"session"},"rechnung":{"dob":{"day":99228,"month":104080000,"year":3704893}},"redaction":{"status":"processing"},"revolut_pay":{},"samsung_pay":{},"satispay":{},"scalapay":{},"sepa_debit":{"bank_code":"bank_code","branch_code":"branch_code","country":"country","fingerprint":"fingerprint","generated_from":{"charge":null,"setup_attempt":null},"last4":"last4"},"sequra":{},"shared_payment_granted_token":"shared_payment_granted_token","shopeepay":{},"sofort":{"country":"country"},"stripe_balance":{"account":"account"},"sunbit":{},"swish":{},"twint":{},"type":"twint","upi":{"vpa":"vpa"},"us_bank_account":{"account_holder_type":"individual","account_number":"account_number","account_type":"checking","bank_name":"bank_name","financial_connections_account":"financial_connections_account","fingerprint":"fingerprint","last4":"last4","networks":{"preferred":"preferred","supported":["ach"]},"routing_number":"routing_number","status_details":{"blocked":{"network_code":"R29","reason":"bank_account_frozen"}}},"wechat_pay":{},"wero":{},"zip":{}},"footer":"footer","rendering_options":{"amount_tax_display":"amount_tax_display","template":"template"}},"livemode":true,"metadata":{"key":"metadata"},"name":"name","next_invoice_sequence":1356358751,"phone":"phone","preferred_locales":["preferred_locales"],"redaction":{"status":"processing"},"shipping":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"carrier":"carrier","name":"name","phone":"phone","tracking_number":"tracking_number"},"sources":{"object":"list","has_more":false,"data":[null]},"subscriptions":{"object":"list","has_more":false,"data":[{"object":"subscription","application":null,"application_fee_percent":282303517,"automatic_tax":{"disabled_reason":"requires_location_inputs","enabled":true,"liability":{"account":null,"type":"account"}},"billing_cycle_anchor":672980850,"billing_cycle_anchor_config":{"day_of_month":1361669285,"hour":3208676,"minute":1074026988,"month":104080000,"second":906279820},"billing_mode":{"flexible":{"proration_discounts":"itemized"},"type":"classic","updated_at":295464393},"billing_schedules":[{"applies_to":[{"price":null,"type":"price"}],"bill_until":{"computed_timestamp":2082605468,"duration":{"interval":"month","interval_count":797691627},"timestamp":55126294,"type":"duration"},"key":"key"}],"billing_thresholds":{"amount_gte":1424546639,"reset_billing_cycle_anchor":true},"cancel_at":476575768,"cancel_at_period_end":true,"canceled_at":1566574183,"cancellation_details":{"comment":"comment","feedback":"other","feedback_option":null,"reason":"canceled_by_retention_policy"},"collection_method":"charge_automatically","created":1028554472,"currency":"usd","customer":null,"customer_account":"customer_account","days_until_due":555548757,"default_payment_method":null,"default_source":null,"default_tax_rates":[null],"description":"description","discounts":[null],"ended_at":1730606040,"id":"obj_123","invoice_settings":{"account_tax_ids":[null],"custom_fields":[{"name":"name","value":"value"}],"description":"description","footer":"footer","issuer":{"account":null,"type":"account"}},"items":{"object":"list","has_more":false,"data":[null]},"last_price_migration_error":{"errored_at":1641242315,"failed_transitions":[{"source_price":"source_price","target_price":"target_price"}],"type":"price_uniqueness_violation"},"latest_invoice":null,"livemode":true,"managed_payments":{"enabled":true},"metadata":{"key":"metadata"},"next_pending_invoice_item_invoice":1422145209,"on_behalf_of":null,"pause_collection":{"behavior":"mark_uncollectible","resumes_at":556162772},"payment_settings":{"payment_method_options":{"acss_debit":{"mandate_options":{"transaction_type":"personal"},"verification_method":"microdeposits"},"bancontact":{"preferred_language":"fr"},"billie":{"company_details":{"registered_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"registered_name":"registered_name","registration_number":"registration_number","registration_type":"no_pno","vat":"vat"}},"blik":{"mandate_options":{"expires_at":833811170}},"card":{"mandate_options":{"amount":1413853096,"amount_type":"maximum","description":"description"},"network":"diners","request_three_d_secure":"any"},"customer_balance":{"bank_transfer":{"eu_bank_transfer":{"country":"ES"},"type":"type"},"funding_type":"bank_transfer"},"id_bank_transfer":{},"konbini":{},"payto":{"mandate_options":{"amount":1413853096,"amount_type":"maximum","purpose":"pension"}},"pix":{"expires_after_seconds":1859901103,"mandate_options":{"amount":1413853096,"amount_includes_iof":"never","end_date":"end_date","payment_schedule":"yearly"}},"sepa_debit":{},"upi":{"mandate_options":{"amount":1413853096,"amount_type":"maximum","description":"description","end_date":1725067410}},"us_bank_account":{"financial_connections":{"filters":{"account_subcategories":["checking"],"institution":"institution"},"permissions":["balances"],"prefetch":["inferred_balances"]},"verification_method":"microdeposits"}},"payment_method_types":["naver_pay"],"save_default_payment_method":"off"},"pending_invoice_item_interval":{"interval":"month","interval_count":797691627},"pending_setup_intent":null,"pending_update":{"billing_cycle_anchor":672980850,"cancel_at_period_end":true,"discount":null,"discounts":[null],"expires_at":833811170,"metadata":{"key":"metadata"},"prebilling_iterations":1175045469,"subscription_items":[null],"trial_end":816100302,"trial_from_plan":true},"prebilling":{"invoice":null,"period_end":384656733,"period_start":301041764,"update_behavior":"prebill"},"presentment_details":{"presentment_currency":"usd"},"schedule":null,"start_date":1573629589,"status":"trialing","status_details":{"paused":{"subscription":{"type":"final_payment_failure"},"transitioned_at":1968518242,"type":"subscription"}},"test_clock":null,"transfer_data":{"amount_percent":268993374,"destination":null},"trial_end":816100302,"trial_settings":{"end_behavior":{"billing_cycle_anchor":"now","missing_payment_method":"cancel"}},"trial_start":1719733753}]},"tax":{"automatic_tax":"unrecognized_location","ip_address":"ip_address","location":{"country":"country","source":"ip_address","state":"state"},"provider":"stripe"},"tax_exempt":"reverse","tax_ids":{"object":"list","has_more":false,"data":[{"object":"tax_id","country":"country","created":1028554472,"customer":null,"customer_account":"customer_account","id":"obj_123","livemode":true,"owner":{"account":null,"application":null,"customer":null,"customer_account":"customer_account","type":"customer"},"type":"ci_vat","value":"value","verification":{"status":"unverified","verified_address":"verified_address","verified_name":"verified_name"}}]},"test_clock":{"object":"test_helpers.test_clock","created":1028554472,"deletes_after":73213179,"frozen_time":2033541876,"id":"obj_123","livemode":true,"name":"name","status":"advancing","status_details":{"advancing":{"target_frozen_time":833971362}}}},"customer_account":"customer_account","id":"obj_123","livemode":true,"owner":{"account":{"object":"account","business_profile":{"annual_revenue":{"amount":1413853096,"currency":"usd","fiscal_year_end":"fiscal_year_end"},"estimated_worker_count":884794319,"mcc":"mcc","minority_owned_business_designation":["prefer_not_to_answer"],"monthly_estimated_revenue":{"amount":1413853096,"currency":"usd"},"name":"name","product_description":"product_description","specified_commercial_transactions_act_url":"specified_commercial_transactions_act_url","support_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"support_email":"support_email","support_phone":"support_phone","support_url":"support_url","url":"url"},"business_type":"government_entity","capabilities":{"acss_debit_payments":"inactive","affirm_payments":"pending","afterpay_clearpay_payments":"inactive","alma_payments":"pending","amazon_pay_payments":"inactive","app_distribution":"inactive","au_becs_debit_payments":"active","automatic_indirect_tax":"pending","bacs_debit_payments":"active","bancontact_payments":"inactive","bank_transfer_payments":"pending","billie_payments":"active","bizum_payments":"active","blik_payments":"inactive","blik_recurring_payments":"inactive","boleto_payments":"inactive","card_issuing":"active","card_payments":"active","cartes_bancaires_payments":"active","cashapp_payments":"active","crypto_payments":"inactive","eps_payments":"inactive","fpx_payments":"active","gb_bank_transfer_payments":"pending","giropay_payments":"active","gopay_payments":"active","grabpay_payments":"pending","id_bank_transfer_payments":"pending","id_bank_transfer_payments_bca":"active","ideal_payments":"inactive","india_international_payments":"inactive","jcb_payments":"inactive","jp_bank_transfer_payments":"pending","kakao_pay_payments":"active","klarna_payments":"active","konbini_payments":"active","kr_card_payments":"inactive","legacy_payments":"active","link_payments":"inactive","mb_way_payments":"active","mobilepay_payments":"pending","multibanco_payments":"inactive","mx_bank_transfer_payments":"pending","naver_pay_payments":"active","nz_bank_account_becs_debit_payments":"active","oxxo_payments":"pending","p24_payments":"inactive","pay_by_bank_payments":"active","payco_payments":"inactive","paynow_payments":"active","paypal_payments":"inactive","paypay_payments":"inactive","payto_payments":"pending","pix_payments":"inactive","promptpay_payments":"active","qris_payments":"pending","rechnung_payments":"inactive","revolut_pay_payments":"inactive","samsung_pay_payments":"pending","satispay_payments":"pending","scalapay_payments":"inactive","sepa_bank_transfer_payments":"pending","sepa_debit_payments":"inactive","sequra_payments":"inactive","shopeepay_payments":"active","sofort_payments":"active","stripe_balance_payments":"active","sunbit_payments":"pending","swish_payments":"inactive","tax_reporting_us_1099_k":"inactive","tax_reporting_us_1099_misc":"pending","transfers":"inactive","treasury":"pending","treasury_evolve":"inactive","treasury_fifth_third":"inactive","treasury_goldman_sachs":"active","twint_payments":"inactive","upi_payments":"pending","us_bank_account_ach_payments":"pending","us_bank_transfer_payments":"pending","wero_payments":"pending","zip_payments":"pending"},"charges_enabled":true,"company":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"address_kana":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"address_kanji":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"administrative_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"directors_provided":true,"directorship_declaration":{"date":3076014,"ip":"ip","user_agent":"user_agent"},"executives_provided":true,"export_license_id":"export_license_id","export_purpose_code":"export_purpose_code","name":"name","name_kana":"name_kana","name_kanji":"name_kanji","owners_provided":true,"ownership_declaration":{"date":3076014,"ip":"ip","user_agent":"user_agent"},"ownership_exemption_reason":"qualified_entity_exceeds_ownership_threshold","phone":"phone","physical_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"principal_place_of_business":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"registration_date":{"day":99228,"month":104080000,"year":3704893},"representative_declaration":{"date":3076014,"ip":"ip","user_agent":"user_agent"},"structure":"single_member_llc","tax_id_provided":true,"tax_id_registrar":"tax_id_registrar","vat_id_provided":true,"verification":{"document":{"back":{"object":"file","created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"purpose":"customer_signature","size":3530753,"title":"title","type":"type","url":"url"},"details":"details","details_code":"details_code","front":{"object":"file","created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"purpose":"customer_signature","size":3530753,"title":"title","type":"type","url":"url"}}}},"controller":{"application":{"loss_liable":true,"onboarding_owner":true,"pricing_controls":true},"dashboard":{"type":"express"},"fees":{"payer":"account"},"is_controller":true,"losses":{"payments":"stripe"},"requirement_collection":"application","stripe_dashboard":{"type":"express"},"type":"account"},"country":"country","created":1028554472,"default_currency":"usd","details_submitted":true,"email":"email","external_accounts":{"object":"list","has_more":false,"data":[null]},"future_requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"current_deadline":270965154,"currently_due":["currently_due"],"disabled_reason":"rejected.listed","errors":[{"code":"verification_failed_business_iec_number","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"groups":{"payments_pricing":"payments_pricing"},"id":"obj_123","individual":{"object":"person","account":"account","additional_tos_acceptances":{"account":{"date":3076014,"ip":"ip","user_agent":"user_agent"}},"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"address_kana":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"address_kanji":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state","town":"town"},"created":1028554472,"dob":{"day":99228,"month":104080000,"year":3704893},"email":"email","first_name":"first_name","first_name_kana":"first_name_kana","first_name_kanji":"first_name_kanji","full_name_aliases":["full_name_aliases"],"future_requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"currently_due":["currently_due"],"errors":[{"code":"verification_failed_business_iec_number","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"gender":"gender","id":"obj_123","id_number_provided":true,"id_number_secondary_provided":true,"last_name":"last_name","last_name_kana":"last_name_kana","last_name_kanji":"last_name_kanji","maiden_name":"maiden_name","metadata":{"key":"metadata"},"nationality":"nationality","phone":"phone","political_exposure":"none","registered_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"relationship":{"authorizer":true,"director":true,"executive":true,"legal_guardian":true,"owner":true,"percent_ownership":760989685,"representative":true,"title":"title"},"requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"currently_due":["currently_due"],"errors":[{"code":"verification_failed_business_iec_number","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"ssn_last_4_provided":true,"us_cfpb_data":{"ethnicity_details":{"ethnicity":["not_hispanic_or_latino"],"ethnicity_other":"ethnicity_other"},"race_details":{"race":["haitian"],"race_other":"race_other"},"self_identified_gender":"self_identified_gender"},"verification":{"additional_document":{"back":null,"details":"details","details_code":"details_code","front":null},"details":"details","details_code":"details_code","document":{"back":null,"details":"details","details_code":"details_code","front":null},"status":"status"}},"metadata":{"key":"metadata"},"payouts_enabled":true,"requirements":{"alternatives":[{"alternative_fields_due":["alternative_fields_due"],"original_fields_due":["original_fields_due"]}],"current_deadline":270965154,"currently_due":["currently_due"],"disabled_reason":"rejected.listed","errors":[{"code":"verification_failed_business_iec_number","reason":"reason","requirement":"requirement"}],"eventually_due":["eventually_due"],"past_due":["past_due"],"pending_verification":["pending_verification"]},"risk_controls":{"charges":{"pause_requested":true},"payouts":{"pause_requested":true},"rejected_reason":"fraud_other"},"settings":{"bacs_debit_payments":{"display_name":"display_name","service_user_number":"service_user_number"},"bank_bca_onboarding":{"account_holder_name":"account_holder_name","business_account_number":"business_account_number"},"branding":{"icon":{"object":"file","created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"purpose":"customer_signature","size":3530753,"title":"title","type":"type","url":"url"},"logo":{"object":"file","created":1028554472,"expires_at":833811170,"filename":"filename","id":"obj_123","links":{"object":"list","has_more":false,"data":[null]},"purpose":"customer_signature","size":3530753,"title":"title","type":"type","url":"url"},"primary_color":"primary_color","secondary_color":"secondary_color"},"card_issuing":{"tos_acceptance":{"date":3076014,"ip":"ip","user_agent":"user_agent"}},"card_payments":{"decline_on":{"avs_failure":true,"cvc_failure":true},"statement_descriptor_prefix":"statement_descriptor_prefix","statement_descriptor_prefix_kana":"statement_descriptor_prefix_kana","statement_descriptor_prefix_kanji":"statement_descriptor_prefix_kanji"},"dashboard":{"display_name":"display_name","timezone":"timezone"},"invoices":{"default_account_tax_ids":[{"object":"tax_id","country":"country","created":1028554472,"customer":null,"customer_account":"customer_account","id":"obj_123","livemode":true,"owner":{"account":null,"application":null,"customer":null,"customer_account":"customer_account","type":"customer"},"type":"ci_vat","value":"value","verification":{"status":"unverified","verified_address":"verified_address","verified_name":"verified_name"}}],"hosted_payment_method_save":"offer"},"payments":{"email_customers_on_successful_payment":true,"statement_descriptor":"statement_descriptor","statement_descriptor_kana":"statement_descriptor_kana","statement_descriptor_kanji":"statement_descriptor_kanji","statement_descriptor_prefix_kana":"statement_descriptor_prefix_kana","statement_descriptor_prefix_kanji":"statement_descriptor_prefix_kanji"},"payouts":{"debit_negative_balances":true,"schedule":{"delay_days":1647351405,"interval":"interval","monthly_anchor":1920305369,"monthly_payout_days":[656202210],"weekly_anchor":"weekly_anchor","weekly_payout_days":["friday"]},"statement_descriptor":"statement_descriptor"},"paypay_payments":{"additional_files":["additional_files"],"goods_type":"other","site":{"accessible":{},"in_development":{"password_provided":true,"username":"username"},"restricted":{"payment_flow_file":"payment_flow_file"},"type":"accessible"}},"sepa_debit_payments":{"creditor_id":"creditor_id"},"smart_disputes":{"auto_respond":{"preference":"on","value":"on"}},"tax_forms":{"consented_to_paperless_delivery":true},"treasury":{"tos_acceptance":{"date":3076014,"ip":"ip","user_agent":"user_agent"}}},"tos_acceptance":{"date":3076014,"ip":"ip","service_agreement":"service_agreement","user_agent":"user_agent"},"type":"none"},"application":{"object":"application","id":"obj_123","name":"name"},"customer":{"object":"customer","address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"balance":339185956,"business_name":"business_name","cash_balance":{"object":"cash_balance","available":{"key":733902135},"customer":"customer","customer_account":"customer_account","livemode":true,"settings":{"reconciliation_mode":"manual","using_merchant_default":true}},"created":1028554472,"currency":"usd","customer_account":"customer_account","default_source":null,"delinquent":true,"description":"description","discount":{"object":"discount","checkout_session":"checkout_session","customer":null,"customer_account":"customer_account","end":100571,"id":"obj_123","invoice":"invoice","invoice_item":"invoice_item","promotion_code":null,"source":{"coupon":null,"type":"coupon"},"start":109757538,"subscription":"subscription","subscription_item":"subscription_item"},"email":"email","id":"obj_123","individual_name":"individual_name","invoice_credit_balance":{"key":1267696360},"invoice_prefix":"invoice_prefix","invoice_settings":{"custom_fields":[{"name":"name","value":"value"}],"default_payment_method":{"object":"payment_method","acss_debit":{"account_number":"account_number","bank_name":"bank_name","fingerprint":"fingerprint","institution_number":"institution_number","last4":"last4","transit_number":"transit_number"},"affirm":{},"afterpay_clearpay":{},"alipay":{},"allow_redisplay":"unspecified","alma":{},"amazon_pay":{},"au_becs_debit":{"bsb_number":"bsb_number","fingerprint":"fingerprint","last4":"last4"},"bacs_debit":{"fingerprint":"fingerprint","last4":"last4","sort_code":"sort_code"},"bancontact":{},"billie":{},"billing_details":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"email":"email","name":"name","phone":"phone","tax_id":"tax_id"},"bizum":{"buyer_id":"buyer_id"},"blik":{"buyer_id":"buyer_id"},"boleto":{"tax_id":"tax_id"},"card":{"brand":"brand","checks":{"address_line1_check":"address_line1_check","address_postal_code_check":"address_postal_code_check","cvc_check":"cvc_check"},"country":"country","description":"description","display_brand":"display_brand","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","generated_from":{"charge":"charge","payment_method_details":{"card_present":{"amount_authorized":1406151710,"brand":"brand","brand_product":"brand_product","capture_before":2079401320,"cardholder_name":"cardholder_name","country":"country","description":"description","emv_auth_data":"emv_auth_data","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","generated_card":"generated_card","iin":"iin","incremental_authorization_supported":true,"issuer":"issuer","last4":"last4","location":"location","network":"network","network_transaction_id":"network_transaction_id","offline":{"stored_at":1692436047,"type":"deferred"},"overcapture_supported":true,"preferred_locales":["preferred_locales"],"read_method":"magnetic_stripe_track2","reader":"reader","receipt":{"account_type":"checking","application_cryptogram":"application_cryptogram","application_preferred_name":"application_preferred_name","authorization_code":"authorization_code","authorization_response_code":"authorization_response_code","cardholder_verification_method":"cardholder_verification_method","dedicated_file_name":"dedicated_file_name","terminal_verification_results":"terminal_verification_results","transaction_status_information":"transaction_status_information"},"wallet":{"type":"samsung_pay"}},"type":"type"},"setup_attempt":null},"iin":"iin","issuer":"issuer","last4":"last4","networks":{"available":["available"],"preferred":"preferred"},"regulated_status":"regulated","three_d_secure_usage":{"supported":true},"wallet":{"amex_express_checkout":{},"apple_pay":{},"dynamic_last4":"dynamic_last4","google_pay":{},"link":{},"masterpass":{"billing_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"email":"email","name":"name","shipping_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"}},"samsung_pay":{},"type":"link","visa_checkout":{"billing_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"email":"email","name":"name","shipping_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"}}}},"card_present":{"brand":"brand","brand_product":"brand_product","cardholder_name":"cardholder_name","country":"country","description":"description","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","iin":"iin","issuer":"issuer","last4":"last4","networks":{"available":["available"],"preferred":"preferred"},"offline":{"stored_at":1692436047,"type":"deferred"},"preferred_locales":["preferred_locales"],"read_method":"magnetic_stripe_track2","wallet":{"type":"samsung_pay"}},"cashapp":{"buyer_id":"buyer_id","cashtag":"cashtag"},"created":1028554472,"crypto":{},"custom":{"display_name":"display_name","logo":{"content_type":"content_type","url":"url"},"type":"type"},"customer":null,"customer_account":"customer_account","customer_balance":{},"eps":{"bank":"btv_vier_lander_bank"},"fpx":{"account_holder_type":"individual","bank":"alliance_bank"},"giropay":{},"gopay":{},"grabpay":{},"id":"obj_123","id_bank_transfer":{"bank":"mandiri","bank_code":"bank_code","bank_name":"bank_name","display_name":"display_name"},"ideal":{"bank":"nn","bic":"HANDNL2A"},"interac_present":{"brand":"brand","cardholder_name":"cardholder_name","country":"country","description":"description","exp_month":40417826,"exp_year":1940618977,"fingerprint":"fingerprint","funding":"funding","iin":"iin","issuer":"issuer","last4":"last4","networks":{"available":["available"],"preferred":"preferred"},"preferred_locales":["preferred_locales"],"read_method":"magnetic_stripe_track2"},"kakao_pay":{},"klarna":{"dob":{"day":99228,"month":104080000,"year":3704893}},"konbini":{},"kr_card":{"brand":"lotte","last4":"last4"},"latest_active_mandate":null,"link":{"email":"email","persistent_token":"persistent_token"},"livemode":true,"mb_way":{},"metadata":{"key":"metadata"},"mobilepay":{},"multibanco":{},"naver_pay":{"buyer_id":"buyer_id","funding":"points"},"nz_bank_account":{"account_holder_name":"account_holder_name","bank_code":"bank_code","bank_name":"bank_name","branch_code":"branch_code","last4":"last4","suffix":"suffix"},"oxxo":{},"p24":{"bank":"noble_pay"},"pay_by_bank":{},"payco":{},"paynow":{},"paypal":{"country":"country","fingerprint":"fingerprint","payer_email":"payer_email","payer_id":"payer_id","verified_email":"verified_email"},"paypay":{},"payto":{"bsb_number":"bsb_number","last4":"last4","pay_id":"pay_id"},"pix":{"fingerprint":"fingerprint"},"promptpay":{},"qris":{},"radar_options":{"session":"session"},"rechnung":{"dob":{"day":99228,"month":104080000,"year":3704893}},"redaction":{"status":"processing"},"revolut_pay":{},"samsung_pay":{},"satispay":{},"scalapay":{},"sepa_debit":{"bank_code":"bank_code","branch_code":"branch_code","country":"country","fingerprint":"fingerprint","generated_from":{"charge":null,"setup_attempt":null},"last4":"last4"},"sequra":{},"shared_payment_granted_token":"shared_payment_granted_token","shopeepay":{},"sofort":{"country":"country"},"stripe_balance":{"account":"account"},"sunbit":{},"swish":{},"twint":{},"type":"twint","upi":{"vpa":"vpa"},"us_bank_account":{"account_holder_type":"individual","account_number":"account_number","account_type":"checking","bank_name":"bank_name","financial_connections_account":"financial_connections_account","fingerprint":"fingerprint","last4":"last4","networks":{"preferred":"preferred","supported":["ach"]},"routing_number":"routing_number","status_details":{"blocked":{"network_code":"R29","reason":"bank_account_frozen"}}},"wechat_pay":{},"wero":{},"zip":{}},"footer":"footer","rendering_options":{"amount_tax_display":"amount_tax_display","template":"template"}},"livemode":true,"metadata":{"key":"metadata"},"name":"name","next_invoice_sequence":1356358751,"phone":"phone","preferred_locales":["preferred_locales"],"redaction":{"status":"processing"},"shipping":{"address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"carrier":"carrier","name":"name","phone":"phone","tracking_number":"tracking_number"},"sources":{"object":"list","has_more":false,"data":[null]},"subscriptions":{"object":"list","has_more":false,"data":[{"object":"subscription","application":null,"application_fee_percent":282303517,"automatic_tax":{"disabled_reason":"requires_location_inputs","enabled":true,"liability":{"account":null,"type":"account"}},"billing_cycle_anchor":672980850,"billing_cycle_anchor_config":{"day_of_month":1361669285,"hour":3208676,"minute":1074026988,"month":104080000,"second":906279820},"billing_mode":{"flexible":{"proration_discounts":"itemized"},"type":"classic","updated_at":295464393},"billing_schedules":[{"applies_to":[{"price":null,"type":"price"}],"bill_until":{"computed_timestamp":2082605468,"duration":{"interval":"month","interval_count":797691627},"timestamp":55126294,"type":"duration"},"key":"key"}],"billing_thresholds":{"amount_gte":1424546639,"reset_billing_cycle_anchor":true},"cancel_at":476575768,"cancel_at_period_end":true,"canceled_at":1566574183,"cancellation_details":{"comment":"comment","feedback":"other","feedback_option":null,"reason":"canceled_by_retention_policy"},"collection_method":"charge_automatically","created":1028554472,"currency":"usd","customer":null,"customer_account":"customer_account","days_until_due":555548757,"default_payment_method":null,"default_source":null,"default_tax_rates":[null],"description":"description","discounts":[null],"ended_at":1730606040,"id":"obj_123","invoice_settings":{"account_tax_ids":[null],"custom_fields":[{"name":"name","value":"value"}],"description":"description","footer":"footer","issuer":{"account":null,"type":"account"}},"items":{"object":"list","has_more":false,"data":[null]},"last_price_migration_error":{"errored_at":1641242315,"failed_transitions":[{"source_price":"source_price","target_price":"target_price"}],"type":"price_uniqueness_violation"},"latest_invoice":null,"livemode":true,"managed_payments":{"enabled":true},"metadata":{"key":"metadata"},"next_pending_invoice_item_invoice":1422145209,"on_behalf_of":null,"pause_collection":{"behavior":"mark_uncollectible","resumes_at":556162772},"payment_settings":{"payment_method_options":{"acss_debit":{"mandate_options":{"transaction_type":"personal"},"verification_method":"microdeposits"},"bancontact":{"preferred_language":"fr"},"billie":{"company_details":{"registered_address":{"city":"city","country":"country","line1":"line1","line2":"line2","postal_code":"postal_code","state":"state"},"registered_name":"registered_name","registration_number":"registration_number","registration_type":"no_pno","vat":"vat"}},"blik":{"mandate_options":{"expires_at":833811170}},"card":{"mandate_options":{"amount":1413853096,"amount_type":"maximum","description":"description"},"network":"diners","request_three_d_secure":"any"},"customer_balance":{"bank_transfer":{"eu_bank_transfer":{"country":"ES"},"type":"type"},"funding_type":"bank_transfer"},"id_bank_transfer":{},"konbini":{},"payto":{"mandate_options":{"amount":1413853096,"amount_type":"maximum","purpose":"pension"}},"pix":{"expires_after_seconds":1859901103,"mandate_options":{"amount":1413853096,"amount_includes_iof":"never","end_date":"end_date","payment_schedule":"yearly"}},"sepa_debit":{},"upi":{"mandate_options":{"amount":1413853096,"amount_type":"maximum","description":"description","end_date":1725067410}},"us_bank_account":{"financial_connections":{"filters":{"account_subcategories":["checking"],"institution":"institution"},"permissions":["balances"],"prefetch":["inferred_balances"]},"verification_method":"microdeposits"}},"payment_method_types":["naver_pay"],"save_default_payment_method":"off"},"pending_invoice_item_interval":{"interval":"month","interval_count":797691627},"pending_setup_intent":null,"pending_update":{"billing_cycle_anchor":672980850,"cancel_at_period_end":true,"discount":null,"discounts":[null],"expires_at":833811170,"metadata":{"key":"metadata"},"prebilling_iterations":1175045469,"subscription_items":[null],"trial_end":816100302,"trial_from_plan":true},"prebilling":{"invoice":null,"period_end":384656733,"period_start":301041764,"update_behavior":"prebill"},"presentment_details":{"presentment_currency":"usd"},"schedule":null,"start_date":1573629589,"status":"trialing","status_details":{"paused":{"subscription":{"type":"final_payment_failure"},"transitioned_at":1968518242,"type":"subscription"}},"test_clock":null,"transfer_data":{"amount_percent":268993374,"destination":null},"trial_end":816100302,"trial_settings":{"end_behavior":{"billing_cycle_anchor":"now","missing_payment_method":"cancel"}},"trial_start":1719733753}]},"tax":{"automatic_tax":"unrecognized_location","ip_address":"ip_address","location":{"country":"country","source":"ip_address","state":"state"},"provider":"stripe"},"tax_exempt":"reverse","tax_ids":{"object":"list","has_more":false,"data":[{"object":"tax_id","country":"country","created":1028554472,"customer":null,"customer_account":"customer_account","id":"obj_123","livemode":true,"owner":{"account":null,"application":null,"customer":null,"customer_account":"customer_account","type":"customer"},"type":"ci_vat","value":"value","verification":{"status":"unverified","verified_address":"verified_address","verified_name":"verified_name"}}]},"test_clock":{"object":"test_helpers.test_clock","created":1028554472,"deletes_after":73213179,"frozen_time":2033541876,"id":"obj_123","livemode":true,"name":"name","status":"advancing","status_details":{"advancing":{"target_frozen_time":833971362}}}},"customer_account":"customer_account","type":"customer"},"type":"ci_vat","value":"value","verification":{"status":"unverified","verified_address":"verified_address","verified_name":"verified_name"}}],"hosted_payment_method_save":"offer"},"payments":{"email_customers_on_successful_payment":true,"statement_descriptor":"statement_descriptor","statement_descriptor_kana":"statement_descriptor_kana","statement_descriptor_kanji":"statement_descriptor_kanji","statement_descriptor_prefix_kana":"statement_descriptor_prefix_kana","statement_descriptor_prefix_kanji":"statement_descriptor_prefix_kanji"},"payouts":{"debit_negative_balances":true,"schedule":{"delay_days":1647351405,"interval":"interval","monthly_anchor":1920305369,"monthly_payout_days":[656202210],"weekly_anchor":"weekly_anchor","weekly_payout_days":["friday"]},"statement_descriptor":"statement_descriptor"},"paypay_payments":{"additional_files":["additional_files"],"goods_type":"other","site":{"accessible":{},"in_development":{"password_provided":true,"username":"username"},"restricted":{"payment_flow_file":"payment_flow_file"},"type":"accessible"}},"sepa_debit_payments":{"creditor_id":"creditor_id"},"smart_disputes":{"auto_respond":{"preference":"on","value":"on"}},"tax_forms":{"consented_to_paperless_delivery":true},"treasury":{"tos_acceptance":{"date":3076014,"ip":"ip","user_agent":"user_agent"}}},"tos_acceptance":{"date":3076014,"ip":"ip","service_agreement":"service_agreement","user_agent":"user_agent"},"type":"none"}',
       },
     ]);
-    const account = await stripe.accounts.retrieve('acc_123');
+    const account = await stripe.v1.accounts.retrieve('acc_123');
     expect(account).not.to.be.null;
   });
 
   it('test_accounts_login_links_post', async function() {
-    const loginLink = await stripe.accounts.createLoginLink(
+    const loginLink = await stripe.v1.accounts.createLoginLink(
       'acct_xxxxxxxxxxxxx'
     );
     expect(loginLink).not.to.be.null;
   });
 
   it('test_accounts_persons_delete', async function() {
-    const deleted = await stripe.accounts.deletePerson(
+    const deleted = await stripe.v1.accounts.deletePerson(
       'acct_xxxxxxxxxxxxx',
       'person_xxxxxxxxxxxxx'
     );
@@ -202,14 +202,14 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_persons_get', async function() {
-    const persons = await stripe.accounts.listPersons('acct_xxxxxxxxxxxxx', {
+    const persons = await stripe.v1.accounts.listPersons('acct_xxxxxxxxxxxxx', {
       limit: 3,
     });
     expect(persons).not.to.be.null;
   });
 
   it('test_accounts_persons_get_2', async function() {
-    const person = await stripe.accounts.retrievePerson(
+    const person = await stripe.v1.accounts.retrievePerson(
       'acct_xxxxxxxxxxxxx',
       'person_xxxxxxxxxxxxx'
     );
@@ -217,7 +217,7 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_persons_post', async function() {
-    const person = await stripe.accounts.createPerson('acct_xxxxxxxxxxxxx', {
+    const person = await stripe.v1.accounts.createPerson('acct_xxxxxxxxxxxxx', {
       first_name: 'Jane',
       last_name: 'Diaz',
     });
@@ -225,7 +225,7 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_persons_post_2', async function() {
-    const person = await stripe.accounts.updatePerson(
+    const person = await stripe.v1.accounts.updatePerson(
       'acct_xxxxxxxxxxxxx',
       'person_xxxxxxxxxxxxx',
       {
@@ -238,7 +238,7 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_post', async function() {
-    const account = await stripe.accounts.create({
+    const account = await stripe.v1.accounts.create({
       type: 'custom',
       country: 'US',
       email: 'jenny.rosen@example.com',
@@ -255,7 +255,7 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_post_2', async function() {
-    const account = await stripe.accounts.update('acct_xxxxxxxxxxxxx', {
+    const account = await stripe.v1.accounts.update('acct_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
       },
@@ -264,28 +264,28 @@ describe('Generated tests', function() {
   });
 
   it('test_accounts_reject_post', async function() {
-    const account = await stripe.accounts.reject('acct_xxxxxxxxxxxxx', {
+    const account = await stripe.v1.accounts.reject('acct_xxxxxxxxxxxxx', {
       reason: 'fraud_other',
     });
     expect(account).not.to.be.null;
   });
 
   it('test_application_fees_get', async function() {
-    const applicationFees = await stripe.applicationFees.list({
+    const applicationFees = await stripe.v1.applicationFees.list({
       limit: 3,
     });
     expect(applicationFees).not.to.be.null;
   });
 
   it('test_application_fees_get_2', async function() {
-    const applicationFee = await stripe.applicationFees.retrieve(
+    const applicationFee = await stripe.v1.applicationFees.retrieve(
       'fee_xxxxxxxxxxxxx'
     );
     expect(applicationFee).not.to.be.null;
   });
 
   it('test_application_fees_refunds_get', async function() {
-    const feeRefunds = await stripe.applicationFees.listRefunds(
+    const feeRefunds = await stripe.v1.applicationFees.listRefunds(
       'fee_xxxxxxxxxxxxx',
       {
         limit: 3,
@@ -295,7 +295,7 @@ describe('Generated tests', function() {
   });
 
   it('test_application_fees_refunds_get_2', async function() {
-    const feeRefund = await stripe.applicationFees.retrieveRefund(
+    const feeRefund = await stripe.v1.applicationFees.retrieveRefund(
       'fee_xxxxxxxxxxxxx',
       'fr_xxxxxxxxxxxxx'
     );
@@ -303,14 +303,14 @@ describe('Generated tests', function() {
   });
 
   it('test_application_fees_refunds_post', async function() {
-    const feeRefund = await stripe.applicationFees.createRefund(
+    const feeRefund = await stripe.v1.applicationFees.createRefund(
       'fee_xxxxxxxxxxxxx'
     );
     expect(feeRefund).not.to.be.null;
   });
 
   it('test_application_fees_refunds_post_2', async function() {
-    const feeRefund = await stripe.applicationFees.updateRefund(
+    const feeRefund = await stripe.v1.applicationFees.updateRefund(
       'fee_xxxxxxxxxxxxx',
       'fr_xxxxxxxxxxxxx',
       {
@@ -323,7 +323,7 @@ describe('Generated tests', function() {
   });
 
   it('test_apps_secrets_delete_post', async function() {
-    const secret = await stripe.apps.secrets.deleteWhere({
+    const secret = await stripe.v1.apps.secrets.deleteWhere({
       name: 'my-api-key',
       scope: {
         type: 'account',
@@ -333,7 +333,7 @@ describe('Generated tests', function() {
   });
 
   it('test_apps_secrets_find_get', async function() {
-    const secret = await stripe.apps.secrets.find({
+    const secret = await stripe.v1.apps.secrets.find({
       name: 'sec_123',
       scope: {
         type: 'account',
@@ -343,7 +343,7 @@ describe('Generated tests', function() {
   });
 
   it('test_apps_secrets_get', async function() {
-    const secrets = await stripe.apps.secrets.list({
+    const secrets = await stripe.v1.apps.secrets.list({
       scope: {
         type: 'account',
       },
@@ -353,7 +353,7 @@ describe('Generated tests', function() {
   });
 
   it('test_apps_secrets_get_2', async function() {
-    const secrets = await stripe.apps.secrets.list({
+    const secrets = await stripe.v1.apps.secrets.list({
       scope: {
         type: 'account',
       },
@@ -363,7 +363,7 @@ describe('Generated tests', function() {
   });
 
   it('test_apps_secrets_post', async function() {
-    const secret = await stripe.apps.secrets.create({
+    const secret = await stripe.v1.apps.secrets.create({
       name: 'sec_123',
       payload: 'very secret string',
       scope: {
@@ -374,7 +374,7 @@ describe('Generated tests', function() {
   });
 
   it('test_apps_secrets_post_2', async function() {
-    const secret = await stripe.apps.secrets.create({
+    const secret = await stripe.v1.apps.secrets.create({
       name: 'my-api-key',
       payload: 'secret_key_xxxxxx',
       scope: {
@@ -385,35 +385,35 @@ describe('Generated tests', function() {
   });
 
   it('test_balance_transactions_get', async function() {
-    const balanceTransactions = await stripe.balanceTransactions.list({
+    const balanceTransactions = await stripe.v1.balanceTransactions.list({
       limit: 3,
     });
     expect(balanceTransactions).not.to.be.null;
   });
 
   it('test_balance_transactions_get_2', async function() {
-    const balanceTransaction = await stripe.balanceTransactions.retrieve(
+    const balanceTransaction = await stripe.v1.balanceTransactions.retrieve(
       'txn_xxxxxxxxxxxxx'
     );
     expect(balanceTransaction).not.to.be.null;
   });
 
   it('test_billing_portal_configurations_get', async function() {
-    const configurations = await stripe.billingPortal.configurations.list({
+    const configurations = await stripe.v1.billingPortal.configurations.list({
       limit: 3,
     });
     expect(configurations).not.to.be.null;
   });
 
   it('test_billing_portal_configurations_get_2', async function() {
-    const configuration = await stripe.billingPortal.configurations.retrieve(
+    const configuration = await stripe.v1.billingPortal.configurations.retrieve(
       'bpc_xxxxxxxxxxxxx'
     );
     expect(configuration).not.to.be.null;
   });
 
   it('test_billing_portal_configurations_post', async function() {
-    const configuration = await stripe.billingPortal.configurations.create({
+    const configuration = await stripe.v1.billingPortal.configurations.create({
       features: {
         customer_update: {
           allowed_updates: ['email', 'tax_id'],
@@ -432,7 +432,7 @@ describe('Generated tests', function() {
   });
 
   it('test_billing_portal_configurations_post_2', async function() {
-    const configuration = await stripe.billingPortal.configurations.update(
+    const configuration = await stripe.v1.billingPortal.configurations.update(
       'bpc_xxxxxxxxxxxxx',
       {
         business_profile: {
@@ -445,7 +445,7 @@ describe('Generated tests', function() {
   });
 
   it('test_billing_portal_sessions_post', async function() {
-    const session = await stripe.billingPortal.sessions.create({
+    const session = await stripe.v1.billingPortal.sessions.create({
       customer: 'cus_xxxxxxxxxxxxx',
       return_url: 'https://example.com/account',
     });
@@ -453,24 +453,24 @@ describe('Generated tests', function() {
   });
 
   it('test_charges_capture_post', async function() {
-    const charge = await stripe.charges.capture('ch_xxxxxxxxxxxxx');
+    const charge = await stripe.v1.charges.capture('ch_xxxxxxxxxxxxx');
     expect(charge).not.to.be.null;
   });
 
   it('test_charges_get', async function() {
-    const charges = await stripe.charges.list({
+    const charges = await stripe.v1.charges.list({
       limit: 3,
     });
     expect(charges).not.to.be.null;
   });
 
   it('test_charges_get_2', async function() {
-    const charge = await stripe.charges.retrieve('ch_xxxxxxxxxxxxx');
+    const charge = await stripe.v1.charges.retrieve('ch_xxxxxxxxxxxxx');
     expect(charge).not.to.be.null;
   });
 
   it('test_charges_post', async function() {
-    const charge = await stripe.charges.create({
+    const charge = await stripe.v1.charges.create({
       amount: 2000,
       currency: 'usd',
       source: 'tok_xxxx',
@@ -481,7 +481,7 @@ describe('Generated tests', function() {
   });
 
   it('test_charges_post_2', async function() {
-    const charge = await stripe.charges.update('ch_xxxxxxxxxxxxx', {
+    const charge = await stripe.v1.charges.update('ch_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
       },
@@ -490,45 +490,47 @@ describe('Generated tests', function() {
   });
 
   it('test_charges_search_get', async function() {
-    const charges = await stripe.charges.search({
+    const charges = await stripe.v1.charges.search({
       query: "amount>999 AND metadata['order_id']:'6735'",
     });
     expect(charges).not.to.be.null;
   });
 
   it('test_checkout_sessions_expire_post', async function() {
-    const session = await stripe.checkout.sessions.expire('sess_xyz');
+    const session = await stripe.v1.checkout.sessions.expire('sess_xyz');
     expect(session).not.to.be.null;
   });
 
   it('test_checkout_sessions_expire_post_2', async function() {
-    const session = await stripe.checkout.sessions.expire(
+    const session = await stripe.v1.checkout.sessions.expire(
       'cs_test_xxxxxxxxxxxxx'
     );
     expect(session).not.to.be.null;
   });
 
   it('test_checkout_sessions_get', async function() {
-    const sessions = await stripe.checkout.sessions.list({
+    const sessions = await stripe.v1.checkout.sessions.list({
       limit: 3,
     });
     expect(sessions).not.to.be.null;
   });
 
   it('test_checkout_sessions_get_2', async function() {
-    const session = await stripe.checkout.sessions.retrieve(
+    const session = await stripe.v1.checkout.sessions.retrieve(
       'cs_test_xxxxxxxxxxxxx'
     );
     expect(session).not.to.be.null;
   });
 
   it('test_checkout_sessions_line_items_get', async function() {
-    const lineItems = await stripe.checkout.sessions.listLineItems('sess_xyz');
+    const lineItems = await stripe.v1.checkout.sessions.listLineItems(
+      'sess_xyz'
+    );
     expect(lineItems).not.to.be.null;
   });
 
   it('test_checkout_sessions_post', async function() {
-    const session = await stripe.checkout.sessions.create({
+    const session = await stripe.v1.checkout.sessions.create({
       success_url: 'https://example.com/success',
       cancel_url: 'https://example.com/cancel',
       mode: 'payment',
@@ -557,7 +559,7 @@ describe('Generated tests', function() {
   });
 
   it('test_checkout_sessions_post_2', async function() {
-    const session = await stripe.checkout.sessions.create({
+    const session = await stripe.v1.checkout.sessions.create({
       success_url: 'https://example.com/success',
       line_items: [
         {
@@ -584,36 +586,36 @@ describe('Generated tests', function() {
   });
 
   it('test_country_specs_get', async function() {
-    const countrySpecs = await stripe.countrySpecs.list({
+    const countrySpecs = await stripe.v1.countrySpecs.list({
       limit: 3,
     });
     expect(countrySpecs).not.to.be.null;
   });
 
   it('test_country_specs_get_2', async function() {
-    const countrySpec = await stripe.countrySpecs.retrieve('US');
+    const countrySpec = await stripe.v1.countrySpecs.retrieve('US');
     expect(countrySpec).not.to.be.null;
   });
 
   it('test_coupons_delete', async function() {
-    const deleted = await stripe.coupons.del('Z4OV52SU');
+    const deleted = await stripe.v1.coupons.del('Z4OV52SU');
     expect(deleted).not.to.be.null;
   });
 
   it('test_coupons_get', async function() {
-    const coupons = await stripe.coupons.list({
+    const coupons = await stripe.v1.coupons.list({
       limit: 3,
     });
     expect(coupons).not.to.be.null;
   });
 
   it('test_coupons_get_2', async function() {
-    const coupon = await stripe.coupons.retrieve('Z4OV52SU');
+    const coupon = await stripe.v1.coupons.retrieve('Z4OV52SU');
     expect(coupon).not.to.be.null;
   });
 
   it('test_coupons_post', async function() {
-    const coupon = await stripe.coupons.create({
+    const coupon = await stripe.v1.coupons.create({
       percent_off: 25.5,
       duration: 'once',
     });
@@ -621,7 +623,7 @@ describe('Generated tests', function() {
   });
 
   it('test_coupons_post_2', async function() {
-    const coupon = await stripe.coupons.update('Z4OV52SU', {
+    const coupon = await stripe.v1.coupons.update('Z4OV52SU', {
       metadata: {
         order_id: '6735',
       },
@@ -630,14 +632,14 @@ describe('Generated tests', function() {
   });
 
   it('test_credit_notes_get', async function() {
-    const creditNotes = await stripe.creditNotes.list({
+    const creditNotes = await stripe.v1.creditNotes.list({
       limit: 3,
     });
     expect(creditNotes).not.to.be.null;
   });
 
   it('test_credit_notes_lines_get', async function() {
-    const creditNoteLineItems = await stripe.creditNotes.listLineItems(
+    const creditNoteLineItems = await stripe.v1.creditNotes.listLineItems(
       'cn_xxxxxxxxxxxxx',
       {
         limit: 3,
@@ -647,7 +649,7 @@ describe('Generated tests', function() {
   });
 
   it('test_credit_notes_post', async function() {
-    const creditNote = await stripe.creditNotes.create({
+    const creditNote = await stripe.v1.creditNotes.create({
       invoice: 'in_xxxxxxxxxxxxx',
       lines: [
         {
@@ -661,7 +663,7 @@ describe('Generated tests', function() {
   });
 
   it('test_credit_notes_preview_get', async function() {
-    const creditNote = await stripe.creditNotes.preview({
+    const creditNote = await stripe.v1.creditNotes.preview({
       invoice: 'in_xxxxxxxxxxxxx',
       lines: [
         {
@@ -675,22 +677,24 @@ describe('Generated tests', function() {
   });
 
   it('test_credit_notes_preview_lines_get', async function() {
-    const creditNoteLineItems = await stripe.creditNotes.listPreviewLineItems({
-      limit: 3,
-      invoice: 'in_xxxxxxxxxxxxx',
-    });
+    const creditNoteLineItems = await stripe.v1.creditNotes.listPreviewLineItems(
+      {
+        limit: 3,
+        invoice: 'in_xxxxxxxxxxxxx',
+      }
+    );
     expect(creditNoteLineItems).not.to.be.null;
   });
 
   it('test_credit_notes_void_post', async function() {
-    const creditNote = await stripe.creditNotes.voidCreditNote(
+    const creditNote = await stripe.v1.creditNotes.voidCreditNote(
       'cn_xxxxxxxxxxxxx'
     );
     expect(creditNote).not.to.be.null;
   });
 
   it('test_customer_sessions_post', async function() {
-    const customerSession = await stripe.customerSessions.create({
+    const customerSession = await stripe.v1.customerSessions.create({
       customer: 'cus_123',
       components: {
         buy_button: {
@@ -702,7 +706,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_balance_transactions_get', async function() {
-    const customerBalanceTransactions = await stripe.customers.listBalanceTransactions(
+    const customerBalanceTransactions = await stripe.v1.customers.listBalanceTransactions(
       'cus_xxxxxxxxxxxxx',
       {
         limit: 3,
@@ -712,7 +716,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_balance_transactions_get_2', async function() {
-    const customerBalanceTransaction = await stripe.customers.retrieveBalanceTransaction(
+    const customerBalanceTransaction = await stripe.v1.customers.retrieveBalanceTransaction(
       'cus_xxxxxxxxxxxxx',
       'cbtxn_xxxxxxxxxxxxx'
     );
@@ -720,7 +724,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_balance_transactions_post', async function() {
-    const customerBalanceTransaction = await stripe.customers.createBalanceTransaction(
+    const customerBalanceTransaction = await stripe.v1.customers.createBalanceTransaction(
       'cus_xxxxxxxxxxxxx',
       {
         amount: -500,
@@ -731,7 +735,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_balance_transactions_post_2', async function() {
-    const customerBalanceTransaction = await stripe.customers.updateBalanceTransaction(
+    const customerBalanceTransaction = await stripe.v1.customers.updateBalanceTransaction(
       'cus_xxxxxxxxxxxxx',
       'cbtxn_xxxxxxxxxxxxx',
       {
@@ -744,12 +748,14 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_cash_balance_get', async function() {
-    const cashBalance = await stripe.customers.retrieveCashBalance('cus_123');
+    const cashBalance = await stripe.v1.customers.retrieveCashBalance(
+      'cus_123'
+    );
     expect(cashBalance).not.to.be.null;
   });
 
   it('test_customers_cash_balance_post', async function() {
-    const cashBalance = await stripe.customers.updateCashBalance('cus_123', {
+    const cashBalance = await stripe.v1.customers.updateCashBalance('cus_123', {
       settings: {
         reconciliation_mode: 'manual',
       },
@@ -758,7 +764,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_cash_balance_transactions_get', async function() {
-    const customerCashBalanceTransactions = await stripe.customers.listCashBalanceTransactions(
+    const customerCashBalanceTransactions = await stripe.v1.customers.listCashBalanceTransactions(
       'cus_123',
       {
         limit: 3,
@@ -768,12 +774,12 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_delete', async function() {
-    const deleted = await stripe.customers.del('cus_xxxxxxxxxxxxx');
+    const deleted = await stripe.v1.customers.del('cus_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
   it('test_customers_funding_instructions_post', async function() {
-    const fundingInstructions = await stripe.customers.createFundingInstructions(
+    const fundingInstructions = await stripe.v1.customers.createFundingInstructions(
       'cus_123',
       {
         bank_transfer: {
@@ -788,26 +794,26 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_get', async function() {
-    const customers = await stripe.customers.list({
+    const customers = await stripe.v1.customers.list({
       limit: 3,
     });
     expect(customers).not.to.be.null;
   });
 
   it('test_customers_get_2', async function() {
-    const customers = await stripe.customers.list({
+    const customers = await stripe.v1.customers.list({
       limit: 3,
     });
     expect(customers).not.to.be.null;
   });
 
   it('test_customers_get_3', async function() {
-    const customer = await stripe.customers.retrieve('cus_xxxxxxxxxxxxx');
+    const customer = await stripe.v1.customers.retrieve('cus_xxxxxxxxxxxxx');
     expect(customer).not.to.be.null;
   });
 
   it('test_customers_payment_methods_get', async function() {
-    const paymentMethods = await stripe.customers.listPaymentMethods(
+    const paymentMethods = await stripe.v1.customers.listPaymentMethods(
       'cus_xyz',
       {
         type: 'card',
@@ -817,7 +823,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_payment_methods_get_2', async function() {
-    const paymentMethods = await stripe.customers.listPaymentMethods(
+    const paymentMethods = await stripe.v1.customers.listPaymentMethods(
       'cus_xxxxxxxxxxxxx',
       {
         type: 'card',
@@ -827,7 +833,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_post', async function() {
-    const customer = await stripe.customers.create({
+    const customer = await stripe.v1.customers.create({
       description:
         'My First Test Customer (created for API docs at https://www.stripe.com/docs/api)',
     });
@@ -835,7 +841,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_post_2', async function() {
-    const customer = await stripe.customers.update('cus_xxxxxxxxxxxxx', {
+    const customer = await stripe.v1.customers.update('cus_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
       },
@@ -844,21 +850,21 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_search_get', async function() {
-    const customers = await stripe.customers.search({
+    const customers = await stripe.v1.customers.search({
       query: "name:'fakename' AND metadata['foo']:'bar'",
     });
     expect(customers).not.to.be.null;
   });
 
   it('test_customers_search_get_2', async function() {
-    const customers = await stripe.customers.search({
+    const customers = await stripe.v1.customers.search({
       query: "name:'fakename' AND metadata['foo']:'bar'",
     });
     expect(customers).not.to.be.null;
   });
 
   it('test_customers_sources_delete', async function() {
-    const customerSource = await stripe.customers.deleteSource(
+    const customerSource = await stripe.v1.customers.deleteSource(
       'cus_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx'
     );
@@ -866,7 +872,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_sources_delete_2', async function() {
-    const customerSource = await stripe.customers.deleteSource(
+    const customerSource = await stripe.v1.customers.deleteSource(
       'cus_xxxxxxxxxxxxx',
       'card_xxxxxxxxxxxxx'
     );
@@ -874,7 +880,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_sources_get', async function() {
-    const customerSources = await stripe.customers.listSources(
+    const customerSources = await stripe.v1.customers.listSources(
       'cus_xxxxxxxxxxxxx',
       {
         object: 'bank_account',
@@ -885,7 +891,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_sources_get_2', async function() {
-    const customerSources = await stripe.customers.listSources(
+    const customerSources = await stripe.v1.customers.listSources(
       'cus_xxxxxxxxxxxxx',
       {
         object: 'card',
@@ -896,7 +902,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_sources_get_3', async function() {
-    const customerSource = await stripe.customers.retrieveSource(
+    const customerSource = await stripe.v1.customers.retrieveSource(
       'cus_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx'
     );
@@ -904,7 +910,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_sources_get_4', async function() {
-    const customerSource = await stripe.customers.retrieveSource(
+    const customerSource = await stripe.v1.customers.retrieveSource(
       'cus_xxxxxxxxxxxxx',
       'card_xxxxxxxxxxxxx'
     );
@@ -912,7 +918,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_sources_post', async function() {
-    const customerSource = await stripe.customers.updateSource(
+    const customerSource = await stripe.v1.customers.updateSource(
       'cus_123',
       'card_123',
       {
@@ -923,7 +929,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_sources_post_2', async function() {
-    const customerSource = await stripe.customers.createSource(
+    const customerSource = await stripe.v1.customers.createSource(
       'cus_xxxxxxxxxxxxx',
       {
         source: 'btok_xxxxxxxxxxxxx',
@@ -933,7 +939,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_sources_post_3', async function() {
-    const customerSource = await stripe.customers.createSource(
+    const customerSource = await stripe.v1.customers.createSource(
       'cus_xxxxxxxxxxxxx',
       {
         source: 'tok_xxxx',
@@ -943,7 +949,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_sources_post_4', async function() {
-    const customerSource = await stripe.customers.updateSource(
+    const customerSource = await stripe.v1.customers.updateSource(
       'cus_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx',
       {
@@ -956,7 +962,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_sources_post_5', async function() {
-    const customerSource = await stripe.customers.updateSource(
+    const customerSource = await stripe.v1.customers.updateSource(
       'cus_xxxxxxxxxxxxx',
       'card_xxxxxxxxxxxxx',
       {
@@ -967,7 +973,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_sources_verify_post', async function() {
-    const bankAccount = await stripe.customers.verifySource(
+    const bankAccount = await stripe.v1.customers.verifySource(
       'cus_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx',
       {
@@ -978,7 +984,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_tax_ids_delete', async function() {
-    const deleted = await stripe.customers.deleteTaxId(
+    const deleted = await stripe.v1.customers.deleteTaxId(
       'cus_xxxxxxxxxxxxx',
       'txi_xxxxxxxxxxxxx'
     );
@@ -986,14 +992,14 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_tax_ids_get', async function() {
-    const taxIds = await stripe.customers.listTaxIds('cus_xxxxxxxxxxxxx', {
+    const taxIds = await stripe.v1.customers.listTaxIds('cus_xxxxxxxxxxxxx', {
       limit: 3,
     });
     expect(taxIds).not.to.be.null;
   });
 
   it('test_customers_tax_ids_get_2', async function() {
-    const taxId = await stripe.customers.retrieveTaxId(
+    const taxId = await stripe.v1.customers.retrieveTaxId(
       'cus_xxxxxxxxxxxxx',
       'txi_xxxxxxxxxxxxx'
     );
@@ -1001,7 +1007,7 @@ describe('Generated tests', function() {
   });
 
   it('test_customers_tax_ids_post', async function() {
-    const taxId = await stripe.customers.createTaxId('cus_xxxxxxxxxxxxx', {
+    const taxId = await stripe.v1.customers.createTaxId('cus_xxxxxxxxxxxxx', {
       type: 'eu_vat',
       value: 'DE123456789',
     });
@@ -1009,24 +1015,24 @@ describe('Generated tests', function() {
   });
 
   it('test_disputes_close_post', async function() {
-    const dispute = await stripe.disputes.close('dp_xxxxxxxxxxxxx');
+    const dispute = await stripe.v1.disputes.close('dp_xxxxxxxxxxxxx');
     expect(dispute).not.to.be.null;
   });
 
   it('test_disputes_get', async function() {
-    const disputes = await stripe.disputes.list({
+    const disputes = await stripe.v1.disputes.list({
       limit: 3,
     });
     expect(disputes).not.to.be.null;
   });
 
   it('test_disputes_get_2', async function() {
-    const dispute = await stripe.disputes.retrieve('dp_xxxxxxxxxxxxx');
+    const dispute = await stripe.v1.disputes.retrieve('dp_xxxxxxxxxxxxx');
     expect(dispute).not.to.be.null;
   });
 
   it('test_disputes_post', async function() {
-    const dispute = await stripe.disputes.update('dp_xxxxxxxxxxxxx', {
+    const dispute = await stripe.v1.disputes.update('dp_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
       },
@@ -1035,38 +1041,38 @@ describe('Generated tests', function() {
   });
 
   it('test_events_get', async function() {
-    const events = await stripe.events.list({
+    const events = await stripe.v1.events.list({
       limit: 3,
     });
     expect(events).not.to.be.null;
   });
 
   it('test_events_get_2', async function() {
-    const event = await stripe.events.retrieve('evt_xxxxxxxxxxxxx');
+    const event = await stripe.v1.events.retrieve('evt_xxxxxxxxxxxxx');
     expect(event).not.to.be.null;
   });
 
   it('test_file_links_get', async function() {
-    const fileLinks = await stripe.fileLinks.list({
+    const fileLinks = await stripe.v1.fileLinks.list({
       limit: 3,
     });
     expect(fileLinks).not.to.be.null;
   });
 
   it('test_file_links_get_2', async function() {
-    const fileLink = await stripe.fileLinks.retrieve('link_xxxxxxxxxxxxx');
+    const fileLink = await stripe.v1.fileLinks.retrieve('link_xxxxxxxxxxxxx');
     expect(fileLink).not.to.be.null;
   });
 
   it('test_file_links_post', async function() {
-    const fileLink = await stripe.fileLinks.create({
+    const fileLink = await stripe.v1.fileLinks.create({
       file: 'file_xxxxxxxxxxxxx',
     });
     expect(fileLink).not.to.be.null;
   });
 
   it('test_file_links_post_2', async function() {
-    const fileLink = await stripe.fileLinks.update('link_xxxxxxxxxxxxx', {
+    const fileLink = await stripe.v1.fileLinks.update('link_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
       },
@@ -1075,19 +1081,19 @@ describe('Generated tests', function() {
   });
 
   it('test_files_get', async function() {
-    const files = await stripe.files.list({
+    const files = await stripe.v1.files.list({
       limit: 3,
     });
     expect(files).not.to.be.null;
   });
 
   it('test_files_get_2', async function() {
-    const file = await stripe.files.retrieve('file_xxxxxxxxxxxxx');
+    const file = await stripe.v1.files.retrieve('file_xxxxxxxxxxxxx');
     expect(file).not.to.be.null;
   });
 
   it('test_files_post', async function() {
-    const file = await stripe.files.create({
+    const file = await stripe.v1.files.create({
       purpose: 'account_requirement',
       file: {
         data: Buffer.from('file contents'),
@@ -1099,33 +1105,33 @@ describe('Generated tests', function() {
   });
 
   it('test_financial_connections_accounts_disconnect_post', async function() {
-    const account = await stripe.financialConnections.accounts.disconnect(
+    const account = await stripe.v1.financialConnections.accounts.disconnect(
       'fca_xyz'
     );
     expect(account).not.to.be.null;
   });
 
   it('test_financial_connections_accounts_disconnect_post_2', async function() {
-    const account = await stripe.financialConnections.accounts.disconnect(
+    const account = await stripe.v1.financialConnections.accounts.disconnect(
       'fca_xxxxxxxxxxxxx'
     );
     expect(account).not.to.be.null;
   });
 
   it('test_financial_connections_accounts_get', async function() {
-    const accounts = await stripe.financialConnections.accounts.list();
+    const accounts = await stripe.v1.financialConnections.accounts.list();
     expect(accounts).not.to.be.null;
   });
 
   it('test_financial_connections_accounts_get_2', async function() {
-    const account = await stripe.financialConnections.accounts.retrieve(
+    const account = await stripe.v1.financialConnections.accounts.retrieve(
       'fca_xyz'
     );
     expect(account).not.to.be.null;
   });
 
   it('test_financial_connections_accounts_get_3', async function() {
-    const accounts = await stripe.financialConnections.accounts.list({
+    const accounts = await stripe.v1.financialConnections.accounts.list({
       account_holder: {
         customer: 'cus_xxxxxxxxxxxxx',
       },
@@ -1134,14 +1140,14 @@ describe('Generated tests', function() {
   });
 
   it('test_financial_connections_accounts_get_4', async function() {
-    const account = await stripe.financialConnections.accounts.retrieve(
+    const account = await stripe.v1.financialConnections.accounts.retrieve(
       'fca_xxxxxxxxxxxxx'
     );
     expect(account).not.to.be.null;
   });
 
   it('test_financial_connections_accounts_owners_get', async function() {
-    const accountOwners = await stripe.financialConnections.accounts.listOwners(
+    const accountOwners = await stripe.v1.financialConnections.accounts.listOwners(
       'fca_xyz',
       {
         ownership: 'fcaowns_xyz',
@@ -1151,7 +1157,7 @@ describe('Generated tests', function() {
   });
 
   it('test_financial_connections_accounts_owners_get_2', async function() {
-    const accountOwners = await stripe.financialConnections.accounts.listOwners(
+    const accountOwners = await stripe.v1.financialConnections.accounts.listOwners(
       'fca_xxxxxxxxxxxxx',
       {
         limit: 3,
@@ -1162,7 +1168,7 @@ describe('Generated tests', function() {
   });
 
   it('test_financial_connections_accounts_refresh_post', async function() {
-    const account = await stripe.financialConnections.accounts.refresh(
+    const account = await stripe.v1.financialConnections.accounts.refresh(
       'fca_xyz',
       {
         features: ['balance'],
@@ -1172,7 +1178,7 @@ describe('Generated tests', function() {
   });
 
   it('test_financial_connections_accounts_subscribe_post', async function() {
-    const account = await stripe.financialConnections.accounts.subscribe(
+    const account = await stripe.v1.financialConnections.accounts.subscribe(
       'fa_123',
       {
         features: ['transactions'],
@@ -1182,7 +1188,7 @@ describe('Generated tests', function() {
   });
 
   it('test_financial_connections_accounts_unsubscribe_post', async function() {
-    const account = await stripe.financialConnections.accounts.unsubscribe(
+    const account = await stripe.v1.financialConnections.accounts.unsubscribe(
       'fa_123',
       {
         features: ['transactions'],
@@ -1192,21 +1198,21 @@ describe('Generated tests', function() {
   });
 
   it('test_financial_connections_sessions_get', async function() {
-    const session = await stripe.financialConnections.sessions.retrieve(
+    const session = await stripe.v1.financialConnections.sessions.retrieve(
       'fcsess_xyz'
     );
     expect(session).not.to.be.null;
   });
 
   it('test_financial_connections_sessions_get_2', async function() {
-    const session = await stripe.financialConnections.sessions.retrieve(
+    const session = await stripe.v1.financialConnections.sessions.retrieve(
       'fcsess_xxxxxxxxxxxxx'
     );
     expect(session).not.to.be.null;
   });
 
   it('test_financial_connections_sessions_post', async function() {
-    const session = await stripe.financialConnections.sessions.create({
+    const session = await stripe.v1.financialConnections.sessions.create({
       account_holder: {
         type: 'customer',
         customer: 'cus_123',
@@ -1217,7 +1223,7 @@ describe('Generated tests', function() {
   });
 
   it('test_financial_connections_sessions_post_2', async function() {
-    const session = await stripe.financialConnections.sessions.create({
+    const session = await stripe.v1.financialConnections.sessions.create({
       account_holder: {
         type: 'customer',
         customer: 'cus_xxxxxxxxxxxxx',
@@ -1231,42 +1237,46 @@ describe('Generated tests', function() {
   });
 
   it('test_financial_connections_transactions_get', async function() {
-    const transaction = await stripe.financialConnections.transactions.retrieve(
+    const transaction = await stripe.v1.financialConnections.transactions.retrieve(
       'tr_123'
     );
     expect(transaction).not.to.be.null;
   });
 
   it('test_financial_connections_transactions_get_2', async function() {
-    const transactions = await stripe.financialConnections.transactions.list({
-      account: 'fca_xyz',
-    });
+    const transactions = await stripe.v1.financialConnections.transactions.list(
+      {
+        account: 'fca_xyz',
+      }
+    );
     expect(transactions).not.to.be.null;
   });
 
   it('test_identity_verification_reports_get', async function() {
-    const verificationReports = await stripe.identity.verificationReports.list({
-      limit: 3,
-    });
+    const verificationReports = await stripe.v1.identity.verificationReports.list(
+      {
+        limit: 3,
+      }
+    );
     expect(verificationReports).not.to.be.null;
   });
 
   it('test_identity_verification_reports_get_2', async function() {
-    const verificationReport = await stripe.identity.verificationReports.retrieve(
+    const verificationReport = await stripe.v1.identity.verificationReports.retrieve(
       'vr_xxxxxxxxxxxxx'
     );
     expect(verificationReport).not.to.be.null;
   });
 
   it('test_identity_verification_sessions_cancel_post', async function() {
-    const verificationSession = await stripe.identity.verificationSessions.cancel(
+    const verificationSession = await stripe.v1.identity.verificationSessions.cancel(
       'vs_xxxxxxxxxxxxx'
     );
     expect(verificationSession).not.to.be.null;
   });
 
   it('test_identity_verification_sessions_get', async function() {
-    const verificationSessions = await stripe.identity.verificationSessions.list(
+    const verificationSessions = await stripe.v1.identity.verificationSessions.list(
       {
         limit: 3,
       }
@@ -1275,14 +1285,14 @@ describe('Generated tests', function() {
   });
 
   it('test_identity_verification_sessions_get_2', async function() {
-    const verificationSession = await stripe.identity.verificationSessions.retrieve(
+    const verificationSession = await stripe.v1.identity.verificationSessions.retrieve(
       'vs_xxxxxxxxxxxxx'
     );
     expect(verificationSession).not.to.be.null;
   });
 
   it('test_identity_verification_sessions_post', async function() {
-    const verificationSession = await stripe.identity.verificationSessions.create(
+    const verificationSession = await stripe.v1.identity.verificationSessions.create(
       {
         type: 'document',
       }
@@ -1291,7 +1301,7 @@ describe('Generated tests', function() {
   });
 
   it('test_identity_verification_sessions_post_2', async function() {
-    const verificationSession = await stripe.identity.verificationSessions.update(
+    const verificationSession = await stripe.v1.identity.verificationSessions.update(
       'vs_xxxxxxxxxxxxx',
       {
         type: 'id_number',
@@ -1301,93 +1311,102 @@ describe('Generated tests', function() {
   });
 
   it('test_identity_verification_sessions_redact_post', async function() {
-    const verificationSession = await stripe.identity.verificationSessions.redact(
+    const verificationSession = await stripe.v1.identity.verificationSessions.redact(
       'vs_xxxxxxxxxxxxx'
     );
     expect(verificationSession).not.to.be.null;
   });
 
   it('test_invoiceitems_delete', async function() {
-    const deleted = await stripe.invoiceItems.del('ii_xxxxxxxxxxxxx');
+    const deleted = await stripe.v1.invoiceItems.del('ii_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
   it('test_invoiceitems_get', async function() {
-    const invoiceItems = await stripe.invoiceItems.list({
+    const invoiceItems = await stripe.v1.invoiceItems.list({
       limit: 3,
     });
     expect(invoiceItems).not.to.be.null;
   });
 
   it('test_invoiceitems_get_2', async function() {
-    const invoiceItem = await stripe.invoiceItems.retrieve('ii_xxxxxxxxxxxxx');
+    const invoiceItem = await stripe.v1.invoiceItems.retrieve(
+      'ii_xxxxxxxxxxxxx'
+    );
     expect(invoiceItem).not.to.be.null;
   });
 
   it('test_invoiceitems_post', async function() {
-    const invoiceItem = await stripe.invoiceItems.create({
+    const invoiceItem = await stripe.v1.invoiceItems.create({
       customer: 'cus_xxxxxxxxxxxxx',
     });
     expect(invoiceItem).not.to.be.null;
   });
 
   it('test_invoiceitems_post_2', async function() {
-    const invoiceItem = await stripe.invoiceItems.update('ii_xxxxxxxxxxxxx', {
-      metadata: {
-        order_id: '6735',
-      },
-    });
+    const invoiceItem = await stripe.v1.invoiceItems.update(
+      'ii_xxxxxxxxxxxxx',
+      {
+        metadata: {
+          order_id: '6735',
+        },
+      }
+    );
     expect(invoiceItem).not.to.be.null;
   });
 
   it('test_invoices_delete', async function() {
-    const deleted = await stripe.invoices.del('in_xxxxxxxxxxxxx');
+    const deleted = await stripe.v1.invoices.del('in_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
   it('test_invoices_finalize_post', async function() {
-    const invoice = await stripe.invoices.finalizeInvoice('in_xxxxxxxxxxxxx');
+    const invoice = await stripe.v1.invoices.finalizeInvoice(
+      'in_xxxxxxxxxxxxx'
+    );
     expect(invoice).not.to.be.null;
   });
 
   it('test_invoices_get', async function() {
-    const invoices = await stripe.invoices.list({
+    const invoices = await stripe.v1.invoices.list({
       limit: 3,
     });
     expect(invoices).not.to.be.null;
   });
 
   it('test_invoices_get_2', async function() {
-    const invoice = await stripe.invoices.retrieve('in_xxxxxxxxxxxxx');
+    const invoice = await stripe.v1.invoices.retrieve('in_xxxxxxxxxxxxx');
     expect(invoice).not.to.be.null;
   });
 
   it('test_invoices_get_3', async function() {
-    const invoice = await stripe.invoices.retrieve('in_xxxxxxxxxxxxx', {
+    const invoice = await stripe.v1.invoices.retrieve('in_xxxxxxxxxxxxx', {
       expand: ['customer'],
     });
     expect(invoice).not.to.be.null;
   });
 
   it('test_invoices_mark_uncollectible_post', async function() {
-    const invoice = await stripe.invoices.markUncollectible('in_xxxxxxxxxxxxx');
+    const invoice = await stripe.v1.invoices.markUncollectible(
+      'in_xxxxxxxxxxxxx'
+    );
     expect(invoice).not.to.be.null;
   });
 
   it('test_invoices_pay_post', async function() {
-    const invoice = await stripe.invoices.pay('in_xxxxxxxxxxxxx');
+    const invoice = await stripe.v1.invoices.pay('in_xxxxxxxxxxxxx');
     expect(invoice).not.to.be.null;
   });
 
   it('test_invoices_post', async function() {
-    const invoice = await stripe.invoices.create({
+    const invoice = await stripe.v1.invoices.create({
       customer: 'cus_xxxxxxxxxxxxx',
     });
     expect(invoice).not.to.be.null;
   });
 
   it('test_invoices_post_2', async function() {
-    const invoice = await stripe.invoices.update('in_xxxxxxxxxxxxx', {
+    const invoice = await stripe.v1.invoices.update('in_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
       },
@@ -1396,52 +1415,52 @@ describe('Generated tests', function() {
   });
 
   it('test_invoices_search_get', async function() {
-    const invoices = await stripe.invoices.search({
+    const invoices = await stripe.v1.invoices.search({
       query: "total>999 AND metadata['order_id']:'6735'",
     });
     expect(invoices).not.to.be.null;
   });
 
   it('test_invoices_send_post', async function() {
-    const invoice = await stripe.invoices.sendInvoice('in_xxxxxxxxxxxxx');
+    const invoice = await stripe.v1.invoices.sendInvoice('in_xxxxxxxxxxxxx');
     expect(invoice).not.to.be.null;
   });
 
   it('test_invoices_void_post', async function() {
-    const invoice = await stripe.invoices.voidInvoice('in_xxxxxxxxxxxxx');
+    const invoice = await stripe.v1.invoices.voidInvoice('in_xxxxxxxxxxxxx');
     expect(invoice).not.to.be.null;
   });
 
   it('test_issuing_authorizations_approve_post', async function() {
-    const authorization = await stripe.issuing.authorizations.approve(
+    const authorization = await stripe.v1.issuing.authorizations.approve(
       'iauth_xxxxxxxxxxxxx'
     );
     expect(authorization).not.to.be.null;
   });
 
   it('test_issuing_authorizations_decline_post', async function() {
-    const authorization = await stripe.issuing.authorizations.decline(
+    const authorization = await stripe.v1.issuing.authorizations.decline(
       'iauth_xxxxxxxxxxxxx'
     );
     expect(authorization).not.to.be.null;
   });
 
   it('test_issuing_authorizations_get', async function() {
-    const authorizations = await stripe.issuing.authorizations.list({
+    const authorizations = await stripe.v1.issuing.authorizations.list({
       limit: 3,
     });
     expect(authorizations).not.to.be.null;
   });
 
   it('test_issuing_authorizations_get_2', async function() {
-    const authorization = await stripe.issuing.authorizations.retrieve(
+    const authorization = await stripe.v1.issuing.authorizations.retrieve(
       'iauth_xxxxxxxxxxxxx'
     );
     expect(authorization).not.to.be.null;
   });
 
   it('test_issuing_authorizations_post', async function() {
-    const authorization = await stripe.issuing.authorizations.update(
+    const authorization = await stripe.v1.issuing.authorizations.update(
       'iauth_xxxxxxxxxxxxx',
       {
         metadata: {
@@ -1453,21 +1472,21 @@ describe('Generated tests', function() {
   });
 
   it('test_issuing_cardholders_get', async function() {
-    const cardholders = await stripe.issuing.cardholders.list({
+    const cardholders = await stripe.v1.issuing.cardholders.list({
       limit: 3,
     });
     expect(cardholders).not.to.be.null;
   });
 
   it('test_issuing_cardholders_get_2', async function() {
-    const cardholder = await stripe.issuing.cardholders.retrieve(
+    const cardholder = await stripe.v1.issuing.cardholders.retrieve(
       'ich_xxxxxxxxxxxxx'
     );
     expect(cardholder).not.to.be.null;
   });
 
   it('test_issuing_cardholders_post', async function() {
-    const cardholder = await stripe.issuing.cardholders.create({
+    const cardholder = await stripe.v1.issuing.cardholders.create({
       type: 'individual',
       name: 'Jenny Rosen',
       email: 'jenny.rosen@example.com',
@@ -1486,7 +1505,7 @@ describe('Generated tests', function() {
   });
 
   it('test_issuing_cardholders_post_2', async function() {
-    const cardholder = await stripe.issuing.cardholders.update(
+    const cardholder = await stripe.v1.issuing.cardholders.update(
       'ich_xxxxxxxxxxxxx',
       {
         metadata: {
@@ -1498,19 +1517,19 @@ describe('Generated tests', function() {
   });
 
   it('test_issuing_cards_get', async function() {
-    const cards = await stripe.issuing.cards.list({
+    const cards = await stripe.v1.issuing.cards.list({
       limit: 3,
     });
     expect(cards).not.to.be.null;
   });
 
   it('test_issuing_cards_get_2', async function() {
-    const card = await stripe.issuing.cards.retrieve('ic_xxxxxxxxxxxxx');
+    const card = await stripe.v1.issuing.cards.retrieve('ic_xxxxxxxxxxxxx');
     expect(card).not.to.be.null;
   });
 
   it('test_issuing_cards_post', async function() {
-    const card = await stripe.issuing.cards.create({
+    const card = await stripe.v1.issuing.cards.create({
       cardholder: 'ich_xxxxxxxxxxxxx',
       currency: 'usd',
       type: 'virtual',
@@ -1519,7 +1538,7 @@ describe('Generated tests', function() {
   });
 
   it('test_issuing_cards_post_2', async function() {
-    const card = await stripe.issuing.cards.update('ic_xxxxxxxxxxxxx', {
+    const card = await stripe.v1.issuing.cards.update('ic_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
       },
@@ -1528,19 +1547,21 @@ describe('Generated tests', function() {
   });
 
   it('test_issuing_disputes_get', async function() {
-    const disputes = await stripe.issuing.disputes.list({
+    const disputes = await stripe.v1.issuing.disputes.list({
       limit: 3,
     });
     expect(disputes).not.to.be.null;
   });
 
   it('test_issuing_disputes_get_2', async function() {
-    const dispute = await stripe.issuing.disputes.retrieve('idp_xxxxxxxxxxxxx');
+    const dispute = await stripe.v1.issuing.disputes.retrieve(
+      'idp_xxxxxxxxxxxxx'
+    );
     expect(dispute).not.to.be.null;
   });
 
   it('test_issuing_disputes_post', async function() {
-    const dispute = await stripe.issuing.disputes.create({
+    const dispute = await stripe.v1.issuing.disputes.create({
       transaction: 'ipi_xxxxxxxxxxxxx',
       evidence: {
         reason: 'fraudulent',
@@ -1553,24 +1574,26 @@ describe('Generated tests', function() {
   });
 
   it('test_issuing_disputes_submit_post', async function() {
-    const dispute = await stripe.issuing.disputes.submit('idp_xxxxxxxxxxxxx');
+    const dispute = await stripe.v1.issuing.disputes.submit(
+      'idp_xxxxxxxxxxxxx'
+    );
     expect(dispute).not.to.be.null;
   });
 
   it('test_issuing_personalization_designs_get', async function() {
-    const personalizationDesigns = await stripe.issuing.personalizationDesigns.list();
+    const personalizationDesigns = await stripe.v1.issuing.personalizationDesigns.list();
     expect(personalizationDesigns).not.to.be.null;
   });
 
   it('test_issuing_personalization_designs_get_2', async function() {
-    const personalizationDesign = await stripe.issuing.personalizationDesigns.retrieve(
+    const personalizationDesign = await stripe.v1.issuing.personalizationDesigns.retrieve(
       'pd_xyz'
     );
     expect(personalizationDesign).not.to.be.null;
   });
 
   it('test_issuing_personalization_designs_post', async function() {
-    const personalizationDesign = await stripe.issuing.personalizationDesigns.create(
+    const personalizationDesign = await stripe.v1.issuing.personalizationDesigns.create(
       {
         physical_bundle: 'pb_xyz',
       }
@@ -1579,40 +1602,40 @@ describe('Generated tests', function() {
   });
 
   it('test_issuing_personalization_designs_post_2', async function() {
-    const personalizationDesign = await stripe.issuing.personalizationDesigns.update(
+    const personalizationDesign = await stripe.v1.issuing.personalizationDesigns.update(
       'pd_xyz'
     );
     expect(personalizationDesign).not.to.be.null;
   });
 
   it('test_issuing_physical_bundles_get', async function() {
-    const physicalBundles = await stripe.issuing.physicalBundles.list();
+    const physicalBundles = await stripe.v1.issuing.physicalBundles.list();
     expect(physicalBundles).not.to.be.null;
   });
 
   it('test_issuing_physical_bundles_get_2', async function() {
-    const physicalBundle = await stripe.issuing.physicalBundles.retrieve(
+    const physicalBundle = await stripe.v1.issuing.physicalBundles.retrieve(
       'pb_xyz'
     );
     expect(physicalBundle).not.to.be.null;
   });
 
   it('test_issuing_transactions_get', async function() {
-    const transactions = await stripe.issuing.transactions.list({
+    const transactions = await stripe.v1.issuing.transactions.list({
       limit: 3,
     });
     expect(transactions).not.to.be.null;
   });
 
   it('test_issuing_transactions_get_2', async function() {
-    const transaction = await stripe.issuing.transactions.retrieve(
+    const transaction = await stripe.v1.issuing.transactions.retrieve(
       'ipi_xxxxxxxxxxxxx'
     );
     expect(transaction).not.to.be.null;
   });
 
   it('test_issuing_transactions_post', async function() {
-    const transaction = await stripe.issuing.transactions.update(
+    const transaction = await stripe.v1.issuing.transactions.update(
       'ipi_xxxxxxxxxxxxx',
       {
         metadata: {
@@ -1624,33 +1647,33 @@ describe('Generated tests', function() {
   });
 
   it('test_mandates_get', async function() {
-    const mandate = await stripe.mandates.retrieve('mandate_xxxxxxxxxxxxx');
+    const mandate = await stripe.v1.mandates.retrieve('mandate_xxxxxxxxxxxxx');
     expect(mandate).not.to.be.null;
   });
 
   it('test_payment_intents_apply_customer_balance_post', async function() {
-    const paymentIntent = await stripe.paymentIntents.applyCustomerBalance(
+    const paymentIntent = await stripe.v1.paymentIntents.applyCustomerBalance(
       'pi_xxxxxxxxxxxxx'
     );
     expect(paymentIntent).not.to.be.null;
   });
 
   it('test_payment_intents_cancel_post', async function() {
-    const paymentIntent = await stripe.paymentIntents.cancel(
+    const paymentIntent = await stripe.v1.paymentIntents.cancel(
       'pi_xxxxxxxxxxxxx'
     );
     expect(paymentIntent).not.to.be.null;
   });
 
   it('test_payment_intents_capture_post', async function() {
-    const paymentIntent = await stripe.paymentIntents.capture(
+    const paymentIntent = await stripe.v1.paymentIntents.capture(
       'pi_xxxxxxxxxxxxx'
     );
     expect(paymentIntent).not.to.be.null;
   });
 
   it('test_payment_intents_confirm_post', async function() {
-    const paymentIntent = await stripe.paymentIntents.confirm(
+    const paymentIntent = await stripe.v1.paymentIntents.confirm(
       'pi_xxxxxxxxxxxxx',
       {
         payment_method: 'pm_card_visa',
@@ -1660,21 +1683,21 @@ describe('Generated tests', function() {
   });
 
   it('test_payment_intents_get', async function() {
-    const paymentIntents = await stripe.paymentIntents.list({
+    const paymentIntents = await stripe.v1.paymentIntents.list({
       limit: 3,
     });
     expect(paymentIntents).not.to.be.null;
   });
 
   it('test_payment_intents_get_2', async function() {
-    const paymentIntent = await stripe.paymentIntents.retrieve(
+    const paymentIntent = await stripe.v1.paymentIntents.retrieve(
       'pi_xxxxxxxxxxxxx'
     );
     expect(paymentIntent).not.to.be.null;
   });
 
   it('test_payment_intents_increment_authorization_post', async function() {
-    const paymentIntent = await stripe.paymentIntents.incrementAuthorization(
+    const paymentIntent = await stripe.v1.paymentIntents.incrementAuthorization(
       'pi_xxxxxxxxxxxxx',
       {
         amount: 2099,
@@ -1684,7 +1707,7 @@ describe('Generated tests', function() {
   });
 
   it('test_payment_intents_post', async function() {
-    const paymentIntent = await stripe.paymentIntents.create({
+    const paymentIntent = await stripe.v1.paymentIntents.create({
       amount: 1099,
       currency: 'eur',
       automatic_payment_methods: {
@@ -1695,7 +1718,7 @@ describe('Generated tests', function() {
   });
 
   it('test_payment_intents_post_2', async function() {
-    const paymentIntent = await stripe.paymentIntents.create({
+    const paymentIntent = await stripe.v1.paymentIntents.create({
       amount: 2000,
       currency: 'usd',
       automatic_payment_methods: {
@@ -1706,7 +1729,7 @@ describe('Generated tests', function() {
   });
 
   it('test_payment_intents_post_3', async function() {
-    const paymentIntent = await stripe.paymentIntents.update(
+    const paymentIntent = await stripe.v1.paymentIntents.update(
       'pi_xxxxxxxxxxxxx',
       {
         metadata: {
@@ -1718,7 +1741,7 @@ describe('Generated tests', function() {
   });
 
   it('test_payment_intents_post_4', async function() {
-    const paymentIntent = await stripe.paymentIntents.create({
+    const paymentIntent = await stripe.v1.paymentIntents.create({
       amount: 200,
       currency: 'usd',
       payment_method_data: {
@@ -1732,21 +1755,21 @@ describe('Generated tests', function() {
   });
 
   it('test_payment_intents_search_get', async function() {
-    const paymentIntents = await stripe.paymentIntents.search({
+    const paymentIntents = await stripe.v1.paymentIntents.search({
       query: "status:'succeeded' AND metadata['order_id']:'6735'",
     });
     expect(paymentIntents).not.to.be.null;
   });
 
   it('test_payment_intents_verify_microdeposits_post', async function() {
-    const paymentIntent = await stripe.paymentIntents.verifyMicrodeposits(
+    const paymentIntent = await stripe.v1.paymentIntents.verifyMicrodeposits(
       'pi_xxxxxxxxxxxxx'
     );
     expect(paymentIntent).not.to.be.null;
   });
 
   it('test_payment_intents_verify_microdeposits_post_2', async function() {
-    const paymentIntent = await stripe.paymentIntents.verifyMicrodeposits(
+    const paymentIntent = await stripe.v1.paymentIntents.verifyMicrodeposits(
       'pi_xxxxxxxxxxxxx',
       {
         amounts: [32, 45],
@@ -1756,31 +1779,31 @@ describe('Generated tests', function() {
   });
 
   it('test_payment_links_get', async function() {
-    const paymentLink = await stripe.paymentLinks.retrieve('pl_xyz');
+    const paymentLink = await stripe.v1.paymentLinks.retrieve('pl_xyz');
     expect(paymentLink).not.to.be.null;
   });
 
   it('test_payment_links_get_2', async function() {
-    const paymentLinks = await stripe.paymentLinks.list({
+    const paymentLinks = await stripe.v1.paymentLinks.list({
       limit: 3,
     });
     expect(paymentLinks).not.to.be.null;
   });
 
   it('test_payment_links_get_3', async function() {
-    const paymentLink = await stripe.paymentLinks.retrieve(
+    const paymentLink = await stripe.v1.paymentLinks.retrieve(
       'plink_xxxxxxxxxxxxx'
     );
     expect(paymentLink).not.to.be.null;
   });
 
   it('test_payment_links_line_items_get', async function() {
-    const lineItems = await stripe.paymentLinks.listLineItems('pl_xyz');
+    const lineItems = await stripe.v1.paymentLinks.listLineItems('pl_xyz');
     expect(lineItems).not.to.be.null;
   });
 
   it('test_payment_links_post', async function() {
-    const paymentLink = await stripe.paymentLinks.create({
+    const paymentLink = await stripe.v1.paymentLinks.create({
       line_items: [
         {
           price: 'price_xxxxxxxxxxxxx',
@@ -1792,7 +1815,7 @@ describe('Generated tests', function() {
   });
 
   it('test_payment_links_post_2', async function() {
-    const paymentLink = await stripe.paymentLinks.create({
+    const paymentLink = await stripe.v1.paymentLinks.create({
       line_items: [
         {
           price: 'price_xxxxxxxxxxxxx',
@@ -1804,7 +1827,7 @@ describe('Generated tests', function() {
   });
 
   it('test_payment_links_post_3', async function() {
-    const paymentLink = await stripe.paymentLinks.update(
+    const paymentLink = await stripe.v1.paymentLinks.update(
       'plink_xxxxxxxxxxxxx',
       {
         active: false,
@@ -1814,7 +1837,7 @@ describe('Generated tests', function() {
   });
 
   it('test_payment_method_configurations_get', async function() {
-    const paymentMethodConfigurations = await stripe.paymentMethodConfigurations.list(
+    const paymentMethodConfigurations = await stripe.v1.paymentMethodConfigurations.list(
       {
         application: 'foo',
       }
@@ -1823,14 +1846,14 @@ describe('Generated tests', function() {
   });
 
   it('test_payment_method_configurations_get_2', async function() {
-    const paymentMethodConfiguration = await stripe.paymentMethodConfigurations.retrieve(
+    const paymentMethodConfiguration = await stripe.v1.paymentMethodConfigurations.retrieve(
       'foo'
     );
     expect(paymentMethodConfiguration).not.to.be.null;
   });
 
   it('test_payment_method_configurations_post', async function() {
-    const paymentMethodConfiguration = await stripe.paymentMethodConfigurations.create(
+    const paymentMethodConfiguration = await stripe.v1.paymentMethodConfigurations.create(
       {
         acss_debit: {
           display_preference: {
@@ -1848,7 +1871,7 @@ describe('Generated tests', function() {
   });
 
   it('test_payment_method_configurations_post_2', async function() {
-    const paymentMethodConfiguration = await stripe.paymentMethodConfigurations.update(
+    const paymentMethodConfiguration = await stripe.v1.paymentMethodConfigurations.update(
       'foo',
       {
         acss_debit: {
@@ -1862,7 +1885,7 @@ describe('Generated tests', function() {
   });
 
   it('test_payment_methods_attach_post', async function() {
-    const paymentMethod = await stripe.paymentMethods.attach(
+    const paymentMethod = await stripe.v1.paymentMethods.attach(
       'pm_xxxxxxxxxxxxx',
       {
         customer: 'cus_xxxxxxxxxxxxx',
@@ -1872,14 +1895,14 @@ describe('Generated tests', function() {
   });
 
   it('test_payment_methods_detach_post', async function() {
-    const paymentMethod = await stripe.paymentMethods.detach(
+    const paymentMethod = await stripe.v1.paymentMethods.detach(
       'pm_xxxxxxxxxxxxx'
     );
     expect(paymentMethod).not.to.be.null;
   });
 
   it('test_payment_methods_get', async function() {
-    const paymentMethods = await stripe.paymentMethods.list({
+    const paymentMethods = await stripe.v1.paymentMethods.list({
       customer: 'cus_xxxxxxxxxxxxx',
       type: 'card',
     });
@@ -1887,14 +1910,14 @@ describe('Generated tests', function() {
   });
 
   it('test_payment_methods_get_2', async function() {
-    const paymentMethod = await stripe.paymentMethods.retrieve(
+    const paymentMethod = await stripe.v1.paymentMethods.retrieve(
       'pm_xxxxxxxxxxxxx'
     );
     expect(paymentMethod).not.to.be.null;
   });
 
   it('test_payment_methods_post', async function() {
-    const paymentMethod = await stripe.paymentMethods.create({
+    const paymentMethod = await stripe.v1.paymentMethods.create({
       type: 'card',
       card: {
         number: '4242424242424242',
@@ -1907,7 +1930,7 @@ describe('Generated tests', function() {
   });
 
   it('test_payment_methods_post_2', async function() {
-    const paymentMethod = await stripe.paymentMethods.update(
+    const paymentMethod = await stripe.v1.paymentMethods.update(
       'pm_xxxxxxxxxxxxx',
       {
         metadata: {
@@ -1919,24 +1942,24 @@ describe('Generated tests', function() {
   });
 
   it('test_payouts_cancel_post', async function() {
-    const payout = await stripe.payouts.cancel('po_xxxxxxxxxxxxx');
+    const payout = await stripe.v1.payouts.cancel('po_xxxxxxxxxxxxx');
     expect(payout).not.to.be.null;
   });
 
   it('test_payouts_get', async function() {
-    const payouts = await stripe.payouts.list({
+    const payouts = await stripe.v1.payouts.list({
       limit: 3,
     });
     expect(payouts).not.to.be.null;
   });
 
   it('test_payouts_get_2', async function() {
-    const payout = await stripe.payouts.retrieve('po_xxxxxxxxxxxxx');
+    const payout = await stripe.v1.payouts.retrieve('po_xxxxxxxxxxxxx');
     expect(payout).not.to.be.null;
   });
 
   it('test_payouts_post', async function() {
-    const payout = await stripe.payouts.create({
+    const payout = await stripe.v1.payouts.create({
       amount: 1100,
       currency: 'usd',
     });
@@ -1944,7 +1967,7 @@ describe('Generated tests', function() {
   });
 
   it('test_payouts_post_2', async function() {
-    const payout = await stripe.payouts.update('po_xxxxxxxxxxxxx', {
+    const payout = await stripe.v1.payouts.update('po_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
       },
@@ -1953,29 +1976,29 @@ describe('Generated tests', function() {
   });
 
   it('test_payouts_reverse_post', async function() {
-    const payout = await stripe.payouts.reverse('po_xxxxxxxxxxxxx');
+    const payout = await stripe.v1.payouts.reverse('po_xxxxxxxxxxxxx');
     expect(payout).not.to.be.null;
   });
 
   it('test_plans_delete', async function() {
-    const deleted = await stripe.plans.del('price_xxxxxxxxxxxxx');
+    const deleted = await stripe.v1.plans.del('price_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
   it('test_plans_get', async function() {
-    const plans = await stripe.plans.list({
+    const plans = await stripe.v1.plans.list({
       limit: 3,
     });
     expect(plans).not.to.be.null;
   });
 
   it('test_plans_get_2', async function() {
-    const plan = await stripe.plans.retrieve('price_xxxxxxxxxxxxx');
+    const plan = await stripe.v1.plans.retrieve('price_xxxxxxxxxxxxx');
     expect(plan).not.to.be.null;
   });
 
   it('test_plans_post', async function() {
-    const plan = await stripe.plans.create({
+    const plan = await stripe.v1.plans.create({
       amount: 2000,
       currency: 'usd',
       interval: 'month',
@@ -1985,7 +2008,7 @@ describe('Generated tests', function() {
   });
 
   it('test_plans_post_2', async function() {
-    const plan = await stripe.plans.create({
+    const plan = await stripe.v1.plans.create({
       amount: 2000,
       currency: 'usd',
       interval: 'month',
@@ -1997,7 +2020,7 @@ describe('Generated tests', function() {
   });
 
   it('test_plans_post_3', async function() {
-    const plan = await stripe.plans.update('price_xxxxxxxxxxxxx', {
+    const plan = await stripe.v1.plans.update('price_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
       },
@@ -2006,19 +2029,19 @@ describe('Generated tests', function() {
   });
 
   it('test_prices_get', async function() {
-    const prices = await stripe.prices.list({
+    const prices = await stripe.v1.prices.list({
       limit: 3,
     });
     expect(prices).not.to.be.null;
   });
 
   it('test_prices_get_2', async function() {
-    const price = await stripe.prices.retrieve('price_xxxxxxxxxxxxx');
+    const price = await stripe.v1.prices.retrieve('price_xxxxxxxxxxxxx');
     expect(price).not.to.be.null;
   });
 
   it('test_prices_post', async function() {
-    const price = await stripe.prices.create({
+    const price = await stripe.v1.prices.create({
       unit_amount: 2000,
       currency: 'usd',
       currency_options: {
@@ -2038,7 +2061,7 @@ describe('Generated tests', function() {
   });
 
   it('test_prices_post_2', async function() {
-    const price = await stripe.prices.create({
+    const price = await stripe.v1.prices.create({
       unit_amount: 2000,
       currency: 'usd',
       recurring: {
@@ -2050,7 +2073,7 @@ describe('Generated tests', function() {
   });
 
   it('test_prices_post_3', async function() {
-    const price = await stripe.prices.update('price_xxxxxxxxxxxxx', {
+    const price = await stripe.v1.prices.update('price_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
       },
@@ -2059,38 +2082,38 @@ describe('Generated tests', function() {
   });
 
   it('test_prices_search_get', async function() {
-    const prices = await stripe.prices.search({
+    const prices = await stripe.v1.prices.search({
       query: "active:'true' AND metadata['order_id']:'6735'",
     });
     expect(prices).not.to.be.null;
   });
 
   it('test_products_delete', async function() {
-    const deleted = await stripe.products.del('prod_xxxxxxxxxxxxx');
+    const deleted = await stripe.v1.products.del('prod_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
   it('test_products_get', async function() {
-    const products = await stripe.products.list({
+    const products = await stripe.v1.products.list({
       limit: 3,
     });
     expect(products).not.to.be.null;
   });
 
   it('test_products_get_2', async function() {
-    const product = await stripe.products.retrieve('prod_xxxxxxxxxxxxx');
+    const product = await stripe.v1.products.retrieve('prod_xxxxxxxxxxxxx');
     expect(product).not.to.be.null;
   });
 
   it('test_products_post', async function() {
-    const product = await stripe.products.create({
+    const product = await stripe.v1.products.create({
       name: 'Gold Special',
     });
     expect(product).not.to.be.null;
   });
 
   it('test_products_post_2', async function() {
-    const product = await stripe.products.update('prod_xxxxxxxxxxxxx', {
+    const product = await stripe.v1.products.update('prod_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
       },
@@ -2099,28 +2122,28 @@ describe('Generated tests', function() {
   });
 
   it('test_products_search_get', async function() {
-    const products = await stripe.products.search({
+    const products = await stripe.v1.products.search({
       query: "active:'true' AND metadata['order_id']:'6735'",
     });
     expect(products).not.to.be.null;
   });
 
   it('test_promotion_codes_get', async function() {
-    const promotionCodes = await stripe.promotionCodes.list({
+    const promotionCodes = await stripe.v1.promotionCodes.list({
       limit: 3,
     });
     expect(promotionCodes).not.to.be.null;
   });
 
   it('test_promotion_codes_get_2', async function() {
-    const promotionCode = await stripe.promotionCodes.retrieve(
+    const promotionCode = await stripe.v1.promotionCodes.retrieve(
       'promo_xxxxxxxxxxxxx'
     );
     expect(promotionCode).not.to.be.null;
   });
 
   it('test_promotion_codes_post', async function() {
-    const promotionCode = await stripe.promotionCodes.create({
+    const promotionCode = await stripe.v1.promotionCodes.create({
       promotion: {
         type: 'coupon',
         coupon: 'Z4OV52SU',
@@ -2130,7 +2153,7 @@ describe('Generated tests', function() {
   });
 
   it('test_promotion_codes_post_2', async function() {
-    const promotionCode = await stripe.promotionCodes.update(
+    const promotionCode = await stripe.v1.promotionCodes.update(
       'promo_xxxxxxxxxxxxx',
       {
         metadata: {
@@ -2142,44 +2165,44 @@ describe('Generated tests', function() {
   });
 
   it('test_quotes_accept_post', async function() {
-    const quote = await stripe.quotes.accept('qt_xxxxxxxxxxxxx');
+    const quote = await stripe.v1.quotes.accept('qt_xxxxxxxxxxxxx');
     expect(quote).not.to.be.null;
   });
 
   it('test_quotes_cancel_post', async function() {
-    const quote = await stripe.quotes.cancel('qt_xxxxxxxxxxxxx');
+    const quote = await stripe.v1.quotes.cancel('qt_xxxxxxxxxxxxx');
     expect(quote).not.to.be.null;
   });
 
   it('test_quotes_finalize_post', async function() {
-    const quote = await stripe.quotes.finalizeQuote('qt_xxxxxxxxxxxxx');
+    const quote = await stripe.v1.quotes.finalizeQuote('qt_xxxxxxxxxxxxx');
     expect(quote).not.to.be.null;
   });
 
   it('test_quotes_get', async function() {
-    const quotes = await stripe.quotes.list({
+    const quotes = await stripe.v1.quotes.list({
       limit: 3,
     });
     expect(quotes).not.to.be.null;
   });
 
   it('test_quotes_get_2', async function() {
-    const quote = await stripe.quotes.retrieve('qt_xxxxxxxxxxxxx');
+    const quote = await stripe.v1.quotes.retrieve('qt_xxxxxxxxxxxxx');
     expect(quote).not.to.be.null;
   });
 
   it('test_quotes_line_items_get', async function() {
-    const lineItems = await stripe.quotes.listLineItems('qt_xxxxxxxxxxxxx');
+    const lineItems = await stripe.v1.quotes.listLineItems('qt_xxxxxxxxxxxxx');
     expect(lineItems).not.to.be.null;
   });
 
   it('test_quotes_pdf_get', async function() {
-    const file = await stripe.quotes.pdf('qt_xxxxxxxxxxxxx');
+    const file = await stripe.v1.quotes.pdf('qt_xxxxxxxxxxxxx');
     expect(file).not.to.be.null;
   });
 
   it('test_quotes_post', async function() {
-    const quote = await stripe.quotes.create({
+    const quote = await stripe.v1.quotes.create({
       customer: 'cus_xxxxxxxxxxxxx',
       line_items: [
         {
@@ -2192,7 +2215,7 @@ describe('Generated tests', function() {
   });
 
   it('test_quotes_post_2', async function() {
-    const quote = await stripe.quotes.update('qt_xxxxxxxxxxxxx', {
+    const quote = await stripe.v1.quotes.update('qt_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
       },
@@ -2201,7 +2224,7 @@ describe('Generated tests', function() {
   });
 
   it('test_quotes_preview_invoices_lines_get', async function() {
-    const invoiceLineItems = await stripe.quotes.listPreviewInvoiceLines(
+    const invoiceLineItems = await stripe.v1.quotes.listPreviewInvoiceLines(
       'qt_xyz',
       'in_xyz'
     );
@@ -2209,26 +2232,28 @@ describe('Generated tests', function() {
   });
 
   it('test_radar_early_fraud_warnings_get', async function() {
-    const earlyFraudWarnings = await stripe.radar.earlyFraudWarnings.list({
+    const earlyFraudWarnings = await stripe.v1.radar.earlyFraudWarnings.list({
       limit: 3,
     });
     expect(earlyFraudWarnings).not.to.be.null;
   });
 
   it('test_radar_early_fraud_warnings_get_2', async function() {
-    const earlyFraudWarning = await stripe.radar.earlyFraudWarnings.retrieve(
+    const earlyFraudWarning = await stripe.v1.radar.earlyFraudWarnings.retrieve(
       'issfr_xxxxxxxxxxxxx'
     );
     expect(earlyFraudWarning).not.to.be.null;
   });
 
   it('test_radar_value_list_items_delete', async function() {
-    const deleted = await stripe.radar.valueListItems.del('rsli_xxxxxxxxxxxxx');
+    const deleted = await stripe.v1.radar.valueListItems.del(
+      'rsli_xxxxxxxxxxxxx'
+    );
     expect(deleted).not.to.be.null;
   });
 
   it('test_radar_value_list_items_get', async function() {
-    const valueListItems = await stripe.radar.valueListItems.list({
+    const valueListItems = await stripe.v1.radar.valueListItems.list({
       limit: 3,
       value_list: 'rsl_xxxxxxxxxxxxx',
     });
@@ -2236,14 +2261,14 @@ describe('Generated tests', function() {
   });
 
   it('test_radar_value_list_items_get_2', async function() {
-    const valueListItem = await stripe.radar.valueListItems.retrieve(
+    const valueListItem = await stripe.v1.radar.valueListItems.retrieve(
       'rsli_xxxxxxxxxxxxx'
     );
     expect(valueListItem).not.to.be.null;
   });
 
   it('test_radar_value_list_items_post', async function() {
-    const valueListItem = await stripe.radar.valueListItems.create({
+    const valueListItem = await stripe.v1.radar.valueListItems.create({
       value_list: 'rsl_xxxxxxxxxxxxx',
       value: '1.2.3.4',
     });
@@ -2251,26 +2276,26 @@ describe('Generated tests', function() {
   });
 
   it('test_radar_value_lists_delete', async function() {
-    const deleted = await stripe.radar.valueLists.del('rsl_xxxxxxxxxxxxx');
+    const deleted = await stripe.v1.radar.valueLists.del('rsl_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
   it('test_radar_value_lists_get', async function() {
-    const valueLists = await stripe.radar.valueLists.list({
+    const valueLists = await stripe.v1.radar.valueLists.list({
       limit: 3,
     });
     expect(valueLists).not.to.be.null;
   });
 
   it('test_radar_value_lists_get_2', async function() {
-    const valueList = await stripe.radar.valueLists.retrieve(
+    const valueList = await stripe.v1.radar.valueLists.retrieve(
       'rsl_xxxxxxxxxxxxx'
     );
     expect(valueList).not.to.be.null;
   });
 
   it('test_radar_value_lists_post', async function() {
-    const valueList = await stripe.radar.valueLists.create({
+    const valueList = await stripe.v1.radar.valueLists.create({
       alias: 'custom_ip_xxxxxxxxxxxxx',
       name: 'Custom IP Blocklist',
       item_type: 'ip_address',
@@ -2279,7 +2304,7 @@ describe('Generated tests', function() {
   });
 
   it('test_radar_value_lists_post_2', async function() {
-    const valueList = await stripe.radar.valueLists.update(
+    const valueList = await stripe.v1.radar.valueLists.update(
       'rsl_xxxxxxxxxxxxx',
       {
         name: 'Updated IP Block List',
@@ -2289,31 +2314,31 @@ describe('Generated tests', function() {
   });
 
   it('test_refunds_cancel_post', async function() {
-    const refund = await stripe.refunds.cancel('re_xxxxxxxxxxxxx');
+    const refund = await stripe.v1.refunds.cancel('re_xxxxxxxxxxxxx');
     expect(refund).not.to.be.null;
   });
 
   it('test_refunds_get', async function() {
-    const refunds = await stripe.refunds.list({
+    const refunds = await stripe.v1.refunds.list({
       limit: 3,
     });
     expect(refunds).not.to.be.null;
   });
 
   it('test_refunds_get_2', async function() {
-    const refund = await stripe.refunds.retrieve('re_xxxxxxxxxxxxx');
+    const refund = await stripe.v1.refunds.retrieve('re_xxxxxxxxxxxxx');
     expect(refund).not.to.be.null;
   });
 
   it('test_refunds_post', async function() {
-    const refund = await stripe.refunds.create({
+    const refund = await stripe.v1.refunds.create({
       charge: 'ch_xxxxxxxxxxxxx',
     });
     expect(refund).not.to.be.null;
   });
 
   it('test_refunds_post_2', async function() {
-    const refund = await stripe.refunds.update('re_xxxxxxxxxxxxx', {
+    const refund = await stripe.v1.refunds.update('re_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
       },
@@ -2322,21 +2347,21 @@ describe('Generated tests', function() {
   });
 
   it('test_reporting_report_runs_get', async function() {
-    const reportRuns = await stripe.reporting.reportRuns.list({
+    const reportRuns = await stripe.v1.reporting.reportRuns.list({
       limit: 3,
     });
     expect(reportRuns).not.to.be.null;
   });
 
   it('test_reporting_report_runs_get_2', async function() {
-    const reportRun = await stripe.reporting.reportRuns.retrieve(
+    const reportRun = await stripe.v1.reporting.reportRuns.retrieve(
       'frr_xxxxxxxxxxxxx'
     );
     expect(reportRun).not.to.be.null;
   });
 
   it('test_reporting_report_runs_post', async function() {
-    const reportRun = await stripe.reporting.reportRuns.create({
+    const reportRun = await stripe.v1.reporting.reportRuns.create({
       report_type: 'balance.summary.1',
       parameters: {
         interval_start: 1522540800,
@@ -2347,36 +2372,36 @@ describe('Generated tests', function() {
   });
 
   it('test_reporting_report_types_get', async function() {
-    const reportTypes = await stripe.reporting.reportTypes.list();
+    const reportTypes = await stripe.v1.reporting.reportTypes.list();
     expect(reportTypes).not.to.be.null;
   });
 
   it('test_reporting_report_types_get_2', async function() {
-    const reportType = await stripe.reporting.reportTypes.retrieve(
+    const reportType = await stripe.v1.reporting.reportTypes.retrieve(
       'balance.summary.1'
     );
     expect(reportType).not.to.be.null;
   });
 
   it('test_reviews_approve_post', async function() {
-    const review = await stripe.reviews.approve('prv_xxxxxxxxxxxxx');
+    const review = await stripe.v1.reviews.approve('prv_xxxxxxxxxxxxx');
     expect(review).not.to.be.null;
   });
 
   it('test_reviews_get', async function() {
-    const reviews = await stripe.reviews.list({
+    const reviews = await stripe.v1.reviews.list({
       limit: 3,
     });
     expect(reviews).not.to.be.null;
   });
 
   it('test_reviews_get_2', async function() {
-    const review = await stripe.reviews.retrieve('prv_xxxxxxxxxxxxx');
+    const review = await stripe.v1.reviews.retrieve('prv_xxxxxxxxxxxxx');
     expect(review).not.to.be.null;
   });
 
   it('test_setup_attempts_get', async function() {
-    const setupAttempts = await stripe.setupAttempts.list({
+    const setupAttempts = await stripe.v1.setupAttempts.list({
       limit: 3,
       setup_intent: 'si_xyz',
     });
@@ -2384,12 +2409,14 @@ describe('Generated tests', function() {
   });
 
   it('test_setup_intents_cancel_post', async function() {
-    const setupIntent = await stripe.setupIntents.cancel('seti_xxxxxxxxxxxxx');
+    const setupIntent = await stripe.v1.setupIntents.cancel(
+      'seti_xxxxxxxxxxxxx'
+    );
     expect(setupIntent).not.to.be.null;
   });
 
   it('test_setup_intents_confirm_post', async function() {
-    const setupIntent = await stripe.setupIntents.confirm(
+    const setupIntent = await stripe.v1.setupIntents.confirm(
       'seti_xxxxxxxxxxxxx',
       {
         payment_method: 'pm_card_visa',
@@ -2399,44 +2426,47 @@ describe('Generated tests', function() {
   });
 
   it('test_setup_intents_get', async function() {
-    const setupIntents = await stripe.setupIntents.list({
+    const setupIntents = await stripe.v1.setupIntents.list({
       limit: 3,
     });
     expect(setupIntents).not.to.be.null;
   });
 
   it('test_setup_intents_get_2', async function() {
-    const setupIntent = await stripe.setupIntents.retrieve(
+    const setupIntent = await stripe.v1.setupIntents.retrieve(
       'seti_xxxxxxxxxxxxx'
     );
     expect(setupIntent).not.to.be.null;
   });
 
   it('test_setup_intents_post', async function() {
-    const setupIntent = await stripe.setupIntents.create({
+    const setupIntent = await stripe.v1.setupIntents.create({
       allowed_payment_method_types: ['card'],
     });
     expect(setupIntent).not.to.be.null;
   });
 
   it('test_setup_intents_post_2', async function() {
-    const setupIntent = await stripe.setupIntents.update('seti_xxxxxxxxxxxxx', {
-      metadata: {
-        user_id: '3435453',
-      },
-    });
+    const setupIntent = await stripe.v1.setupIntents.update(
+      'seti_xxxxxxxxxxxxx',
+      {
+        metadata: {
+          user_id: '3435453',
+        },
+      }
+    );
     expect(setupIntent).not.to.be.null;
   });
 
   it('test_setup_intents_verify_microdeposits_post', async function() {
-    const setupIntent = await stripe.setupIntents.verifyMicrodeposits(
+    const setupIntent = await stripe.v1.setupIntents.verifyMicrodeposits(
       'seti_xxxxxxxxxxxxx'
     );
     expect(setupIntent).not.to.be.null;
   });
 
   it('test_setup_intents_verify_microdeposits_post_2', async function() {
-    const setupIntent = await stripe.setupIntents.verifyMicrodeposits(
+    const setupIntent = await stripe.v1.setupIntents.verifyMicrodeposits(
       'seti_xxxxxxxxxxxxx',
       {
         amounts: [32, 45],
@@ -2446,26 +2476,26 @@ describe('Generated tests', function() {
   });
 
   it('test_shipping_rates_get', async function() {
-    const shippingRates = await stripe.shippingRates.list();
+    const shippingRates = await stripe.v1.shippingRates.list();
     expect(shippingRates).not.to.be.null;
   });
 
   it('test_shipping_rates_get_2', async function() {
-    const shippingRates = await stripe.shippingRates.list({
+    const shippingRates = await stripe.v1.shippingRates.list({
       limit: 3,
     });
     expect(shippingRates).not.to.be.null;
   });
 
   it('test_shipping_rates_get_3', async function() {
-    const shippingRate = await stripe.shippingRates.retrieve(
+    const shippingRate = await stripe.v1.shippingRates.retrieve(
       'shr_xxxxxxxxxxxxx'
     );
     expect(shippingRate).not.to.be.null;
   });
 
   it('test_shipping_rates_post', async function() {
-    const shippingRate = await stripe.shippingRates.create({
+    const shippingRate = await stripe.v1.shippingRates.create({
       display_name: 'Sample Shipper',
       fixed_amount: {
         currency: 'usd',
@@ -2477,7 +2507,7 @@ describe('Generated tests', function() {
   });
 
   it('test_shipping_rates_post_2', async function() {
-    const shippingRate = await stripe.shippingRates.create({
+    const shippingRate = await stripe.v1.shippingRates.create({
       display_name: 'Ground shipping',
       type: 'fixed_amount',
       fixed_amount: {
@@ -2489,7 +2519,7 @@ describe('Generated tests', function() {
   });
 
   it('test_shipping_rates_post_3', async function() {
-    const shippingRate = await stripe.shippingRates.update(
+    const shippingRate = await stripe.v1.shippingRates.update(
       'shr_xxxxxxxxxxxxx',
       {
         metadata: {
@@ -2501,31 +2531,31 @@ describe('Generated tests', function() {
   });
 
   it('test_sigma_scheduled_query_runs_get', async function() {
-    const scheduledQueryRuns = await stripe.sigma.scheduledQueryRuns.list({
+    const scheduledQueryRuns = await stripe.v1.sigma.scheduledQueryRuns.list({
       limit: 3,
     });
     expect(scheduledQueryRuns).not.to.be.null;
   });
 
   it('test_sigma_scheduled_query_runs_get_2', async function() {
-    const scheduledQueryRun = await stripe.sigma.scheduledQueryRuns.retrieve(
+    const scheduledQueryRun = await stripe.v1.sigma.scheduledQueryRuns.retrieve(
       'sqr_xxxxxxxxxxxxx'
     );
     expect(scheduledQueryRun).not.to.be.null;
   });
 
   it('test_sources_get', async function() {
-    const source = await stripe.sources.retrieve('src_xxxxxxxxxxxxx');
+    const source = await stripe.v1.sources.retrieve('src_xxxxxxxxxxxxx');
     expect(source).not.to.be.null;
   });
 
   it('test_sources_get_2', async function() {
-    const source = await stripe.sources.retrieve('src_xxxxxxxxxxxxx');
+    const source = await stripe.v1.sources.retrieve('src_xxxxxxxxxxxxx');
     expect(source).not.to.be.null;
   });
 
   it('test_sources_post', async function() {
-    const source = await stripe.sources.update('src_xxxxxxxxxxxxx', {
+    const source = await stripe.v1.sources.update('src_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
       },
@@ -2534,26 +2564,26 @@ describe('Generated tests', function() {
   });
 
   it('test_subscription_items_delete', async function() {
-    const deleted = await stripe.subscriptionItems.del('si_xxxxxxxxxxxxx');
+    const deleted = await stripe.v1.subscriptionItems.del('si_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
   it('test_subscription_items_get', async function() {
-    const subscriptionItems = await stripe.subscriptionItems.list({
+    const subscriptionItems = await stripe.v1.subscriptionItems.list({
       subscription: 'sub_xxxxxxxxxxxxx',
     });
     expect(subscriptionItems).not.to.be.null;
   });
 
   it('test_subscription_items_get_2', async function() {
-    const subscriptionItem = await stripe.subscriptionItems.retrieve(
+    const subscriptionItem = await stripe.v1.subscriptionItems.retrieve(
       'si_xxxxxxxxxxxxx'
     );
     expect(subscriptionItem).not.to.be.null;
   });
 
   it('test_subscription_items_post', async function() {
-    const subscriptionItem = await stripe.subscriptionItems.create({
+    const subscriptionItem = await stripe.v1.subscriptionItems.create({
       subscription: 'sub_xxxxxxxxxxxxx',
       price: 'price_xxxxxxxxxxxxx',
       quantity: 2,
@@ -2562,7 +2592,7 @@ describe('Generated tests', function() {
   });
 
   it('test_subscription_items_post_2', async function() {
-    const subscriptionItem = await stripe.subscriptionItems.update(
+    const subscriptionItem = await stripe.v1.subscriptionItems.update(
       'si_xxxxxxxxxxxxx',
       {
         metadata: {
@@ -2574,28 +2604,28 @@ describe('Generated tests', function() {
   });
 
   it('test_subscription_schedules_cancel_post', async function() {
-    const subscriptionSchedule = await stripe.subscriptionSchedules.cancel(
+    const subscriptionSchedule = await stripe.v1.subscriptionSchedules.cancel(
       'sub_sched_xxxxxxxxxxxxx'
     );
     expect(subscriptionSchedule).not.to.be.null;
   });
 
   it('test_subscription_schedules_get', async function() {
-    const subscriptionSchedules = await stripe.subscriptionSchedules.list({
+    const subscriptionSchedules = await stripe.v1.subscriptionSchedules.list({
       limit: 3,
     });
     expect(subscriptionSchedules).not.to.be.null;
   });
 
   it('test_subscription_schedules_get_2', async function() {
-    const subscriptionSchedule = await stripe.subscriptionSchedules.retrieve(
+    const subscriptionSchedule = await stripe.v1.subscriptionSchedules.retrieve(
       'sub_sched_xxxxxxxxxxxxx'
     );
     expect(subscriptionSchedule).not.to.be.null;
   });
 
   it('test_subscription_schedules_post', async function() {
-    const subscriptionSchedule = await stripe.subscriptionSchedules.create({
+    const subscriptionSchedule = await stripe.v1.subscriptionSchedules.create({
       customer: 'cus_xxxxxxxxxxxxx',
       start_date: 1676070661,
       end_behavior: 'release',
@@ -2614,7 +2644,7 @@ describe('Generated tests', function() {
   });
 
   it('test_subscription_schedules_post_2', async function() {
-    const subscriptionSchedule = await stripe.subscriptionSchedules.update(
+    const subscriptionSchedule = await stripe.v1.subscriptionSchedules.update(
       'sub_sched_xxxxxxxxxxxxx',
       {
         end_behavior: 'release',
@@ -2624,38 +2654,40 @@ describe('Generated tests', function() {
   });
 
   it('test_subscription_schedules_release_post', async function() {
-    const subscriptionSchedule = await stripe.subscriptionSchedules.release(
+    const subscriptionSchedule = await stripe.v1.subscriptionSchedules.release(
       'sub_sched_xxxxxxxxxxxxx'
     );
     expect(subscriptionSchedule).not.to.be.null;
   });
 
   it('test_subscriptions_delete', async function() {
-    const subscription = await stripe.subscriptions.cancel('sub_xxxxxxxxxxxxx');
+    const subscription = await stripe.v1.subscriptions.cancel(
+      'sub_xxxxxxxxxxxxx'
+    );
     expect(subscription).not.to.be.null;
   });
 
   it('test_subscriptions_discount_delete', async function() {
-    const deleted = await stripe.subscriptions.deleteDiscount('sub_xyz');
+    const deleted = await stripe.v1.subscriptions.deleteDiscount('sub_xyz');
     expect(deleted).not.to.be.null;
   });
 
   it('test_subscriptions_get', async function() {
-    const subscriptions = await stripe.subscriptions.list({
+    const subscriptions = await stripe.v1.subscriptions.list({
       limit: 3,
     });
     expect(subscriptions).not.to.be.null;
   });
 
   it('test_subscriptions_get_2', async function() {
-    const subscription = await stripe.subscriptions.retrieve(
+    const subscription = await stripe.v1.subscriptions.retrieve(
       'sub_xxxxxxxxxxxxx'
     );
     expect(subscription).not.to.be.null;
   });
 
   it('test_subscriptions_post', async function() {
-    const subscription = await stripe.subscriptions.create({
+    const subscription = await stripe.v1.subscriptions.create({
       customer: 'cus_xxxxxxxxxxxxx',
       items: [
         {
@@ -2667,7 +2699,7 @@ describe('Generated tests', function() {
   });
 
   it('test_subscriptions_post_2', async function() {
-    const subscription = await stripe.subscriptions.update(
+    const subscription = await stripe.v1.subscriptions.update(
       'sub_xxxxxxxxxxxxx',
       {
         metadata: {
@@ -2679,21 +2711,21 @@ describe('Generated tests', function() {
   });
 
   it('test_subscriptions_search_get', async function() {
-    const subscriptions = await stripe.subscriptions.search({
+    const subscriptions = await stripe.v1.subscriptions.search({
       query: "status:'active' AND metadata['order_id']:'6735'",
     });
     expect(subscriptions).not.to.be.null;
   });
 
   it('test_tax_calculations_line_items_get', async function() {
-    const calculationLineItems = await stripe.tax.calculations.listLineItems(
+    const calculationLineItems = await stripe.v1.tax.calculations.listLineItems(
       'xxx'
     );
     expect(calculationLineItems).not.to.be.null;
   });
 
   it('test_tax_calculations_post', async function() {
-    const calculation = await stripe.tax.calculations.create({
+    const calculation = await stripe.v1.tax.calculations.create({
       currency: 'usd',
       line_items: [
         {
@@ -2716,39 +2748,39 @@ describe('Generated tests', function() {
   });
 
   it('test_tax_codes_get', async function() {
-    const taxCodes = await stripe.taxCodes.list({
+    const taxCodes = await stripe.v1.taxCodes.list({
       limit: 3,
     });
     expect(taxCodes).not.to.be.null;
   });
 
   it('test_tax_codes_get_2', async function() {
-    const taxCode = await stripe.taxCodes.retrieve('txcd_xxxxxxxxxxxxx');
+    const taxCode = await stripe.v1.taxCodes.retrieve('txcd_xxxxxxxxxxxxx');
     expect(taxCode).not.to.be.null;
   });
 
   it('test_tax_forms_pdf_get', async function() {
-    const file = await stripe.tax.forms.pdf('form_xxxxxxxxxxxxx');
+    const file = await stripe.v1.tax.forms.pdf('form_xxxxxxxxxxxxx');
     expect(file).not.to.be.null;
   });
 
   it('test_tax_ids_delete', async function() {
-    const deleted = await stripe.taxIds.del('taxid_123');
+    const deleted = await stripe.v1.taxIds.del('taxid_123');
     expect(deleted).not.to.be.null;
   });
 
   it('test_tax_ids_get', async function() {
-    const taxIds = await stripe.taxIds.list();
+    const taxIds = await stripe.v1.taxIds.list();
     expect(taxIds).not.to.be.null;
   });
 
   it('test_tax_ids_get_2', async function() {
-    const taxId = await stripe.taxIds.retrieve('taxid_123');
+    const taxId = await stripe.v1.taxIds.retrieve('taxid_123');
     expect(taxId).not.to.be.null;
   });
 
   it('test_tax_ids_post', async function() {
-    const taxId = await stripe.taxIds.create({
+    const taxId = await stripe.v1.taxIds.create({
       type: 'eu_vat',
       value: '123',
     });
@@ -2756,19 +2788,19 @@ describe('Generated tests', function() {
   });
 
   it('test_tax_rates_get', async function() {
-    const taxRates = await stripe.taxRates.list({
+    const taxRates = await stripe.v1.taxRates.list({
       limit: 3,
     });
     expect(taxRates).not.to.be.null;
   });
 
   it('test_tax_rates_get_2', async function() {
-    const taxRate = await stripe.taxRates.retrieve('txr_xxxxxxxxxxxxx');
+    const taxRate = await stripe.v1.taxRates.retrieve('txr_xxxxxxxxxxxxx');
     expect(taxRate).not.to.be.null;
   });
 
   it('test_tax_rates_post', async function() {
-    const taxRate = await stripe.taxRates.create({
+    const taxRate = await stripe.v1.taxRates.create({
       display_name: 'VAT',
       description: 'VAT Germany',
       jurisdiction: 'DE',
@@ -2779,21 +2811,21 @@ describe('Generated tests', function() {
   });
 
   it('test_tax_rates_post_2', async function() {
-    const taxRate = await stripe.taxRates.update('txr_xxxxxxxxxxxxx', {
+    const taxRate = await stripe.v1.taxRates.update('txr_xxxxxxxxxxxxx', {
       active: false,
     });
     expect(taxRate).not.to.be.null;
   });
 
   it('test_tax_registrations_get', async function() {
-    const registrations = await stripe.tax.registrations.list({
+    const registrations = await stripe.v1.tax.registrations.list({
       status: 'all',
     });
     expect(registrations).not.to.be.null;
   });
 
   it('test_tax_registrations_post', async function() {
-    const registration = await stripe.tax.registrations.create({
+    const registration = await stripe.v1.tax.registrations.create({
       country: 'IE',
       country_options: {
         ie: {
@@ -2806,7 +2838,7 @@ describe('Generated tests', function() {
   });
 
   it('test_tax_registrations_post_2', async function() {
-    const registration = await stripe.tax.registrations.update(
+    const registration = await stripe.v1.tax.registrations.update(
       'taxreg_xxxxxxxxxxxxx',
       {
         expires_at: 'now',
@@ -2816,12 +2848,12 @@ describe('Generated tests', function() {
   });
 
   it('test_tax_settings_get', async function() {
-    const settings = await stripe.tax.settings.retrieve();
+    const settings = await stripe.v1.tax.settings.retrieve();
     expect(settings).not.to.be.null;
   });
 
   it('test_tax_settings_post', async function() {
-    const settings = await stripe.tax.settings.update({
+    const settings = await stripe.v1.tax.settings.update({
       defaults: {
         tax_code: 'txcd_10000000',
       },
@@ -2830,7 +2862,7 @@ describe('Generated tests', function() {
   });
 
   it('test_tax_transactions_create_from_calculation_post', async function() {
-    const transaction = await stripe.tax.transactions.createFromCalculation({
+    const transaction = await stripe.v1.tax.transactions.createFromCalculation({
       calculation: 'xxx',
       reference: 'yyy',
     });
@@ -2838,50 +2870,50 @@ describe('Generated tests', function() {
   });
 
   it('test_terminal_configurations_delete', async function() {
-    const deleted = await stripe.terminal.configurations.del('uc_123');
+    const deleted = await stripe.v1.terminal.configurations.del('uc_123');
     expect(deleted).not.to.be.null;
   });
 
   it('test_terminal_configurations_delete_2', async function() {
-    const deleted = await stripe.terminal.configurations.del(
+    const deleted = await stripe.v1.terminal.configurations.del(
       'tmc_xxxxxxxxxxxxx'
     );
     expect(deleted).not.to.be.null;
   });
 
   it('test_terminal_configurations_get', async function() {
-    const configurations = await stripe.terminal.configurations.list();
+    const configurations = await stripe.v1.terminal.configurations.list();
     expect(configurations).not.to.be.null;
   });
 
   it('test_terminal_configurations_get_2', async function() {
-    const configuration = await stripe.terminal.configurations.retrieve(
+    const configuration = await stripe.v1.terminal.configurations.retrieve(
       'uc_123'
     );
     expect(configuration).not.to.be.null;
   });
 
   it('test_terminal_configurations_get_3', async function() {
-    const configurations = await stripe.terminal.configurations.list({
+    const configurations = await stripe.v1.terminal.configurations.list({
       limit: 3,
     });
     expect(configurations).not.to.be.null;
   });
 
   it('test_terminal_configurations_get_4', async function() {
-    const configuration = await stripe.terminal.configurations.retrieve(
+    const configuration = await stripe.v1.terminal.configurations.retrieve(
       'tmc_xxxxxxxxxxxxx'
     );
     expect(configuration).not.to.be.null;
   });
 
   it('test_terminal_configurations_post', async function() {
-    const configuration = await stripe.terminal.configurations.create();
+    const configuration = await stripe.v1.terminal.configurations.create();
     expect(configuration).not.to.be.null;
   });
 
   it('test_terminal_configurations_post_2', async function() {
-    const configuration = await stripe.terminal.configurations.update(
+    const configuration = await stripe.v1.terminal.configurations.update(
       'uc_123',
       {
         tipping: {
@@ -2895,7 +2927,7 @@ describe('Generated tests', function() {
   });
 
   it('test_terminal_configurations_post_3', async function() {
-    const configuration = await stripe.terminal.configurations.create({
+    const configuration = await stripe.v1.terminal.configurations.create({
       bbpos_wisepos_e: {
         splashscreen: 'file_xxxxxxxxxxxxx',
       },
@@ -2904,7 +2936,7 @@ describe('Generated tests', function() {
   });
 
   it('test_terminal_configurations_post_4', async function() {
-    const configuration = await stripe.terminal.configurations.update(
+    const configuration = await stripe.v1.terminal.configurations.update(
       'tmc_xxxxxxxxxxxxx',
       {
         bbpos_wisepos_e: {
@@ -2916,31 +2948,31 @@ describe('Generated tests', function() {
   });
 
   it('test_terminal_connection_tokens_post', async function() {
-    const connectionToken = await stripe.terminal.connectionTokens.create();
+    const connectionToken = await stripe.v1.terminal.connectionTokens.create();
     expect(connectionToken).not.to.be.null;
   });
 
   it('test_terminal_locations_delete', async function() {
-    const deleted = await stripe.terminal.locations.del('tml_xxxxxxxxxxxxx');
+    const deleted = await stripe.v1.terminal.locations.del('tml_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
   it('test_terminal_locations_get', async function() {
-    const locations = await stripe.terminal.locations.list({
+    const locations = await stripe.v1.terminal.locations.list({
       limit: 3,
     });
     expect(locations).not.to.be.null;
   });
 
   it('test_terminal_locations_get_2', async function() {
-    const location = await stripe.terminal.locations.retrieve(
+    const location = await stripe.v1.terminal.locations.retrieve(
       'tml_xxxxxxxxxxxxx'
     );
     expect(location).not.to.be.null;
   });
 
   it('test_terminal_locations_post', async function() {
-    const location = await stripe.terminal.locations.create({
+    const location = await stripe.v1.terminal.locations.create({
       display_name: 'My First Store',
       address: {
         line1: '1234 Main Street',
@@ -2954,7 +2986,7 @@ describe('Generated tests', function() {
   });
 
   it('test_terminal_locations_post_2', async function() {
-    const location = await stripe.terminal.locations.update(
+    const location = await stripe.v1.terminal.locations.update(
       'tml_xxxxxxxxxxxxx',
       {
         display_name: 'My First Store',
@@ -2964,31 +2996,33 @@ describe('Generated tests', function() {
   });
 
   it('test_terminal_readers_cancel_action_post', async function() {
-    const reader = await stripe.terminal.readers.cancelAction(
+    const reader = await stripe.v1.terminal.readers.cancelAction(
       'tmr_xxxxxxxxxxxxx'
     );
     expect(reader).not.to.be.null;
   });
 
   it('test_terminal_readers_delete', async function() {
-    const deleted = await stripe.terminal.readers.del('tmr_xxxxxxxxxxxxx');
+    const deleted = await stripe.v1.terminal.readers.del('tmr_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
   it('test_terminal_readers_get', async function() {
-    const readers = await stripe.terminal.readers.list({
+    const readers = await stripe.v1.terminal.readers.list({
       limit: 3,
     });
     expect(readers).not.to.be.null;
   });
 
   it('test_terminal_readers_get_2', async function() {
-    const reader = await stripe.terminal.readers.retrieve('tmr_xxxxxxxxxxxxx');
+    const reader = await stripe.v1.terminal.readers.retrieve(
+      'tmr_xxxxxxxxxxxxx'
+    );
     expect(reader).not.to.be.null;
   });
 
   it('test_terminal_readers_post', async function() {
-    const reader = await stripe.terminal.readers.create({
+    const reader = await stripe.v1.terminal.readers.create({
       registration_code: 'puppies-plug-could',
       label: 'Blue Rabbit',
       location: 'tml_1234',
@@ -2997,14 +3031,17 @@ describe('Generated tests', function() {
   });
 
   it('test_terminal_readers_post_2', async function() {
-    const reader = await stripe.terminal.readers.update('tmr_xxxxxxxxxxxxx', {
-      label: 'Blue Rabbit',
-    });
+    const reader = await stripe.v1.terminal.readers.update(
+      'tmr_xxxxxxxxxxxxx',
+      {
+        label: 'Blue Rabbit',
+      }
+    );
     expect(reader).not.to.be.null;
   });
 
   it('test_terminal_readers_process_payment_intent_post', async function() {
-    const reader = await stripe.terminal.readers.processPaymentIntent(
+    const reader = await stripe.v1.terminal.readers.processPaymentIntent(
       'tmr_xxxxxxxxxxxxx',
       {
         payment_intent: 'pi_xxxxxxxxxxxxx',
@@ -3014,7 +3051,7 @@ describe('Generated tests', function() {
   });
 
   it('test_terminal_readers_process_setup_intent_post', async function() {
-    const reader = await stripe.terminal.readers.processSetupIntent(
+    const reader = await stripe.v1.terminal.readers.processSetupIntent(
       'tmr_xxxxxxxxxxxxx',
       {
         setup_intent: 'seti_xxxxxxxxxxxxx',
@@ -3025,7 +3062,7 @@ describe('Generated tests', function() {
   });
 
   it('test_test_helpers_customers_fund_cash_balance_post', async function() {
-    const customerCashBalanceTransaction = await stripe.testHelpers.customers.fundCashBalance(
+    const customerCashBalanceTransaction = await stripe.v1.testHelpers.customers.fundCashBalance(
       'cus_123',
       {
         amount: 30,
@@ -3036,7 +3073,7 @@ describe('Generated tests', function() {
   });
 
   it('test_test_helpers_issuing_authorizations_capture_post', async function() {
-    const authorization = await stripe.testHelpers.issuing.authorizations.capture(
+    const authorization = await stripe.v1.testHelpers.issuing.authorizations.capture(
       'example_authorization',
       {
         capture_amount: 100,
@@ -3084,14 +3121,14 @@ describe('Generated tests', function() {
   });
 
   it('test_test_helpers_issuing_authorizations_expire_post', async function() {
-    const authorization = await stripe.testHelpers.issuing.authorizations.expire(
+    const authorization = await stripe.v1.testHelpers.issuing.authorizations.expire(
       'example_authorization'
     );
     expect(authorization).not.to.be.null;
   });
 
   it('test_test_helpers_issuing_authorizations_increment_post', async function() {
-    const authorization = await stripe.testHelpers.issuing.authorizations.increment(
+    const authorization = await stripe.v1.testHelpers.issuing.authorizations.increment(
       'example_authorization',
       {
         increment_amount: 50,
@@ -3102,7 +3139,7 @@ describe('Generated tests', function() {
   });
 
   it('test_test_helpers_issuing_authorizations_post', async function() {
-    const authorization = await stripe.testHelpers.issuing.authorizations.create(
+    const authorization = await stripe.v1.testHelpers.issuing.authorizations.create(
       {
         amount: 100,
         amount_details: {
@@ -3139,7 +3176,7 @@ describe('Generated tests', function() {
   });
 
   it('test_test_helpers_issuing_authorizations_reverse_post', async function() {
-    const authorization = await stripe.testHelpers.issuing.authorizations.reverse(
+    const authorization = await stripe.v1.testHelpers.issuing.authorizations.reverse(
       'example_authorization',
       {
         reverse_amount: 20,
@@ -3149,41 +3186,45 @@ describe('Generated tests', function() {
   });
 
   it('test_test_helpers_issuing_cards_shipping_deliver_post', async function() {
-    const card = await stripe.testHelpers.issuing.cards.deliverCard('card_123');
+    const card = await stripe.v1.testHelpers.issuing.cards.deliverCard(
+      'card_123'
+    );
     expect(card).not.to.be.null;
   });
 
   it('test_test_helpers_issuing_cards_shipping_fail_post', async function() {
-    const card = await stripe.testHelpers.issuing.cards.failCard('card_123');
+    const card = await stripe.v1.testHelpers.issuing.cards.failCard('card_123');
     expect(card).not.to.be.null;
   });
 
   it('test_test_helpers_issuing_cards_shipping_return_post', async function() {
-    const card = await stripe.testHelpers.issuing.cards.returnCard('card_123');
+    const card = await stripe.v1.testHelpers.issuing.cards.returnCard(
+      'card_123'
+    );
     expect(card).not.to.be.null;
   });
 
   it('test_test_helpers_issuing_cards_shipping_ship_post', async function() {
-    const card = await stripe.testHelpers.issuing.cards.shipCard('card_123');
+    const card = await stripe.v1.testHelpers.issuing.cards.shipCard('card_123');
     expect(card).not.to.be.null;
   });
 
   it('test_test_helpers_issuing_personalization_designs_activate_post', async function() {
-    const personalizationDesign = await stripe.testHelpers.issuing.personalizationDesigns.activate(
+    const personalizationDesign = await stripe.v1.testHelpers.issuing.personalizationDesigns.activate(
       'pd_xyz'
     );
     expect(personalizationDesign).not.to.be.null;
   });
 
   it('test_test_helpers_issuing_personalization_designs_deactivate_post', async function() {
-    const personalizationDesign = await stripe.testHelpers.issuing.personalizationDesigns.deactivate(
+    const personalizationDesign = await stripe.v1.testHelpers.issuing.personalizationDesigns.deactivate(
       'pd_xyz'
     );
     expect(personalizationDesign).not.to.be.null;
   });
 
   it('test_test_helpers_issuing_personalization_designs_reject_post', async function() {
-    const personalizationDesign = await stripe.testHelpers.issuing.personalizationDesigns.reject(
+    const personalizationDesign = await stripe.v1.testHelpers.issuing.personalizationDesigns.reject(
       'pd_xyz',
       {
         rejection_reasons: {
@@ -3195,7 +3236,7 @@ describe('Generated tests', function() {
   });
 
   it('test_test_helpers_issuing_transactions_create_force_capture_post', async function() {
-    const transaction = await stripe.testHelpers.issuing.transactions.createForceCapture(
+    const transaction = await stripe.v1.testHelpers.issuing.transactions.createForceCapture(
       {
         amount: 100,
         card: 'foo',
@@ -3253,7 +3294,7 @@ describe('Generated tests', function() {
   });
 
   it('test_test_helpers_issuing_transactions_create_unlinked_refund_post', async function() {
-    const transaction = await stripe.testHelpers.issuing.transactions.createUnlinkedRefund(
+    const transaction = await stripe.v1.testHelpers.issuing.transactions.createUnlinkedRefund(
       {
         amount: 100,
         card: 'foo',
@@ -3311,7 +3352,7 @@ describe('Generated tests', function() {
   });
 
   it('test_test_helpers_issuing_transactions_refund_post', async function() {
-    const transaction = await stripe.testHelpers.issuing.transactions.refund(
+    const transaction = await stripe.v1.testHelpers.issuing.transactions.refund(
       'example_transaction',
       {
         refund_amount: 50,
@@ -3321,19 +3362,22 @@ describe('Generated tests', function() {
   });
 
   it('test_test_helpers_refunds_expire_post', async function() {
-    const refund = await stripe.testHelpers.refunds.expire('re_123');
+    const refund = await stripe.v1.testHelpers.refunds.expire('re_123');
     expect(refund).not.to.be.null;
   });
 
   it('test_test_helpers_test_clocks_advance_post', async function() {
-    const testClock = await stripe.testHelpers.testClocks.advance('clock_xyz', {
-      frozen_time: 142,
-    });
+    const testClock = await stripe.v1.testHelpers.testClocks.advance(
+      'clock_xyz',
+      {
+        frozen_time: 142,
+      }
+    );
     expect(testClock).not.to.be.null;
   });
 
   it('test_test_helpers_test_clocks_advance_post_2', async function() {
-    const testClock = await stripe.testHelpers.testClocks.advance(
+    const testClock = await stripe.v1.testHelpers.testClocks.advance(
       'clock_xxxxxxxxxxxxx',
       {
         frozen_time: 1675552261,
@@ -3343,43 +3387,45 @@ describe('Generated tests', function() {
   });
 
   it('test_test_helpers_test_clocks_delete', async function() {
-    const deleted = await stripe.testHelpers.testClocks.del('clock_xyz');
+    const deleted = await stripe.v1.testHelpers.testClocks.del('clock_xyz');
     expect(deleted).not.to.be.null;
   });
 
   it('test_test_helpers_test_clocks_delete_2', async function() {
-    const deleted = await stripe.testHelpers.testClocks.del(
+    const deleted = await stripe.v1.testHelpers.testClocks.del(
       'clock_xxxxxxxxxxxxx'
     );
     expect(deleted).not.to.be.null;
   });
 
   it('test_test_helpers_test_clocks_get', async function() {
-    const testClocks = await stripe.testHelpers.testClocks.list();
+    const testClocks = await stripe.v1.testHelpers.testClocks.list();
     expect(testClocks).not.to.be.null;
   });
 
   it('test_test_helpers_test_clocks_get_2', async function() {
-    const testClock = await stripe.testHelpers.testClocks.retrieve('clock_xyz');
+    const testClock = await stripe.v1.testHelpers.testClocks.retrieve(
+      'clock_xyz'
+    );
     expect(testClock).not.to.be.null;
   });
 
   it('test_test_helpers_test_clocks_get_3', async function() {
-    const testClocks = await stripe.testHelpers.testClocks.list({
+    const testClocks = await stripe.v1.testHelpers.testClocks.list({
       limit: 3,
     });
     expect(testClocks).not.to.be.null;
   });
 
   it('test_test_helpers_test_clocks_get_4', async function() {
-    const testClock = await stripe.testHelpers.testClocks.retrieve(
+    const testClock = await stripe.v1.testHelpers.testClocks.retrieve(
       'clock_xxxxxxxxxxxxx'
     );
     expect(testClock).not.to.be.null;
   });
 
   it('test_test_helpers_test_clocks_post', async function() {
-    const testClock = await stripe.testHelpers.testClocks.create({
+    const testClock = await stripe.v1.testHelpers.testClocks.create({
       frozen_time: 123,
       name: 'cogsworth',
     });
@@ -3387,14 +3433,14 @@ describe('Generated tests', function() {
   });
 
   it('test_test_helpers_test_clocks_post_2', async function() {
-    const testClock = await stripe.testHelpers.testClocks.create({
+    const testClock = await stripe.v1.testHelpers.testClocks.create({
       frozen_time: 1577836800,
     });
     expect(testClock).not.to.be.null;
   });
 
   it('test_test_helpers_treasury_inbound_transfers_fail_post', async function() {
-    const inboundTransfer = await stripe.testHelpers.treasury.inboundTransfers.fail(
+    const inboundTransfer = await stripe.v1.testHelpers.treasury.inboundTransfers.fail(
       'ibt_123',
       {
         failure_details: {
@@ -3406,35 +3452,35 @@ describe('Generated tests', function() {
   });
 
   it('test_test_helpers_treasury_inbound_transfers_return_post', async function() {
-    const inboundTransfer = await stripe.testHelpers.treasury.inboundTransfers.returnInboundTransfer(
+    const inboundTransfer = await stripe.v1.testHelpers.treasury.inboundTransfers.returnInboundTransfer(
       'ibt_123'
     );
     expect(inboundTransfer).not.to.be.null;
   });
 
   it('test_test_helpers_treasury_inbound_transfers_succeed_post', async function() {
-    const inboundTransfer = await stripe.testHelpers.treasury.inboundTransfers.succeed(
+    const inboundTransfer = await stripe.v1.testHelpers.treasury.inboundTransfers.succeed(
       'ibt_123'
     );
     expect(inboundTransfer).not.to.be.null;
   });
 
   it('test_test_helpers_treasury_outbound_transfers_fail_post', async function() {
-    const outboundTransfer = await stripe.testHelpers.treasury.outboundTransfers.fail(
+    const outboundTransfer = await stripe.v1.testHelpers.treasury.outboundTransfers.fail(
       'obt_123'
     );
     expect(outboundTransfer).not.to.be.null;
   });
 
   it('test_test_helpers_treasury_outbound_transfers_post_post', async function() {
-    const outboundTransfer = await stripe.testHelpers.treasury.outboundTransfers.post(
+    const outboundTransfer = await stripe.v1.testHelpers.treasury.outboundTransfers.post(
       'obt_123'
     );
     expect(outboundTransfer).not.to.be.null;
   });
 
   it('test_test_helpers_treasury_outbound_transfers_return_post', async function() {
-    const outboundTransfer = await stripe.testHelpers.treasury.outboundTransfers.returnOutboundTransfer(
+    const outboundTransfer = await stripe.v1.testHelpers.treasury.outboundTransfers.returnOutboundTransfer(
       'obt_123',
       {
         returned_details: {
@@ -3446,7 +3492,7 @@ describe('Generated tests', function() {
   });
 
   it('test_test_helpers_treasury_received_credits_post', async function() {
-    const receivedCredit = await stripe.testHelpers.treasury.receivedCredits.create(
+    const receivedCredit = await stripe.v1.testHelpers.treasury.receivedCredits.create(
       {
         financial_account: 'fa_123',
         network: 'ach',
@@ -3458,7 +3504,7 @@ describe('Generated tests', function() {
   });
 
   it('test_test_helpers_treasury_received_debits_post', async function() {
-    const receivedDebit = await stripe.testHelpers.treasury.receivedDebits.create(
+    const receivedDebit = await stripe.v1.testHelpers.treasury.receivedDebits.create(
       {
         financial_account: 'fa_123',
         network: 'ach',
@@ -3470,12 +3516,12 @@ describe('Generated tests', function() {
   });
 
   it('test_tokens_get', async function() {
-    const token = await stripe.tokens.retrieve('tok_xxxx');
+    const token = await stripe.v1.tokens.retrieve('tok_xxxx');
     expect(token).not.to.be.null;
   });
 
   it('test_tokens_post', async function() {
-    const token = await stripe.tokens.create({
+    const token = await stripe.v1.tokens.create({
       card: {
         number: '4242424242424242',
         exp_month: '5',
@@ -3487,7 +3533,7 @@ describe('Generated tests', function() {
   });
 
   it('test_tokens_post_2', async function() {
-    const token = await stripe.tokens.create({
+    const token = await stripe.v1.tokens.create({
       bank_account: {
         country: 'US',
         currency: 'usd',
@@ -3501,7 +3547,7 @@ describe('Generated tests', function() {
   });
 
   it('test_tokens_post_3', async function() {
-    const token = await stripe.tokens.create({
+    const token = await stripe.v1.tokens.create({
       pii: {
         id_number: '000000000',
       },
@@ -3510,7 +3556,7 @@ describe('Generated tests', function() {
   });
 
   it('test_tokens_post_4', async function() {
-    const token = await stripe.tokens.create({
+    const token = await stripe.v1.tokens.create({
       account: {
         individual: {
           first_name: 'Jane',
@@ -3523,7 +3569,7 @@ describe('Generated tests', function() {
   });
 
   it('test_tokens_post_5', async function() {
-    const token = await stripe.tokens.create({
+    const token = await stripe.v1.tokens.create({
       person: {
         first_name: 'Jane',
         last_name: 'Doe',
@@ -3536,7 +3582,7 @@ describe('Generated tests', function() {
   });
 
   it('test_tokens_post_6', async function() {
-    const token = await stripe.tokens.create({
+    const token = await stripe.v1.tokens.create({
       cvc_update: {
         cvc: '123',
       },
@@ -3545,24 +3591,24 @@ describe('Generated tests', function() {
   });
 
   it('test_topups_cancel_post', async function() {
-    const topup = await stripe.topups.cancel('tu_xxxxxxxxxxxxx');
+    const topup = await stripe.v1.topups.cancel('tu_xxxxxxxxxxxxx');
     expect(topup).not.to.be.null;
   });
 
   it('test_topups_get', async function() {
-    const topups = await stripe.topups.list({
+    const topups = await stripe.v1.topups.list({
       limit: 3,
     });
     expect(topups).not.to.be.null;
   });
 
   it('test_topups_get_2', async function() {
-    const topup = await stripe.topups.retrieve('tu_xxxxxxxxxxxxx');
+    const topup = await stripe.v1.topups.retrieve('tu_xxxxxxxxxxxxx');
     expect(topup).not.to.be.null;
   });
 
   it('test_topups_post', async function() {
-    const topup = await stripe.topups.create({
+    const topup = await stripe.v1.topups.create({
       amount: 2000,
       currency: 'usd',
       description: 'Top-up for Jenny Rosen',
@@ -3572,7 +3618,7 @@ describe('Generated tests', function() {
   });
 
   it('test_topups_post_2', async function() {
-    const topup = await stripe.topups.update('tu_xxxxxxxxxxxxx', {
+    const topup = await stripe.v1.topups.update('tu_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
       },
@@ -3581,19 +3627,19 @@ describe('Generated tests', function() {
   });
 
   it('test_transfers_get', async function() {
-    const transfers = await stripe.transfers.list({
+    const transfers = await stripe.v1.transfers.list({
       limit: 3,
     });
     expect(transfers).not.to.be.null;
   });
 
   it('test_transfers_get_2', async function() {
-    const transfer = await stripe.transfers.retrieve('tr_xxxxxxxxxxxxx');
+    const transfer = await stripe.v1.transfers.retrieve('tr_xxxxxxxxxxxxx');
     expect(transfer).not.to.be.null;
   });
 
   it('test_transfers_post', async function() {
-    const transfer = await stripe.transfers.create({
+    const transfer = await stripe.v1.transfers.create({
       amount: 400,
       currency: 'usd',
       destination: 'acct_xxxxxxxxxxxxx',
@@ -3603,7 +3649,7 @@ describe('Generated tests', function() {
   });
 
   it('test_transfers_post_2', async function() {
-    const transfer = await stripe.transfers.update('tr_xxxxxxxxxxxxx', {
+    const transfer = await stripe.v1.transfers.update('tr_xxxxxxxxxxxxx', {
       metadata: {
         order_id: '6735',
       },
@@ -3612,7 +3658,7 @@ describe('Generated tests', function() {
   });
 
   it('test_transfers_reversals_get', async function() {
-    const transferReversals = await stripe.transfers.listReversals(
+    const transferReversals = await stripe.v1.transfers.listReversals(
       'tr_xxxxxxxxxxxxx',
       {
         limit: 3,
@@ -3622,7 +3668,7 @@ describe('Generated tests', function() {
   });
 
   it('test_transfers_reversals_get_2', async function() {
-    const transferReversal = await stripe.transfers.retrieveReversal(
+    const transferReversal = await stripe.v1.transfers.retrieveReversal(
       'tr_xxxxxxxxxxxxx',
       'trr_xxxxxxxxxxxxx'
     );
@@ -3630,7 +3676,7 @@ describe('Generated tests', function() {
   });
 
   it('test_transfers_reversals_post', async function() {
-    const transferReversal = await stripe.transfers.createReversal(
+    const transferReversal = await stripe.v1.transfers.createReversal(
       'tr_xxxxxxxxxxxxx',
       {
         amount: 100,
@@ -3640,7 +3686,7 @@ describe('Generated tests', function() {
   });
 
   it('test_transfers_reversals_post_2', async function() {
-    const transferReversal = await stripe.transfers.updateReversal(
+    const transferReversal = await stripe.v1.transfers.updateReversal(
       'tr_xxxxxxxxxxxxx',
       'trr_xxxxxxxxxxxxx',
       {
@@ -3653,7 +3699,7 @@ describe('Generated tests', function() {
   });
 
   it('test_treasury_credit_reversals_get', async function() {
-    const creditReversals = await stripe.treasury.creditReversals.list({
+    const creditReversals = await stripe.v1.treasury.creditReversals.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
       limit: 3,
     });
@@ -3661,21 +3707,21 @@ describe('Generated tests', function() {
   });
 
   it('test_treasury_credit_reversals_get_2', async function() {
-    const creditReversal = await stripe.treasury.creditReversals.retrieve(
+    const creditReversal = await stripe.v1.treasury.creditReversals.retrieve(
       'credrev_xxxxxxxxxxxxx'
     );
     expect(creditReversal).not.to.be.null;
   });
 
   it('test_treasury_credit_reversals_post', async function() {
-    const creditReversal = await stripe.treasury.creditReversals.create({
+    const creditReversal = await stripe.v1.treasury.creditReversals.create({
       received_credit: 'rc_xxxxxxxxxxxxx',
     });
     expect(creditReversal).not.to.be.null;
   });
 
   it('test_treasury_debit_reversals_get', async function() {
-    const debitReversals = await stripe.treasury.debitReversals.list({
+    const debitReversals = await stripe.v1.treasury.debitReversals.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
       limit: 3,
     });
@@ -3683,42 +3729,42 @@ describe('Generated tests', function() {
   });
 
   it('test_treasury_debit_reversals_get_2', async function() {
-    const debitReversal = await stripe.treasury.debitReversals.retrieve(
+    const debitReversal = await stripe.v1.treasury.debitReversals.retrieve(
       'debrev_xxxxxxxxxxxxx'
     );
     expect(debitReversal).not.to.be.null;
   });
 
   it('test_treasury_debit_reversals_post', async function() {
-    const debitReversal = await stripe.treasury.debitReversals.create({
+    const debitReversal = await stripe.v1.treasury.debitReversals.create({
       received_debit: 'rd_xxxxxxxxxxxxx',
     });
     expect(debitReversal).not.to.be.null;
   });
 
   it('test_treasury_financial_accounts_features_get', async function() {
-    const financialAccountFeatures = await stripe.treasury.financialAccounts.retrieveFeatures(
+    const financialAccountFeatures = await stripe.v1.treasury.financialAccounts.retrieveFeatures(
       'fa_xxxxxxxxxxxxx'
     );
     expect(financialAccountFeatures).not.to.be.null;
   });
 
   it('test_treasury_financial_accounts_get', async function() {
-    const financialAccounts = await stripe.treasury.financialAccounts.list({
+    const financialAccounts = await stripe.v1.treasury.financialAccounts.list({
       limit: 3,
     });
     expect(financialAccounts).not.to.be.null;
   });
 
   it('test_treasury_financial_accounts_get_2', async function() {
-    const financialAccount = await stripe.treasury.financialAccounts.retrieve(
+    const financialAccount = await stripe.v1.treasury.financialAccounts.retrieve(
       'fa_xxxxxxxxxxxxx'
     );
     expect(financialAccount).not.to.be.null;
   });
 
   it('test_treasury_financial_accounts_post', async function() {
-    const financialAccount = await stripe.treasury.financialAccounts.create({
+    const financialAccount = await stripe.v1.treasury.financialAccounts.create({
       supported_currencies: ['usd'],
       features: {},
     });
@@ -3726,7 +3772,7 @@ describe('Generated tests', function() {
   });
 
   it('test_treasury_financial_accounts_post_2', async function() {
-    const financialAccount = await stripe.treasury.financialAccounts.update(
+    const financialAccount = await stripe.v1.treasury.financialAccounts.update(
       'fa_xxxxxxxxxxxxx',
       {
         metadata: {
@@ -3738,14 +3784,14 @@ describe('Generated tests', function() {
   });
 
   it('test_treasury_inbound_transfers_cancel_post', async function() {
-    const inboundTransfer = await stripe.treasury.inboundTransfers.cancel(
+    const inboundTransfer = await stripe.v1.treasury.inboundTransfers.cancel(
       'ibt_xxxxxxxxxxxxx'
     );
     expect(inboundTransfer).not.to.be.null;
   });
 
   it('test_treasury_inbound_transfers_get', async function() {
-    const inboundTransfers = await stripe.treasury.inboundTransfers.list({
+    const inboundTransfers = await stripe.v1.treasury.inboundTransfers.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
       limit: 3,
     });
@@ -3753,14 +3799,14 @@ describe('Generated tests', function() {
   });
 
   it('test_treasury_inbound_transfers_get_2', async function() {
-    const inboundTransfer = await stripe.treasury.inboundTransfers.retrieve(
+    const inboundTransfer = await stripe.v1.treasury.inboundTransfers.retrieve(
       'ibt_xxxxxxxxxxxxx'
     );
     expect(inboundTransfer).not.to.be.null;
   });
 
   it('test_treasury_inbound_transfers_post', async function() {
-    const inboundTransfer = await stripe.treasury.inboundTransfers.create({
+    const inboundTransfer = await stripe.v1.treasury.inboundTransfers.create({
       financial_account: 'fa_xxxxxxxxxxxxx',
       amount: 10000,
       currency: 'usd',
@@ -3771,14 +3817,14 @@ describe('Generated tests', function() {
   });
 
   it('test_treasury_outbound_payments_cancel_post', async function() {
-    const outboundPayment = await stripe.treasury.outboundPayments.cancel(
+    const outboundPayment = await stripe.v1.treasury.outboundPayments.cancel(
       'bot_xxxxxxxxxxxxx'
     );
     expect(outboundPayment).not.to.be.null;
   });
 
   it('test_treasury_outbound_payments_get', async function() {
-    const outboundPayments = await stripe.treasury.outboundPayments.list({
+    const outboundPayments = await stripe.v1.treasury.outboundPayments.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
       limit: 3,
     });
@@ -3786,14 +3832,14 @@ describe('Generated tests', function() {
   });
 
   it('test_treasury_outbound_payments_get_2', async function() {
-    const outboundPayment = await stripe.treasury.outboundPayments.retrieve(
+    const outboundPayment = await stripe.v1.treasury.outboundPayments.retrieve(
       'bot_xxxxxxxxxxxxx'
     );
     expect(outboundPayment).not.to.be.null;
   });
 
   it('test_treasury_outbound_payments_post', async function() {
-    const outboundPayment = await stripe.treasury.outboundPayments.create({
+    const outboundPayment = await stripe.v1.treasury.outboundPayments.create({
       financial_account: 'fa_xxxxxxxxxxxxx',
       amount: 10000,
       currency: 'usd',
@@ -3805,14 +3851,14 @@ describe('Generated tests', function() {
   });
 
   it('test_treasury_outbound_transfers_cancel_post', async function() {
-    const outboundTransfer = await stripe.treasury.outboundTransfers.cancel(
+    const outboundTransfer = await stripe.v1.treasury.outboundTransfers.cancel(
       'obt_xxxxxxxxxxxxx'
     );
     expect(outboundTransfer).not.to.be.null;
   });
 
   it('test_treasury_outbound_transfers_get', async function() {
-    const outboundTransfers = await stripe.treasury.outboundTransfers.list({
+    const outboundTransfers = await stripe.v1.treasury.outboundTransfers.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
       limit: 3,
     });
@@ -3820,14 +3866,14 @@ describe('Generated tests', function() {
   });
 
   it('test_treasury_outbound_transfers_get_2', async function() {
-    const outboundTransfer = await stripe.treasury.outboundTransfers.retrieve(
+    const outboundTransfer = await stripe.v1.treasury.outboundTransfers.retrieve(
       'obt_xxxxxxxxxxxxx'
     );
     expect(outboundTransfer).not.to.be.null;
   });
 
   it('test_treasury_outbound_transfers_post', async function() {
-    const outboundTransfer = await stripe.treasury.outboundTransfers.create({
+    const outboundTransfer = await stripe.v1.treasury.outboundTransfers.create({
       financial_account: 'fa_xxxxxxxxxxxxx',
       destination_payment_method: 'pm_xxxxxxxxxxxxx',
       amount: 500,
@@ -3838,7 +3884,7 @@ describe('Generated tests', function() {
   });
 
   it('test_treasury_received_credits_get', async function() {
-    const receivedCredits = await stripe.treasury.receivedCredits.list({
+    const receivedCredits = await stripe.v1.treasury.receivedCredits.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
       limit: 3,
     });
@@ -3846,14 +3892,14 @@ describe('Generated tests', function() {
   });
 
   it('test_treasury_received_credits_get_2', async function() {
-    const receivedCredit = await stripe.treasury.receivedCredits.retrieve(
+    const receivedCredit = await stripe.v1.treasury.receivedCredits.retrieve(
       'rc_xxxxxxxxxxxxx'
     );
     expect(receivedCredit).not.to.be.null;
   });
 
   it('test_treasury_received_debits_get', async function() {
-    const receivedDebits = await stripe.treasury.receivedDebits.list({
+    const receivedDebits = await stripe.v1.treasury.receivedDebits.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
       limit: 3,
     });
@@ -3861,29 +3907,31 @@ describe('Generated tests', function() {
   });
 
   it('test_treasury_received_debits_get_2', async function() {
-    const receivedDebit = await stripe.treasury.receivedDebits.retrieve(
+    const receivedDebit = await stripe.v1.treasury.receivedDebits.retrieve(
       'rd_xxxxxxxxxxxxx'
     );
     expect(receivedDebit).not.to.be.null;
   });
 
   it('test_treasury_transaction_entries_get', async function() {
-    const transactionEntries = await stripe.treasury.transactionEntries.list({
-      financial_account: 'fa_xxxxxxxxxxxxx',
-      limit: 3,
-    });
+    const transactionEntries = await stripe.v1.treasury.transactionEntries.list(
+      {
+        financial_account: 'fa_xxxxxxxxxxxxx',
+        limit: 3,
+      }
+    );
     expect(transactionEntries).not.to.be.null;
   });
 
   it('test_treasury_transaction_entries_get_2', async function() {
-    const transactionEntry = await stripe.treasury.transactionEntries.retrieve(
+    const transactionEntry = await stripe.v1.treasury.transactionEntries.retrieve(
       'trxne_xxxxxxxxxxxxx'
     );
     expect(transactionEntry).not.to.be.null;
   });
 
   it('test_treasury_transactions_get', async function() {
-    const transactions = await stripe.treasury.transactions.list({
+    const transactions = await stripe.v1.treasury.transactions.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
       limit: 3,
     });
@@ -3891,33 +3939,33 @@ describe('Generated tests', function() {
   });
 
   it('test_treasury_transactions_get_2', async function() {
-    const transaction = await stripe.treasury.transactions.retrieve(
+    const transaction = await stripe.v1.treasury.transactions.retrieve(
       'trxn_xxxxxxxxxxxxx'
     );
     expect(transaction).not.to.be.null;
   });
 
   it('test_webhook_endpoints_delete', async function() {
-    const deleted = await stripe.webhookEndpoints.del('we_xxxxxxxxxxxxx');
+    const deleted = await stripe.v1.webhookEndpoints.del('we_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
   });
 
   it('test_webhook_endpoints_get', async function() {
-    const webhookEndpoints = await stripe.webhookEndpoints.list({
+    const webhookEndpoints = await stripe.v1.webhookEndpoints.list({
       limit: 3,
     });
     expect(webhookEndpoints).not.to.be.null;
   });
 
   it('test_webhook_endpoints_get_2', async function() {
-    const webhookEndpoint = await stripe.webhookEndpoints.retrieve(
+    const webhookEndpoint = await stripe.v1.webhookEndpoints.retrieve(
       'we_xxxxxxxxxxxxx'
     );
     expect(webhookEndpoint).not.to.be.null;
   });
 
   it('test_webhook_endpoints_post', async function() {
-    const webhookEndpoint = await stripe.webhookEndpoints.create({
+    const webhookEndpoint = await stripe.v1.webhookEndpoints.create({
       url: 'https://example.com/my/webhook/endpoint',
       enabled_events: ['charge.failed', 'charge.succeeded'],
     });
@@ -3925,7 +3973,7 @@ describe('Generated tests', function() {
   });
 
   it('test_webhook_endpoints_post_2', async function() {
-    const webhookEndpoint = await stripe.webhookEndpoints.update(
+    const webhookEndpoint = await stripe.v1.webhookEndpoints.update(
       'we_xxxxxxxxxxxxx',
       {
         url: 'https://example.com/new_endpoint',
