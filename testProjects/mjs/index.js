@@ -67,7 +67,7 @@ assert(stripe._prevRequestMetrics);
 assert(stripe._requestSender);
 assert(stripe.VERSION);
 assert(stripe.errors);
-assert(stripe.webhookEndpoints);
+assert(stripe.v1.webhookEndpoints);
 assert(stripe.webhooks);
 assert(stripe._emitter);
 assert(stripe.on);
@@ -91,7 +91,7 @@ try {
 
 async function exampleFunction(args) {
   try {
-    await stripe.paymentIntents.create(args);
+    await stripe.v1.paymentIntents.create(args);
   } catch (e) {
     if (e instanceof stripe.errors.StripeInvalidRequestError) {
       console.log('Caught StripeInvalidRequestError');
@@ -108,7 +108,7 @@ async function exampleMonkeyPatchFunction() {
   };
 
   try {
-    await stripe.paymentIntents.create({
+    await stripe.v1.paymentIntents.create({
       currency: 'usd',
       amount: 2000,
       confirm: true,

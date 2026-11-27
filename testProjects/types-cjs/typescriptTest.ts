@@ -85,7 +85,7 @@ stripe = new Stripe('sk_test_123', {unknownProperty: true});
   const opts: Stripe.RequestOptions = {
     apiVersion: Stripe.API_VERSION,
   };
-  const customer: Stripe.Customer = await stripe.customers.create(params, opts);
+  const customer: Stripe.Customer = await stripe.v1.customers.create(params, opts);
 
   const address: Stripe.Address | null | undefined = customer.address;
 
@@ -96,10 +96,10 @@ stripe = new Stripe('sk_test_123', {unknownProperty: true});
   await stripe.customers.create(params);
 
   // Check multiple dispatch:
-  let product = await stripe.products.retrieve('prod_123', undefined, opts);
-  product = await stripe.products.retrieve('prod_123', {expand: []}, opts);
+  let product = await stripe.v1.products.retrieve('prod_123', undefined, opts);
+  product = await stripe.v1.products.retrieve('prod_123', {expand: []}, opts);
 
-  const charge: Stripe.Charge = await stripe.charges.retrieve('ch_123', {
+  const charge: Stripe.Charge = await stripe.v1.charges.retrieve('ch_123', {
     expand: ['customer'],
   });
 

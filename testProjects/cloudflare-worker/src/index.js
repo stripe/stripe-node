@@ -11,7 +11,7 @@ async function handleRequest(request, env) {
    *
    * See https://stripe.com/docs/payments/accept-a-payment?integration=checkout.
    */
-  const session = await stripe.checkout.sessions.create({
+  const session = await stripe.v1.checkout.sessions.create({
     payment_method_types: ['card'],
     line_items: [
       {
