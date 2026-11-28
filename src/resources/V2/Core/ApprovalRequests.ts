@@ -145,7 +145,18 @@ export interface ApprovalRequest {
 }
 export namespace ApprovalRequest {
   export type Action =
+    | 'api_key.create'
+    | 'api_key.delete'
+    | 'api_key.rotate'
+    | 'api_key.update'
+    | 'approval_rule.create'
+    | 'approval_rule.delete'
+    | 'approval_rule.update'
     | 'charge.create'
+    | 'connected_account.create'
+    | 'credit_note.create'
+    | 'currency_conversions.money_management.create'
+    | 'customer_balance_transaction.create'
     | 'dispute.close'
     | 'inbound_transfers.money_management.create'
     | 'invoice.create'
@@ -159,6 +170,13 @@ export namespace ApprovalRequest {
     | 'setup_intent.create'
     | 'subscription.create'
     | 'subscription.update'
+    | 'tax.customization.create'
+    | 'tax.customization.delete'
+    | 'tax.customization.update'
+    | 'tax.registration_application.submit'
+    | 'tax.registration.create'
+    | 'tax.registration.delete'
+    | 'tax.registration.update'
     | 'topup.create'
     | 'transfer.create'
     | OtherString;

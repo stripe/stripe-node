@@ -12,7 +12,7 @@ import {RequestOptions, Response} from '../../lib.js';
 
 export class ConfirmationTokenResource extends StripeResource {
   /**
-   * Creates a test mode Confirmation Token server side for your integration tests.
+   * Creates a test Confirmation Token server side for your integration tests.
    */
   create(
     params?: TestHelpers.ConfirmationTokenCreateParams,
@@ -841,6 +841,11 @@ export namespace TestHelpers {
          * Routing number of the bank account.
          */
         routing_number?: string;
+
+        /**
+         * The ID of a bank account [Token](https://docs.stripe.com/api/tokens/object) to use as a payment method.
+         */
+        token?: string;
       }
 
       export interface WechatPay {}

@@ -54,7 +54,7 @@ export namespace BalanceSettings {
     /**
      * The default settlement currency for the account.
      */
-    default_settlement_currency?: string;
+    default_settlement_currency: string;
 
     /**
      * Settings specific to the account's payouts.
@@ -64,7 +64,7 @@ export namespace BalanceSettings {
     /**
      * A hash of settlement currencies and their states. Each key is an ISO 4217 currency code, and the value is one of `enabled`, `disabled`, or `restricted_by_application`.
      */
-    settlement_currencies?: {
+    settlement_currencies: {
       [key: string]: Payments.SettlementCurrencies;
     } | null;
 

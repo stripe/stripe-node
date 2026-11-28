@@ -178,6 +178,7 @@ export namespace Transaction {
   export type Category =
     | 'adjustment'
     | 'currency_conversion'
+    | 'hold'
     | 'inbound_transfer'
     | 'inbound_transfer_reversal'
     | 'outbound_payment'
@@ -214,6 +215,11 @@ export namespace Transaction {
      * If applicable, the ID of the FeeBatch that created this Transaction.
      */
     fee_batch?: string;
+
+    /**
+     * If applicable, the ID of the Hold that created this Transaction.
+     */
+    hold?: string;
 
     /**
      * If applicable, the ID of the InboundTransfer that created this Transaction.
@@ -282,6 +288,7 @@ export namespace Transaction {
       | 'adjustment'
       | 'currency_conversion'
       | 'fee_batch'
+      | 'hold'
       | 'inbound_transfer'
       | 'outbound_payment'
       | 'outbound_transfer'

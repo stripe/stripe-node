@@ -134,11 +134,6 @@ export interface OutboundTransfer {
   metadata?: Metadata;
 
   /**
-   * A link to the Stripe-hosted receipt for this OutboundTransfer. The receipt link remains active for 60 days from the OutboundTransfer creation date. After this period, the link will expire and the receipt url value will be null.
-   */
-  receipt_url?: string;
-
-  /**
    * The description that appears on the receiving end for an OutboundTransfer (for example, bank statement for external bank transfer). It will default to `STRIPE` if not set on the account settings.
    */
   statement_descriptor: string;
@@ -306,6 +301,7 @@ export namespace OutboundTransfer {
         | 'payout_method_declined'
         | 'payout_method_does_not_exist'
         | 'payout_method_expired'
+        | 'payout_method_invalid_account_number'
         | 'payout_method_unsupported'
         | 'payout_method_usage_frequency_limit_exceeded'
         | 'review_rejected'
@@ -319,6 +315,7 @@ export namespace OutboundTransfer {
 
     export namespace Returned {
       export type Reason =
+        | 'payout_method_account_type_incorrect'
         | 'payout_method_canceled_by_customer'
         | 'payout_method_closed'
         | 'payout_method_currency_unsupported'
@@ -386,7 +383,7 @@ export namespace V2 {
   export namespace MoneyManagement {
     export interface OutboundTransferCreateParams {
       /**
-       * The "presentment amount" for the OutboundPayment.
+       * The "presentment amount" for the OutboundTransfer.
        */
       amount: V2Amount;
 
@@ -406,7 +403,7 @@ export namespace V2 {
       delivery_options?: OutboundTransferCreateParams.DeliveryOptions;
 
       /**
-       * An arbitrary string attached to the OutboundTransfer. Often useful for displaying to users.
+       * An arbitrary string attached to the OutboundTransfer. Often useful for displaying to users. The description can not be longer than 100 characters and can only contain basic Latin characters and spaces. The following special characters are not allowed: <>\'"* .
        */
       description?: string;
 

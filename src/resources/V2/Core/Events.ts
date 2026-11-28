@@ -222,6 +222,7 @@ export namespace V2 {
   }
 }
 import {Core} from './index.js';
+import {Apps as V1Apps} from './../../Apps/index.js';
 import {Billing as V1Billing} from './../../Billing/index.js';
 import {BillingPortal as V1BillingPortal} from './../../BillingPortal/index.js';
 import {Checkout as V1Checkout} from './../../Checkout/index.js';
@@ -278,6 +279,7 @@ import {Data} from './../Data/index.js';
 import {Extend} from './../Extend/index.js';
 import {MoneyManagement} from './../MoneyManagement/index.js';
 import {OrchestratedCommerce} from './../OrchestratedCommerce/index.js';
+import {Payments} from './../Payments/index.js';
 import {Signals} from './../Signals/index.js';
 export type Event =
   | V1AccountApplicationAuthorizedEvent
@@ -289,6 +291,9 @@ export type Event =
   | V1ApplicationFeeCreatedEvent
   | V1ApplicationFeeRefundUpdatedEvent
   | V1ApplicationFeeRefundedEvent
+  | V1AppsInstallCreatedEvent
+  | V1AppsInstallDeletedEvent
+  | V1AppsInstallUpdatedEvent
   | V1BalanceAvailableEvent
   | V1BalanceSettingsUpdatedEvent
   | V1BillingAlertTriggeredEvent
@@ -432,7 +437,6 @@ export type Event =
   | V1InvoiceitemDiscountAddedEvent
   | V1InvoiceitemDiscountRemovedEvent
   | V1IssuingAuthorizationCreatedEvent
-  | V1IssuingAuthorizationRequestEvent
   | V1IssuingAuthorizationUpdatedEvent
   | V1IssuingCardCreatedEvent
   | V1IssuingCardUpdatedEvent
@@ -554,7 +558,9 @@ export type Event =
   | V2CommerceProductCatalogImportsSucceededEvent
   | V2CommerceProductCatalogImportsSucceededWithErrorsEvent
   | V2CoreAccountClosedEvent
+  | V2CoreAccountConnectedEvent
   | V2CoreAccountCreatedEvent
+  | V2CoreAccountDisconnectedEvent
   | V2CoreAccountUpdatedEvent
   | V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent
   | V2CoreAccountIncludingConfigurationCustomerUpdatedEvent
@@ -662,6 +668,14 @@ export type Event =
   | V2OrchestratedCommerceAgreementCreatedEvent
   | V2OrchestratedCommerceAgreementPartiallyConfirmedEvent
   | V2OrchestratedCommerceAgreementTerminatedEvent
+  | V2PaymentsOffSessionPaymentAttemptFailedEvent
+  | V2PaymentsOffSessionPaymentAttemptStartedEvent
+  | V2PaymentsOffSessionPaymentCanceledEvent
+  | V2PaymentsOffSessionPaymentCreatedEvent
+  | V2PaymentsOffSessionPaymentFailedEvent
+  | V2PaymentsOffSessionPaymentPausedEvent
+  | V2PaymentsOffSessionPaymentResumedEvent
+  | V2PaymentsOffSessionPaymentSucceededEvent
   | V2SignalsAccountEvaluationCompleteEvent
   | V2SignalsAccountSignalFraudulentMerchantReadyEvent
   | V2SignalsAccountSignalFraudulentWebsiteReadyEvent;
@@ -676,6 +690,9 @@ export type EventNotification =
   | V1ApplicationFeeCreatedEventNotification
   | V1ApplicationFeeRefundUpdatedEventNotification
   | V1ApplicationFeeRefundedEventNotification
+  | V1AppsInstallCreatedEventNotification
+  | V1AppsInstallDeletedEventNotification
+  | V1AppsInstallUpdatedEventNotification
   | V1BalanceAvailableEventNotification
   | V1BalanceSettingsUpdatedEventNotification
   | V1BillingAlertTriggeredEventNotification
@@ -819,7 +836,6 @@ export type EventNotification =
   | V1InvoiceitemDiscountAddedEventNotification
   | V1InvoiceitemDiscountRemovedEventNotification
   | V1IssuingAuthorizationCreatedEventNotification
-  | V1IssuingAuthorizationRequestEventNotification
   | V1IssuingAuthorizationUpdatedEventNotification
   | V1IssuingCardCreatedEventNotification
   | V1IssuingCardUpdatedEventNotification
@@ -941,7 +957,9 @@ export type EventNotification =
   | V2CommerceProductCatalogImportsSucceededEventNotification
   | V2CommerceProductCatalogImportsSucceededWithErrorsEventNotification
   | V2CoreAccountClosedEventNotification
+  | V2CoreAccountConnectedEventNotification
   | V2CoreAccountCreatedEventNotification
+  | V2CoreAccountDisconnectedEventNotification
   | V2CoreAccountUpdatedEventNotification
   | V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEventNotification
   | V2CoreAccountIncludingConfigurationCustomerUpdatedEventNotification
@@ -1049,6 +1067,14 @@ export type EventNotification =
   | V2OrchestratedCommerceAgreementCreatedEventNotification
   | V2OrchestratedCommerceAgreementPartiallyConfirmedEventNotification
   | V2OrchestratedCommerceAgreementTerminatedEventNotification
+  | V2PaymentsOffSessionPaymentAttemptFailedEventNotification
+  | V2PaymentsOffSessionPaymentAttemptStartedEventNotification
+  | V2PaymentsOffSessionPaymentCanceledEventNotification
+  | V2PaymentsOffSessionPaymentCreatedEventNotification
+  | V2PaymentsOffSessionPaymentFailedEventNotification
+  | V2PaymentsOffSessionPaymentPausedEventNotification
+  | V2PaymentsOffSessionPaymentResumedEventNotification
+  | V2PaymentsOffSessionPaymentSucceededEventNotification
   | V2SignalsAccountEvaluationCompleteEventNotification
   | V2SignalsAccountSignalFraudulentMerchantReadyEventNotification
   | V2SignalsAccountSignalFraudulentWebsiteReadyEventNotification;
@@ -1248,6 +1274,66 @@ export interface V1ApplicationFeeRefundedEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<V1ApplicationFee>;
   fetchEvent(): Promise<V1ApplicationFeeRefundedEvent>;
+}
+
+/**
+ * Occurs whenever a user installs a Stripe app. Sent to the app developer, embedding platform, and installing merchant.
+ */
+export interface V1AppsInstallCreatedEvent extends EventBase {
+  type: 'v1.apps.install.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Apps.Install>;
+}
+export interface V1AppsInstallCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.apps.install.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Apps.Install>;
+  fetchEvent(): Promise<V1AppsInstallCreatedEvent>;
+}
+
+/**
+ * Occurs whenever a user uninstalls a Stripe app. Sent to the app developer, embedding platform, and installing merchant.
+ */
+export interface V1AppsInstallDeletedEvent extends EventBase {
+  type: 'v1.apps.install.deleted';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Apps.Install>;
+}
+export interface V1AppsInstallDeletedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.apps.install.deleted';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Apps.Install>;
+  fetchEvent(): Promise<V1AppsInstallDeletedEvent>;
+}
+
+/**
+ * Occurs whenever a user updates a Stripe app. Sent to the app developer, embedding platform, and installing merchant.
+ */
+export interface V1AppsInstallUpdatedEvent extends EventBase {
+  type: 'v1.apps.install.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Apps.Install>;
+}
+export interface V1AppsInstallUpdatedEventNotification
+  extends EventNotificationBase {
+  type: 'v1.apps.install.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Apps.Install>;
+  fetchEvent(): Promise<V1AppsInstallUpdatedEvent>;
 }
 
 /**
@@ -1496,6 +1582,7 @@ export namespace V1BillingMeterErrorReportTriggeredEvent {
           | 'meter_event_no_customer_defined'
           | 'meter_event_value_too_many_digits'
           | 'missing_dimension_payload_keys'
+          | 'missing_tenant_payload_keys'
           | 'no_meter'
           | 'timestamp_in_future'
           | 'timestamp_too_far_in_past'
@@ -1603,6 +1690,7 @@ export namespace V1BillingMeterNoMeterFoundEvent {
           | 'meter_event_no_customer_defined'
           | 'meter_event_value_too_many_digits'
           | 'missing_dimension_payload_keys'
+          | 'missing_tenant_payload_keys'
           | 'no_meter'
           | 'timestamp_in_future'
           | 'timestamp_too_far_in_past'
@@ -3039,10 +3127,18 @@ export interface V1EntitlementsActiveEntitlementSummaryEntitlementRemovedEventNo
 export interface V1EntitlementsActiveEntitlementSummaryUpdatedEvent
   extends EventBase {
   type: 'v1.entitlements.active_entitlement_summary.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Customer>;
 }
 export interface V1EntitlementsActiveEntitlementSummaryUpdatedEventNotification
   extends EventNotificationBase {
   type: 'v1.entitlements.active_entitlement_summary.updated';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<V1Customer>;
   fetchEvent(): Promise<V1EntitlementsActiveEntitlementSummaryUpdatedEvent>;
 }
 
@@ -4303,7 +4399,7 @@ export interface V1InvoiceitemDiscountRemovedEventNotification
 }
 
 /**
- * Occurs whenever an authorization is created.
+ * Occurs whenever an authorization is created. For verification authorizations, this event is only accessible via private preview.
  */
 export interface V1IssuingAuthorizationCreatedEvent extends EventBase {
   type: 'v1.issuing_authorization.created';
@@ -4323,27 +4419,7 @@ export interface V1IssuingAuthorizationCreatedEventNotification
 }
 
 /**
- * Represents a synchronous request for authorization, see [Using your integration to handle authorization requests](https://docs.stripe.com/issuing/purchases/authorizations#authorization-handling).
- */
-export interface V1IssuingAuthorizationRequestEvent extends EventBase {
-  type: 'v1.issuing_authorization.request';
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<V1Issuing.Authorization>;
-}
-export interface V1IssuingAuthorizationRequestEventNotification
-  extends EventNotificationBase {
-  type: 'v1.issuing_authorization.request';
-  // Object containing the reference to API resource relevant to the event.
-  related_object: V2.Core.Events.RelatedObject;
-  // Retrieves the object associated with the event.
-  fetchRelatedObject(): Promise<V1Issuing.Authorization>;
-  fetchEvent(): Promise<V1IssuingAuthorizationRequestEvent>;
-}
-
-/**
- * Occurs whenever an authorization is updated.
+ * Occurs whenever an authorization is updated. For verification authorizations, this event is only accessible via private preview.
  */
 export interface V1IssuingAuthorizationUpdatedEvent extends EventBase {
   type: 'v1.issuing_authorization.updated';
@@ -6759,6 +6835,26 @@ export interface V2CoreAccountClosedEventNotification
 }
 
 /**
+ * Occurs when an existing Account connects to your platform or app.
+ */
+export interface V2CoreAccountConnectedEvent extends EventBase {
+  type: 'v2.core.account.connected';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.Account>;
+}
+export interface V2CoreAccountConnectedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.account.connected';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.Account>;
+  fetchEvent(): Promise<V2CoreAccountConnectedEvent>;
+}
+
+/**
  * Occurs when an Account is created.
  */
 export interface V2CoreAccountCreatedEvent extends EventBase {
@@ -6776,6 +6872,26 @@ export interface V2CoreAccountCreatedEventNotification
   // Retrieves the object associated with the event.
   fetchRelatedObject(): Promise<Core.Account>;
   fetchEvent(): Promise<V2CoreAccountCreatedEvent>;
+}
+
+/**
+ * Occurs when an Account disconnects from your platform or app.
+ */
+export interface V2CoreAccountDisconnectedEvent extends EventBase {
+  type: 'v2.core.account.disconnected';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.Account>;
+}
+export interface V2CoreAccountDisconnectedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.core.account.disconnected';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Core.Account>;
+  fetchEvent(): Promise<V2CoreAccountDisconnectedEvent>;
 }
 
 /**
@@ -6900,6 +7016,7 @@ export namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpda
       | 'afterpay_clearpay_payments'
       | 'alma_payments'
       | 'amazon_pay_payments'
+      | 'automatic_indirect_tax'
       | 'au_becs_debit_payments'
       | 'bacs_debit_payments'
       | 'bancontact_payments'
@@ -6924,6 +7041,7 @@ export namespace V2CoreAccountIncludingConfigurationMerchantCapabilityStatusUpda
       | 'link_payments'
       | 'mb_way_payments'
       | 'mobilepay_payments'
+      | 'momo_payments'
       | 'multibanco_payments'
       | 'mx_bank_transfer_payments'
       | 'naver_pay_payments'
@@ -9524,6 +9642,202 @@ export namespace V2OrchestratedCommerceAgreementTerminatedEvent {
 }
 
 /**
+ * Sent after a failed attempt if there are still retries available on the OffSessionPayment.
+ */
+export interface V2PaymentsOffSessionPaymentAttemptFailedEvent
+  extends EventBase {
+  type: 'v2.payments.off_session_payment.attempt_failed';
+  // Retrieves data specific to this event.
+  data: V2PaymentsOffSessionPaymentAttemptFailedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+}
+export interface V2PaymentsOffSessionPaymentAttemptFailedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.payments.off_session_payment.attempt_failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+  fetchEvent(): Promise<V2PaymentsOffSessionPaymentAttemptFailedEvent>;
+}
+
+export namespace V2PaymentsOffSessionPaymentAttemptFailedEvent {
+  export interface Data {
+    /**
+     * The ID of the payment attempt record associated with this failed attempt.
+     */
+    payment_attempt_record: string;
+  }
+}
+
+/**
+ * Sent when our internal scheduling system kicks off an attempt, whether it's a
+ * retry or an initial attempt.
+ */
+export interface V2PaymentsOffSessionPaymentAttemptStartedEvent
+  extends EventBase {
+  type: 'v2.payments.off_session_payment.attempt_started';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+}
+export interface V2PaymentsOffSessionPaymentAttemptStartedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.payments.off_session_payment.attempt_started';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+  fetchEvent(): Promise<V2PaymentsOffSessionPaymentAttemptStartedEvent>;
+}
+
+/**
+ * Sent immediately following a user's call to the Off-Session Payments cancel endpoint.
+ */
+export interface V2PaymentsOffSessionPaymentCanceledEvent extends EventBase {
+  type: 'v2.payments.off_session_payment.canceled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+}
+export interface V2PaymentsOffSessionPaymentCanceledEventNotification
+  extends EventNotificationBase {
+  type: 'v2.payments.off_session_payment.canceled';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+  fetchEvent(): Promise<V2PaymentsOffSessionPaymentCanceledEvent>;
+}
+
+/**
+ * Sent immediately following a user's call to the Off-Session Payments create endpoint.
+ */
+export interface V2PaymentsOffSessionPaymentCreatedEvent extends EventBase {
+  type: 'v2.payments.off_session_payment.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+}
+export interface V2PaymentsOffSessionPaymentCreatedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.payments.off_session_payment.created';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+  fetchEvent(): Promise<V2PaymentsOffSessionPaymentCreatedEvent>;
+}
+
+/**
+ * Sent after a failed authorization if there are no retries remaining, or if the failure is unretryable.
+ */
+export interface V2PaymentsOffSessionPaymentFailedEvent extends EventBase {
+  type: 'v2.payments.off_session_payment.failed';
+  // Retrieves data specific to this event.
+  data: V2PaymentsOffSessionPaymentFailedEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+}
+export interface V2PaymentsOffSessionPaymentFailedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.payments.off_session_payment.failed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+  fetchEvent(): Promise<V2PaymentsOffSessionPaymentFailedEvent>;
+}
+
+export namespace V2PaymentsOffSessionPaymentFailedEvent {
+  export interface Data {
+    /**
+     * The ID of the payment attempt record associated with this terminal failure. Equal to the `latest_payment_attempt_record` on the Off-Session Payment object.
+     */
+    payment_attempt_record: string;
+  }
+}
+
+/**
+ * Sent immediately following a user's call to the Off-Session Payments pause endpoint.
+ */
+export interface V2PaymentsOffSessionPaymentPausedEvent extends EventBase {
+  type: 'v2.payments.off_session_payment.paused';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+}
+export interface V2PaymentsOffSessionPaymentPausedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.payments.off_session_payment.paused';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+  fetchEvent(): Promise<V2PaymentsOffSessionPaymentPausedEvent>;
+}
+
+/**
+ * Sent immediately following a user's call to the Off-Session Payments resume endpoint.
+ */
+export interface V2PaymentsOffSessionPaymentResumedEvent extends EventBase {
+  type: 'v2.payments.off_session_payment.resumed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+}
+export interface V2PaymentsOffSessionPaymentResumedEventNotification
+  extends EventNotificationBase {
+  type: 'v2.payments.off_session_payment.resumed';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+  fetchEvent(): Promise<V2PaymentsOffSessionPaymentResumedEvent>;
+}
+
+/**
+ * Sent immediately after a successful authorization.
+ */
+export interface V2PaymentsOffSessionPaymentSucceededEvent extends EventBase {
+  type: 'v2.payments.off_session_payment.succeeded';
+  // Retrieves data specific to this event.
+  data: V2PaymentsOffSessionPaymentSucceededEvent.Data;
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+}
+export interface V2PaymentsOffSessionPaymentSucceededEventNotification
+  extends EventNotificationBase {
+  type: 'v2.payments.off_session_payment.succeeded';
+  // Object containing the reference to API resource relevant to the event.
+  related_object: V2.Core.Events.RelatedObject;
+  // Retrieves the object associated with the event.
+  fetchRelatedObject(): Promise<Payments.OffSessionPayment>;
+  fetchEvent(): Promise<V2PaymentsOffSessionPaymentSucceededEvent>;
+}
+
+export namespace V2PaymentsOffSessionPaymentSucceededEvent {
+  export interface Data {
+    /**
+     * The ID of the payment attempt record associated with this successful attempt.
+     */
+    payment_attempt_record: string;
+  }
+}
+
+/**
  * Occurs when all requested signals for an account evaluation are complete.
  */
 export interface V2SignalsAccountEvaluationCompleteEvent extends EventBase {
@@ -9597,6 +9911,9 @@ export declare namespace Events {
     V1ApplicationFeeCreatedEvent,
     V1ApplicationFeeRefundUpdatedEvent,
     V1ApplicationFeeRefundedEvent,
+    V1AppsInstallCreatedEvent,
+    V1AppsInstallDeletedEvent,
+    V1AppsInstallUpdatedEvent,
     V1BalanceAvailableEvent,
     V1BalanceSettingsUpdatedEvent,
     V1BillingAlertTriggeredEvent,
@@ -9740,7 +10057,6 @@ export declare namespace Events {
     V1InvoiceitemDiscountAddedEvent,
     V1InvoiceitemDiscountRemovedEvent,
     V1IssuingAuthorizationCreatedEvent,
-    V1IssuingAuthorizationRequestEvent,
     V1IssuingAuthorizationUpdatedEvent,
     V1IssuingCardCreatedEvent,
     V1IssuingCardUpdatedEvent,
@@ -9862,7 +10178,9 @@ export declare namespace Events {
     V2CommerceProductCatalogImportsSucceededEvent,
     V2CommerceProductCatalogImportsSucceededWithErrorsEvent,
     V2CoreAccountClosedEvent,
+    V2CoreAccountConnectedEvent,
     V2CoreAccountCreatedEvent,
+    V2CoreAccountDisconnectedEvent,
     V2CoreAccountUpdatedEvent,
     V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEvent,
     V2CoreAccountIncludingConfigurationCustomerUpdatedEvent,
@@ -9970,6 +10288,14 @@ export declare namespace Events {
     V2OrchestratedCommerceAgreementCreatedEvent,
     V2OrchestratedCommerceAgreementPartiallyConfirmedEvent,
     V2OrchestratedCommerceAgreementTerminatedEvent,
+    V2PaymentsOffSessionPaymentAttemptFailedEvent,
+    V2PaymentsOffSessionPaymentAttemptStartedEvent,
+    V2PaymentsOffSessionPaymentCanceledEvent,
+    V2PaymentsOffSessionPaymentCreatedEvent,
+    V2PaymentsOffSessionPaymentFailedEvent,
+    V2PaymentsOffSessionPaymentPausedEvent,
+    V2PaymentsOffSessionPaymentResumedEvent,
+    V2PaymentsOffSessionPaymentSucceededEvent,
     V2SignalsAccountEvaluationCompleteEvent,
     V2SignalsAccountSignalFraudulentMerchantReadyEvent,
     V2SignalsAccountSignalFraudulentWebsiteReadyEvent,
@@ -9982,6 +10308,9 @@ export declare namespace Events {
     V1ApplicationFeeCreatedEventNotification,
     V1ApplicationFeeRefundUpdatedEventNotification,
     V1ApplicationFeeRefundedEventNotification,
+    V1AppsInstallCreatedEventNotification,
+    V1AppsInstallDeletedEventNotification,
+    V1AppsInstallUpdatedEventNotification,
     V1BalanceAvailableEventNotification,
     V1BalanceSettingsUpdatedEventNotification,
     V1BillingAlertTriggeredEventNotification,
@@ -10125,7 +10454,6 @@ export declare namespace Events {
     V1InvoiceitemDiscountAddedEventNotification,
     V1InvoiceitemDiscountRemovedEventNotification,
     V1IssuingAuthorizationCreatedEventNotification,
-    V1IssuingAuthorizationRequestEventNotification,
     V1IssuingAuthorizationUpdatedEventNotification,
     V1IssuingCardCreatedEventNotification,
     V1IssuingCardUpdatedEventNotification,
@@ -10247,7 +10575,9 @@ export declare namespace Events {
     V2CommerceProductCatalogImportsSucceededEventNotification,
     V2CommerceProductCatalogImportsSucceededWithErrorsEventNotification,
     V2CoreAccountClosedEventNotification,
+    V2CoreAccountConnectedEventNotification,
     V2CoreAccountCreatedEventNotification,
+    V2CoreAccountDisconnectedEventNotification,
     V2CoreAccountUpdatedEventNotification,
     V2CoreAccountIncludingConfigurationCustomerCapabilityStatusUpdatedEventNotification,
     V2CoreAccountIncludingConfigurationCustomerUpdatedEventNotification,
@@ -10355,6 +10685,14 @@ export declare namespace Events {
     V2OrchestratedCommerceAgreementCreatedEventNotification,
     V2OrchestratedCommerceAgreementPartiallyConfirmedEventNotification,
     V2OrchestratedCommerceAgreementTerminatedEventNotification,
+    V2PaymentsOffSessionPaymentAttemptFailedEventNotification,
+    V2PaymentsOffSessionPaymentAttemptStartedEventNotification,
+    V2PaymentsOffSessionPaymentCanceledEventNotification,
+    V2PaymentsOffSessionPaymentCreatedEventNotification,
+    V2PaymentsOffSessionPaymentFailedEventNotification,
+    V2PaymentsOffSessionPaymentPausedEventNotification,
+    V2PaymentsOffSessionPaymentResumedEventNotification,
+    V2PaymentsOffSessionPaymentSucceededEventNotification,
     V2SignalsAccountEvaluationCompleteEventNotification,
     V2SignalsAccountSignalFraudulentMerchantReadyEventNotification,
     V2SignalsAccountSignalFraudulentWebsiteReadyEventNotification,

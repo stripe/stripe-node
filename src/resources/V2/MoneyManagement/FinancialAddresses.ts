@@ -85,6 +85,9 @@ export interface FinancialAddress {
    */
   livemode: boolean;
 
+  /**
+   * Open Enum. The currency the FinancialAddress settles into the FinancialAccount.
+   */
   settlement_currency: string;
 
   /**
@@ -209,7 +212,7 @@ export namespace V2 {
       financial_account: string;
 
       /**
-       * The type of FinancialAddress to create. Must agree with which branch of financial_address_type_properties is set.
+       * The type of FinancialAddress to create: bank_account or crypto_wallet. Must agree with which branch of financial_address_type_properties is set. Cash FinancialAddresses are managed by FundingIntents and cannot be created through this endpoint.
        */
       type: FinancialAddressCreateParams.Type;
 

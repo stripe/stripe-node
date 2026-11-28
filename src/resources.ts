@@ -20,7 +20,6 @@ import {AuthorizationResource as FinancialConnectionsAuthorizations} from './res
 import {AuthorizationResource as IssuingAuthorizations} from './resources/Issuing/Authorizations.js';
 import {AuthorizationResource as TestHelpersIssuingAuthorizations} from './resources/TestHelpers/Issuing/Authorizations.js';
 import {BatchJobResource as V2CoreBatchJobs} from './resources/V2/Core/BatchJobs.js';
-import {BillSettingResource as V2BillingBillSettings} from './resources/V2/Billing/BillSettings.js';
 import {BillingEvaluationResource as RadarBillingEvaluations} from './resources/Radar/BillingEvaluations.js';
 import {BusinessProfileResource as V2NetworkBusinessProfiles} from './resources/V2/Network/BusinessProfiles.js';
 import {CalculationResource as TaxCalculations} from './resources/Tax/Calculations.js';
@@ -28,7 +27,6 @@ import {CardholderResource as IssuingCardholders} from './resources/Issuing/Card
 import {CardResource as IssuingCards} from './resources/Issuing/Cards.js';
 import {CardResource as TestHelpersIssuingCards} from './resources/TestHelpers/Issuing/Cards.js';
 import {ClaimableSandboxResource as V2CoreClaimableSandboxes} from './resources/V2/Core/ClaimableSandboxes.js';
-import {CollectionSettingResource as V2BillingCollectionSettings} from './resources/V2/Billing/CollectionSettings.js';
 import {ConfigurationResource as BillingPortalConfigurations} from './resources/BillingPortal/Configurations.js';
 import {ConfigurationResource as TerminalConfigurations} from './resources/Terminal/Configurations.js';
 import {ConfirmationTokenResource as TestHelpersConfirmationTokens} from './resources/TestHelpers/ConfirmationTokens.js';
@@ -79,6 +77,7 @@ import {MeterEventResource as V2BillingMeterEvents} from './resources/V2/Billing
 import {MeterUsageResource as BillingAnalyticsMeterUsage} from './resources/Billing/Analytics/MeterUsage.js';
 import {MeterResource as BillingMeters} from './resources/Billing/Meters.js';
 import {MoneyManagementResource as V2TestHelpersMoneyManagement} from './resources/V2/TestHelpers/MoneyManagement.js';
+import {OffSessionPaymentResource as V2PaymentsOffSessionPayments} from './resources/V2/Payments/OffSessionPayments.js';
 import {OnboardingLinkResource as TerminalOnboardingLinks} from './resources/Terminal/OnboardingLinks.js';
 import {OrderResource as ClimateOrders} from './resources/Climate/Orders.js';
 import {OutboundPaymentQuoteResource as V2MoneyManagementOutboundPaymentQuotes} from './resources/V2/MoneyManagement/OutboundPaymentQuotes.js';
@@ -98,7 +97,6 @@ import {PersonalizationDesignResource as TestHelpersIssuingPersonalizationDesign
 import {PhysicalBundleResource as IssuingPhysicalBundles} from './resources/Issuing/PhysicalBundles.js';
 import {PlanResource as ReservePlans} from './resources/Reserve/Plans.js';
 import {ProductResource as ClimateProducts} from './resources/Climate/Products.js';
-import {ProfileResource as V2BillingProfiles} from './resources/V2/Billing/Profiles.js';
 import {QueryRunResource as V2DataQueryRuns} from './resources/V2/Data/QueryRuns.js';
 import {QueryRunResource as V2DataReportingQueryRuns} from './resources/V2/Data/Reporting/QueryRuns.js';
 import {ReaderCollectedDatumResource as TerminalReaderCollectedData} from './resources/Terminal/ReaderCollectedData.js';
@@ -366,13 +364,10 @@ export const Treasury = resourceNamespace('treasury', {
 });
 export const V2 = resourceNamespace('v2', {
   Billing: resourceNamespace('billing', {
-    BillSettings: V2BillingBillSettings,
-    CollectionSettings: V2BillingCollectionSettings,
     MeterEventAdjustments: V2BillingMeterEventAdjustments,
     MeterEventSession: V2BillingMeterEventSession,
     MeterEventStream: V2BillingMeterEventStream,
     MeterEvents: V2BillingMeterEvents,
-    Profiles: V2BillingProfiles,
   }),
   Commerce: resourceNamespace('commerce', {
     ProductCatalog: resourceNamespace('productCatalog', {
@@ -433,6 +428,9 @@ export const V2 = resourceNamespace('v2', {
   }),
   OrchestratedCommerce: resourceNamespace('orchestratedCommerce', {
     Agreements: V2OrchestratedCommerceAgreements,
+  }),
+  Payments: resourceNamespace('payments', {
+    OffSessionPayments: V2PaymentsOffSessionPayments,
   }),
   Signals: resourceNamespace('signals', {
     AccountActivities: V2SignalsAccountActivities,

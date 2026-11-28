@@ -33,12 +33,14 @@ export class Data {
 }
 
 export declare namespace Data {
+  export import QueryRunListParams = V2Namespace0.Data.QueryRunListParams;
   export import QueryRunCreateParams = V2Namespace0.Data.QueryRunCreateParams;
   export import QueryRunRetrieveParams = V2Namespace0.Data.QueryRunRetrieveParams;
   export {QueryRun, QueryRunResource};
   export import ReportListParams = V2Namespace1.Data.ReportListParams;
   export import ReportRetrieveParams = V2Namespace1.Data.ReportRetrieveParams;
   export {Report, ReportResource};
+  export import ReportRunListParams = V2Namespace2.Data.ReportRunListParams;
   export import ReportRunCreateParams = V2Namespace2.Data.ReportRunCreateParams;
   export import ReportRunRetrieveParams = V2Namespace2.Data.ReportRunRetrieveParams;
   export {ReportRun, ReportRunResource};

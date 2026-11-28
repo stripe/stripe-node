@@ -2,7 +2,7 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {V2Amount} from './../V2Amounts.js';
-import {OtherString} from '../../../shared.js';
+import {Metadata, OtherString} from '../../../shared.js';
 import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class InboundTransferResource extends StripeResource {
@@ -91,9 +91,9 @@ export interface InboundTransfer {
   livemode: boolean;
 
   /**
-   * A hosted transaction receipt URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
+   * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
    */
-  receipt_url?: string;
+  metadata?: Metadata;
 
   /**
    * A nested object containing information about the destination of the InboundTransfer.

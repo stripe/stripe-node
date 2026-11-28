@@ -2,9 +2,45 @@
 
 import {StripeResource} from '../../../StripeResource.js';
 import {OtherString} from '../../../shared.js';
-import {RequestOptions, Response} from '../../../lib.js';
+import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class ReportRunResource extends StripeResource {
+  /**
+   * Returns a list of `ReportRun` objects created through the API, most recent first. Listed
+   * `ReportRun` objects don't include `result` or `sql`. Retrieve a `ReportRun` to access them.
+   */
+  list(
+    params?: V2.Data.ReportRunListParams,
+    options?: RequestOptions
+  ): V2ListPromise<ReportRun> {
+    return this._makeRequest('GET', '/v2/data/report_runs', params, options, {
+      methodType: 'list',
+      responseSchema: {
+        kind: 'object',
+        fields: {
+          data: {
+            kind: 'array',
+            element: {
+              kind: 'object',
+              fields: {
+                result: {
+                  kind: 'object',
+                  fields: {
+                    col_count: {kind: 'int64_string'},
+                    file: {
+                      kind: 'object',
+                      fields: {size: {kind: 'int64_string'}},
+                    },
+                    row_count: {kind: 'int64_string'},
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    }) as any;
+  }
   /**
    * Initiates the generation of a `ReportRun` based on the specified `Report` and
    * caller-provided parameters. Returns a `ReportRun` object which can be used to track
@@ -134,6 +170,11 @@ export interface ReportRun {
    * Additional details about the current state of the `ReportRun`.
    */
   status_details?: ReportRun.StatusDetails;
+
+  /**
+   * Timestamps of when the `ReportRun` entered each terminal status.
+   */
+  status_transitions: ReportRun.StatusTransitions;
 }
 export namespace ReportRun {
   export type Format = 'csv' | OtherString;
@@ -200,6 +241,23 @@ export namespace ReportRun {
      * Errors found in the submitted SQL. Populated when the failure was caused by invalid SQL.
      */
     query_errors: Array<StatusDetails.QueryError>;
+  }
+
+  export interface StatusTransitions {
+    /**
+     * Time at which the run was canceled.
+     */
+    canceled_at?: string;
+
+    /**
+     * Time at which the run failed.
+     */
+    failed_at?: string;
+
+    /**
+     * Time at which the run succeeded.
+     */
+    succeeded_at?: string;
   }
 
   export namespace Result {
@@ -436,6 +494,70 @@ export namespace V2 {
 
     export namespace ReportRunRetrieveParams {
       export type Include = 'result.inline' | 'sql' | OtherString;
+    }
+  }
+}
+export namespace V2 {
+  export namespace Data {
+    export interface ReportRunListParams {
+      /**
+       * If supplied, only return report runs created within this time range.
+       */
+      created?: ReportRunListParams.Created;
+
+      /**
+       * The maximum number of results per page. Defaults to 10. Maximum is 100.
+       */
+      limit?: number;
+
+      /**
+       * If supplied, only return report runs of the `Report` with this ID.
+       */
+      report?: string;
+
+      /**
+       * If supplied, only return report runs that have any of these statuses.
+       */
+      statuses?: Array<ReportRunListParams.Status>;
+    }
+
+    export namespace ReportRunListParams {
+      export interface Created {
+        /**
+         * Only return runs created after this time.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gt?: string | number;
+
+        /**
+         * Only return runs created at or after this time.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gte?: string | number;
+
+        /**
+         * Only return runs created before this time.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lt?: string | number;
+
+        /**
+         * Only return runs created at or before this time.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lte?: string | number;
+      }
+
+      export type Status =
+        | 'canceled'
+        | 'failed'
+        | 'running'
+        | 'succeeded'
+        | OtherString;
     }
   }
 }

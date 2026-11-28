@@ -163,6 +163,11 @@ export namespace ActivityLog {
     api_key?: Actor.ApiKey;
 
     /**
+     * Set when a display name is available for an action performed by Stripe.
+     */
+    stripe_action?: Actor.StripeAction;
+
+    /**
      * The type of actor.
      */
     type: Actor.Type;
@@ -218,6 +223,11 @@ export namespace ActivityLog {
      * Details of an SSO action.
      */
     sso?: Details.Sso;
+
+    /**
+     * Details of a Stripe access action.
+     */
+    stripe_access?: Details.StripeAccess;
 
     /**
      * The action group type of the activity log entry.
@@ -321,6 +331,7 @@ export namespace ActivityLog {
     | 'sso_settings_created'
     | 'sso_settings_deleted'
     | 'sso_settings_updated'
+    | 'stripe_access_started'
     | 'two_step_authentication_mandate_disabled'
     | 'two_step_authentication_mandate_enabled'
     | 'user_access_started'
@@ -358,6 +369,13 @@ export namespace ActivityLog {
        * Unique identifier of the API key.
        */
       id: string;
+    }
+
+    export interface StripeAction {
+      /**
+       * Public display name captured when the action occurs.
+       */
+      display_name: string;
     }
 
     export type Type = 'api_key' | 'stripe_action' | 'user';
@@ -564,6 +582,18 @@ export namespace ActivityLog {
       mandate?: Sso.Mandate;
     }
 
+    export interface StripeAccess {
+      /**
+       * The level of Dashboard access granted.
+       */
+      access_type: StripeAccess.AccessType;
+
+      /**
+       * The reason for granting Stripe access.
+       */
+      reason: StripeAccess.Reason;
+    }
+
     export type Type =
       | 'account_security'
       | 'api_key'
@@ -577,6 +607,7 @@ export namespace ActivityLog {
       | 'radar'
       | 'scim'
       | 'sso'
+      | 'stripe_access'
       | 'user_access'
       | 'user_invite'
       | 'user_profile'
@@ -1213,6 +1244,74 @@ export namespace ActivityLog {
       export type Mandate = 'off' | 'optional' | 'required';
     }
 
+    export namespace StripeAccess {
+      export type AccessType =
+        | 'dashboard_read_only'
+        | 'dashboard_read_write'
+        | OtherString;
+
+      export interface Reason {
+        /**
+         * Set when access is granted through an access request.
+         */
+        access_request?: Reason.AccessRequest;
+
+        /**
+         * Set when access is granted through a support relationship.
+         */
+        support_relationship?: Reason.SupportRelationship;
+
+        /**
+         * Set when access is granted through a support ticket.
+         */
+        support_ticket?: Reason.SupportTicket;
+
+        /**
+         * The type of reason for granting access.
+         */
+        type: Reason.Type;
+      }
+
+      export namespace Reason {
+        export interface AccessRequest {
+          /**
+           * Identifier of the access request.
+           */
+          id: string;
+        }
+
+        export interface SupportRelationship {
+          /**
+           * Identifier of the support relationship.
+           */
+          id: string;
+
+          /**
+           * Name of the support contact, when available.
+           */
+          name?: string;
+
+          /**
+           * Role of the support contact, when available.
+           */
+          role?: string;
+        }
+
+        export interface SupportTicket {
+          /**
+           * Identifier of the support ticket.
+           */
+          id: string;
+        }
+
+        export type Type =
+          | 'access_request'
+          | 'support_relationship'
+          | 'support_ticket'
+          | OtherString;
+      }
+    }
+
     export namespace UserAccess {
       export interface DashboardClient {
         /**
@@ -1250,7 +1349,7 @@ export namespace ActivityLog {
         signals: Array<Risk.Signal>;
       }
 
-      export type Surface = 'dashboard' | 'express' | OtherString;
+      export type Surface = 'dashboard' | 'embedded' | 'express' | OtherString;
 
       export namespace Risk {
         export interface Signal {
@@ -1336,6 +1435,7 @@ export namespace V2 {
         | 'radar'
         | 'scim'
         | 'sso'
+        | 'stripe_access'
         | 'user_access'
         | 'user_invite'
         | 'user_profile'
@@ -1399,6 +1499,7 @@ export namespace V2 {
         | 'sso_settings_created'
         | 'sso_settings_deleted'
         | 'sso_settings_updated'
+        | 'stripe_access_started'
         | 'two_step_authentication_mandate_disabled'
         | 'two_step_authentication_mandate_enabled'
         | 'user_access_started'

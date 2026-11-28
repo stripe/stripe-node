@@ -6,7 +6,9 @@ import {RequestOptions, V2ListPromise, Response} from '../../../lib.js';
 
 export class AccountSignalResource extends StripeResource {
   /**
-   * Lists AccountSignals whose created timestamps are no more than 90 days old for a given account or customer. Returns only the latest AccountSignal for each requested signal type.
+   * Lists AccountSignals for a given account or customer, newest first. Signals more than 180 days old are omitted.
+   * By default, returns only the latest matching AccountSignal for each requested signal type.
+   * Set latest_per_type to false to include matching historical signals. Filtering and latest-per-type selection occur before pagination.
    */
   list(
     params: V2.Signals.AccountSignalListParams,
@@ -48,7 +50,7 @@ export class AccountSignalResource extends StripeResource {
     ) as any;
   }
   /**
-   * Retrieves an AccountSignal by its ID when its created timestamp is no more than 90 days old.
+   * Retrieves an AccountSignal by its ID for up to 180 days after creation. Signals more than 180 days old are inaccessible.
    */
   retrieve(
     id: string,
@@ -171,9 +173,9 @@ export namespace AccountSignal {
 
   export interface FraudulentWebsite {
     /**
-     * Human-readable details about the fraudulent website evaluation.
+     * Additional information about the fraudulent website evaluation, when available.
      */
-    details?: string;
+    additional_details?: FraudulentWebsite.AdditionalDetails;
 
     /**
      * Categorical assessment of the fraudulent website risk.
@@ -270,6 +272,13 @@ export namespace AccountSignal {
   }
 
   export namespace FraudulentWebsite {
+    export interface AdditionalDetails {
+      /**
+       * Human-readable explanation of the fraudulent website evaluation.
+       */
+      explanation: string;
+    }
+
     export type RiskLevel =
       | 'elevated'
       | 'highest'
@@ -316,7 +325,18 @@ export namespace V2 {
       account_details?: AccountSignalListParams.AccountDetails;
 
       /**
-       * Maximum number of results to return per page. Defaults to 20.
+       * Filter signals by their creation timestamp before latest-per-type selection and pagination.
+       */
+      created?: AccountSignalListParams.Created;
+
+      /**
+       * Whether to return only the latest matching signal for each requested type. Defaults to true.
+       * Set to false to include matching historical signals.
+       */
+      latest_per_type?: boolean;
+
+      /**
+       * Maximum number of results to return per page. Defaults to 10.
        */
       limit?: number;
     }
@@ -339,6 +359,36 @@ export namespace V2 {
          * The v1 customer ID of the account, for users not yet migrated to v2/accounts.
          */
         customer?: string;
+      }
+
+      export interface Created {
+        /**
+         * Only return signals created after this RFC 3339 timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gt?: string | number;
+
+        /**
+         * Only return signals created at or after this RFC 3339 timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        gte?: string | number;
+
+        /**
+         * Only return signals created before this RFC 3339 timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lt?: string | number;
+
+        /**
+         * Only return signals created at or before this RFC 3339 timestamp.
+         *
+         * Numeric values are deprecated and are included only for backwards compatibility. The API does not accept them; use an RFC 3339 string instead.
+         */
+        lte?: string | number;
       }
     }
   }

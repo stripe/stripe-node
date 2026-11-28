@@ -82,11 +82,6 @@ export interface ReceivedDebit {
   livemode: boolean;
 
   /**
-   * A link to the Stripe-hosted receipt for this ReceivedDebit.
-   */
-  receipt_url?: string;
-
-  /**
    * Open Enum. The status of the ReceivedDebit.
    */
   status: ReceivedDebit.Status;

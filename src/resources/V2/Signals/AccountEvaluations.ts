@@ -40,7 +40,7 @@ export class AccountEvaluationResource extends StripeResource {
     ) as any;
   }
   /**
-   * Retrieves an AccountEvaluation by its ID when its created timestamp is no more than 90 days old.
+   * Retrieves an AccountEvaluation by its ID for up to 180 days after creation. Evaluations more than 180 days old are inaccessible.
    */
   retrieve(
     id: string,
@@ -241,9 +241,9 @@ export namespace AccountEvaluation {
   export namespace EvaluatedSignals {
     export interface FraudulentWebsite {
       /**
-       * Human-readable details about the fraudulent website evaluation, when available.
+       * Additional information about the fraudulent website evaluation, when available.
        */
-      details?: string;
+      additional_details?: FraudulentWebsite.AdditionalDetails;
 
       /**
        * Timestamp at which the signal was evaluated.
@@ -306,6 +306,13 @@ export namespace AccountEvaluation {
     }
 
     export namespace FraudulentWebsite {
+      export interface AdditionalDetails {
+        /**
+         * Human-readable explanation of the fraudulent website evaluation.
+         */
+        explanation: string;
+      }
+
       export type RiskLevel =
         | 'elevated'
         | 'highest'
