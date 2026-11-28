@@ -85,7 +85,13 @@ export namespace FundingInstructions {
       zengin?: FinancialAddress.Zengin;
     }
 
-    export type Type = 'eu_bank_transfer' | 'jp_bank_transfer' | OtherString;
+    export type Type =
+      | 'eu_bank_transfer'
+      | 'gb_bank_transfer'
+      | 'jp_bank_transfer'
+      | 'mx_bank_transfer'
+      | 'us_bank_transfer'
+      | OtherString;
 
     export namespace FinancialAddress {
       export interface Aba {

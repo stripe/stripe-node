@@ -349,7 +349,7 @@ export namespace Authentication {
     protocol_version: OutcomeDetails.ProtocolVersion;
 
     /**
-     * The indicator provided to the issuer by Stripe in the AReq that indicates whether a challenge is requested for this Authentication. This indicator should match the flow_preference you specified but may be overridden (for compliance reasons for example).
+     * The indicator provided to the issuer by Stripe in the AReq that indicates whether a challenge is requested for this Authentication. This indicator should match the flow_preference you specified but may be overridden (for compliance reasons or protocol version supportability for example).
      */
     requestor_challenge_indicator?: OutcomeDetails.RequestorChallengeIndicator;
 

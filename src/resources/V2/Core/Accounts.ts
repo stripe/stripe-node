@@ -64,6 +64,7 @@ export class AccountResource extends StripeResource {
   /**
    * Create an Account that represents a company, individual, or other entity that your business interacts with. Accounts contain identifying information about the entity, and configurations that store the features an account has access to. An account can be configured as any or all of the following configurations: Customer, Merchant and/or Recipient.
    * @throws Stripe.RateLimitError
+   * @throws Stripe.InactiveApiOperationConfirmationRequiredError
    */
   create(
     params?: V2.Core.AccountCreateParams,
@@ -150,6 +151,7 @@ export class AccountResource extends StripeResource {
   /**
    * Updates the details of an Account.
    * @throws Stripe.RateLimitError
+   * @throws Stripe.InactiveApiOperationConfirmationRequiredError
    */
   update(
     id: string,
@@ -215,6 +217,80 @@ export class AccountResource extends StripeResource {
     return this._makeRequest(
       'POST',
       `/v2/core/accounts/${encodeURIComponent(id)}/close`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            identity: {
+              kind: 'object',
+              fields: {
+                individual: {
+                  kind: 'object',
+                  fields: {
+                    relationship: {
+                      kind: 'object',
+                      fields: {percent_ownership: {kind: 'decimal_string'}},
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
+    ) as any;
+  }
+  /**
+   * Rejects an Account and prevents it from operating across its configurations.
+   * @throws Stripe.RateLimitError
+   */
+  reject(
+    id: string,
+    params: V2.Core.AccountRejectParams,
+    options?: RequestOptions
+  ): Promise<Response<Account>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/accounts/${encodeURIComponent(id)}/reject`,
+      params,
+      options,
+      {
+        responseSchema: {
+          kind: 'object',
+          fields: {
+            identity: {
+              kind: 'object',
+              fields: {
+                individual: {
+                  kind: 'object',
+                  fields: {
+                    relationship: {
+                      kind: 'object',
+                      fields: {percent_ownership: {kind: 'decimal_string'}},
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      }
+    ) as any;
+  }
+  /**
+   * Reverses a platform rejection on an Account. Restrictions applied by Stripe or other risk controls remain in place.
+   * @throws Stripe.RateLimitError
+   */
+  unreject(
+    id: string,
+    params?: V2.Core.AccountUnrejectParams,
+    options?: RequestOptions
+  ): Promise<Response<Account>> {
+    return this._makeRequest(
+      'POST',
+      `/v2/core/accounts/${encodeURIComponent(id)}/unreject`,
       params,
       options,
       {
@@ -318,6 +394,11 @@ export interface Account {
   metadata?: Metadata;
 
   /**
+   * Information about the rejection of the Account. Null if the platform has not rejected the Account.
+   */
+  rejection?: Account.Rejection;
+
+  /**
    * Information about the active requirements for the Account, including what information needs to be collected, and by when.
    */
   requirements?: Account.Requirements;
@@ -337,7 +418,7 @@ export namespace Account {
     merchant?: Configuration.Merchant;
 
     /**
-     * The Recipient Configuration allows the Account to receive funds. Utilize this configuration if the Account will not be the Merchant of Record, like with Separate Charges & Transfers, or Destination Charges without on_behalf_of set.
+     * The Recipient Configuration allows the Account to receive funds from you.
      */
     recipient?: Configuration.Recipient;
   }
@@ -420,6 +501,13 @@ export namespace Account {
      * Information about the individual represented by the Account. This property is `null` unless `entity_type` is set to `individual`.
      */
     individual?: Identity.Individual;
+  }
+
+  export interface Rejection {
+    /**
+     * Details about the platform's rejection of the Account. Null if the platform hasn't rejected the Account.
+     */
+    platform_rejection?: Rejection.PlatformRejection;
   }
 
   export interface Requirements {
@@ -4511,7 +4599,7 @@ export namespace Account {
           payouts?: StripeBalance.Payouts;
 
           /**
-           * Enables this Account to receive /v1/transfers into their Stripe Balance (/v1/balance).
+           * Enables this Account to receive /v1/transfers into their Stripe Balance (/v1/balance). Use this capability if the Account will not be the Merchant of Record, like with Separate Charges & Transfers, or Destination Charges without on_behalf_of set.
            */
           stripe_transfers?: StripeBalance.StripeTransfers;
         }
@@ -5353,6 +5441,7 @@ export namespace Account {
             export type Code =
               | 'invalid_address_city_state_postal_code'
               | 'invalid_address_cmra_address'
+              | 'invalid_address_crypto_regulated_state'
               | 'invalid_address_highway_contract_box'
               | 'invalid_address_private_mailbox'
               | 'invalid_address_registered_agent_address'
@@ -5394,6 +5483,7 @@ export namespace Account {
               | 'invalid_value_other'
               | 'unresolvable_ip_address'
               | 'unresolvable_postal_code'
+              | 'verification_data_not_found'
               | 'verification_directors_mismatch'
               | 'verification_document_address_mismatch'
               | 'verification_document_address_missing'
@@ -5441,6 +5531,7 @@ export namespace Account {
               | 'verification_missing_directors'
               | 'verification_missing_executives'
               | 'verification_missing_owners'
+              | 'verification_relationships_not_found'
               | 'verification_requires_additional_memorandum_of_associations'
               | 'verification_requires_additional_proof_of_registration'
               | 'verification_selfie_document_missing_photo'
@@ -5549,6 +5640,7 @@ export namespace Account {
         export type Code =
           | 'invalid_address_city_state_postal_code'
           | 'invalid_address_cmra_address'
+          | 'invalid_address_crypto_regulated_state'
           | 'invalid_address_highway_contract_box'
           | 'invalid_address_private_mailbox'
           | 'invalid_address_registered_agent_address'
@@ -5590,6 +5682,7 @@ export namespace Account {
           | 'invalid_value_other'
           | 'unresolvable_ip_address'
           | 'unresolvable_postal_code'
+          | 'verification_data_not_found'
           | 'verification_directors_mismatch'
           | 'verification_document_address_mismatch'
           | 'verification_document_address_missing'
@@ -5637,6 +5730,7 @@ export namespace Account {
           | 'verification_missing_directors'
           | 'verification_missing_executives'
           | 'verification_missing_owners'
+          | 'verification_relationships_not_found'
           | 'verification_requires_additional_memorandum_of_associations'
           | 'verification_requires_additional_proof_of_registration'
           | 'verification_selfie_document_missing_photo'
@@ -5685,7 +5779,6 @@ export namespace Account {
             | 'bank_accounts.rtp'
             | 'bank_accounts.sepa'
             | 'bank_accounts.swift'
-            | 'bank_accounts.wire'
             | 'billie_payments'
             | 'blik_payments'
             | 'blik_recurring_payments'
@@ -6271,6 +6364,11 @@ export namespace Account {
          * Open Enum. The ID number type of a business entity.
          */
         type: IdNumber.Type;
+
+        /**
+         * The value of the ID number. Returned only when the API key is authorized to read it; otherwise null.
+         */
+        value?: string;
       }
 
       export interface MonthlyEstimatedRevenue {
@@ -6557,6 +6655,7 @@ export namespace Account {
         export type Type =
           | 'ae_crn'
           | 'ae_vat'
+          | 'ag_tin'
           | 'ao_nif'
           | 'ar_cuit'
           | 'at_fn'
@@ -6565,25 +6664,31 @@ export namespace Account {
           | 'au_abn'
           | 'au_acn'
           | 'au_in'
+          | 'au_wpn'
           | 'az_tin'
+          | 'ba_pib'
           | 'bd_etin'
           | 'be_cbe'
           | 'be_vat'
           | 'bg_uic'
           | 'bg_vat'
+          | 'bj_ifu'
           | 'br_cnpj'
           | 'ca_cn'
           | 'ca_crarr'
           | 'ca_gst_hst'
           | 'ca_neq'
+          | 'ca_qst'
           | 'ca_rid'
           | 'ch_chid'
           | 'ch_uid'
+          | 'cl_rut'
           | 'cr_cpj'
           | 'cr_nite'
           | 'cy_he'
           | 'cy_tic'
           | 'cy_vat'
+          | 'cz_dic'
           | 'cz_ico'
           | 'cz_vat'
           | 'de_hrn'
@@ -6592,18 +6697,23 @@ export namespace Account {
           | 'dk_cvr'
           | 'dk_vat'
           | 'do_rcn'
+          | 'dz_nif'
           | 'ee_rk'
           | 'ee_vat'
           | 'es_cif'
           | 'es_vat'
+          | 'et_tin'
           | 'fi_vat'
           | 'fi_yt'
           | 'fr_rna'
           | 'fr_siren'
+          | 'fr_siret'
           | 'fr_vat'
           | 'gb_crn'
           | 'gb_vat'
+          | 'ge_tin'
           | 'gi_crn'
+          | 'gi_vat'
           | 'gr_afm'
           | 'gr_gemi'
           | 'gr_vat'
@@ -6616,14 +6726,25 @@ export namespace Account {
           | 'hu_cjs'
           | 'hu_tin'
           | 'hu_vat'
+          | 'id_npwp'
           | 'ie_crn'
           | 'ie_trn'
           | 'ie_vat'
+          | 'il_tin'
+          | 'il_vat'
+          | 'in_gst'
+          | 'in_pan'
+          | 'is_kt'
           | 'it_rea'
           | 'it_vat'
           | 'jp_cn'
+          | 'kh_tin'
+          | 'kr_brn'
           | 'kz_bin'
+          | 'la_tin'
+          | 'lc_tin'
           | 'li_uid'
+          | 'li_vat'
           | 'lt_ccrn'
           | 'lt_vat'
           | 'lu_nif'
@@ -6631,30 +6752,38 @@ export namespace Account {
           | 'lu_vat'
           | 'lv_urn'
           | 'lv_vat'
+          | 'md_cf'
+          | 'mg_nif'
+          | 'mk_edb'
           | 'mt_crn'
           | 'mt_tin'
           | 'mt_vat'
+          | 'mu_vat'
           | 'mx_rfc'
           | 'my_brn'
           | 'my_coid'
           | 'my_itn'
           | 'my_sst'
           | 'mz_nuit'
+          | 'ne_tin'
           | 'nl_kvk'
           | 'nl_rsin'
           | 'nl_vat'
           | 'no_orgnr'
           | 'nz_bn'
           | 'nz_ird'
+          | 'om_tin'
           | 'pe_ruc'
           | 'pk_ntn'
           | 'pl_nip'
           | 'pl_regon'
           | 'pl_vat'
           | 'pt_vat'
+          | 'qa_tin'
           | 'ro_cui'
           | 'ro_orc'
           | 'ro_vat'
+          | 'rw_tin'
           | 'sa_crn'
           | 'sa_tin'
           | 'se_orgnr'
@@ -6666,10 +6795,15 @@ export namespace Account {
           | 'sk_dic'
           | 'sk_ico'
           | 'sk_vat'
+          | 'sm_coe'
           | 'th_crn'
           | 'th_prn'
           | 'th_tin'
+          | 'tr_tin'
+          | 'tt_bir'
+          | 'tt_vat'
           | 'us_ein'
+          | 'vn_tin'
           | OtherString;
       }
 
@@ -6924,6 +7058,11 @@ export namespace Account {
          * The ID number type of an individual.
          */
         type: IdNumber.Type;
+
+        /**
+         * The value of the ID number. Returned only when the API key is authorized to read it; otherwise null.
+         */
+        value?: string;
       }
 
       export type LegalGender = 'female' | 'male' | OtherString;
@@ -7128,82 +7267,212 @@ export namespace Account {
       export namespace IdNumber {
         export type Type =
           | 'ae_eid'
+          | 'ae_pp'
+          | 'al_pp'
+          | 'am_pp'
           | 'ao_nif'
           | 'ar_cuil'
           | 'ar_dni'
+          | 'ar_pp'
+          | 'at_pp'
           | 'at_stn'
+          | 'au_pp'
+          | 'az_pin'
+          | 'az_pp'
           | 'az_tin'
           | 'bd_brc'
           | 'bd_etin'
           | 'bd_nid'
+          | 'bd_pp'
           | 'be_nrn'
+          | 'be_pp'
+          | 'bg_pp'
           | 'bg_ucn'
+          | 'bh_pp'
+          | 'bj_pp'
           | 'bn_nric'
+          | 'bo_pp'
           | 'br_cpf'
+          | 'br_pp'
+          | 'br_rg'
+          | 'bs_pp'
+          | 'bs_tin'
+          | 'by_pp'
+          | 'ca_pp'
           | 'ca_sin'
           | 'ch_oasi'
+          | 'ch_pp'
+          | 'ci_pp'
+          | 'cl_pp'
           | 'cl_rut'
+          | 'cm_pp'
           | 'cn_pp'
           | 'co_nuip'
+          | 'co_pp'
           | 'cr_ci'
           | 'cr_cpf'
           | 'cr_dimex'
           | 'cr_nite'
+          | 'cr_pp'
+          | 'cy_pp'
           | 'cy_tic'
+          | 'cz_dic'
+          | 'cz_pp'
           | 'cz_rc'
+          | 'de_pp'
           | 'de_stn'
           | 'dk_cpr'
+          | 'dk_pp'
           | 'do_cie'
+          | 'do_pp'
           | 'do_rcn'
+          | 'dz_pp'
           | 'ec_ci'
+          | 'ec_pp'
           | 'ee_ik'
+          | 'ee_pp'
+          | 'eg_pp'
           | 'es_nif'
+          | 'es_pp'
+          | 'et_tin'
           | 'fi_hetu'
+          | 'fi_pp'
           | 'fr_nir'
+          | 'fr_pp'
+          | 'fr_spi'
+          | 'ga_nif'
           | 'gb_nino'
+          | 'gb_pp'
+          | 'ge_pp'
+          | 'gh_pp'
           | 'gr_afm'
+          | 'gr_pp'
+          | 'gt_cui'
           | 'gt_nit'
+          | 'gt_pp'
           | 'hk_id'
+          | 'hk_pp'
+          | 'hn_dni'
+          | 'hn_pp'
           | 'hr_oib'
+          | 'hr_pp'
+          | 'ht_pp'
           | 'hu_ad'
+          | 'hu_pp'
           | 'id_nik'
+          | 'id_pp'
+          | 'ie_pp'
           | 'ie_ppsn'
+          | 'il_pp'
+          | 'in_pan'
+          | 'in_pp'
+          | 'iq_pp'
           | 'is_kt'
+          | 'is_pp'
           | 'it_cf'
+          | 'it_pp'
+          | 'je_pp'
+          | 'jm_pp'
+          | 'jo_pp'
           | 'jp_inc'
+          | 'jp_pp'
           | 'ke_pin'
+          | 'ke_pp'
+          | 'kr_pp'
+          | 'kw_pp'
           | 'kz_iin'
+          | 'kz_pp'
+          | 'lb_pp'
           | 'li_peid'
+          | 'li_pp'
+          | 'lk_pp'
           | 'lt_ak'
+          | 'lt_pp'
           | 'lu_nif'
+          | 'lu_pp'
           | 'lv_pk'
+          | 'lv_pp'
+          | 'ma_pp'
+          | 'md_cf'
+          | 'md_pp'
+          | 'mg_nif'
+          | 'mk_pin'
+          | 'mk_pp'
+          | 'mm_pp'
+          | 'mn_pp'
+          | 'mt_pp'
+          | 'mu_pp'
+          | 'mx_curp'
+          | 'mx_pp'
           | 'mx_rfc'
           | 'my_nric'
+          | 'my_pp'
           | 'mz_nuit'
           | 'ng_nin'
+          | 'ng_pp'
           | 'nl_bsn'
+          | 'nl_pp'
           | 'no_nin'
+          | 'no_pp'
+          | 'np_pp'
           | 'nz_ird'
+          | 'nz_pp'
+          | 'pa_pp'
           | 'pe_dni'
+          | 'pe_pp'
+          | 'ph_pp'
           | 'pk_cnic'
+          | 'pk_pp'
           | 'pk_snic'
           | 'pl_pesel'
+          | 'pl_pp'
+          | 'pr_pp'
+          | 'ps_pp'
           | 'pt_nif'
+          | 'pt_pp'
+          | 'py_ci'
+          | 'py_pp'
           | 'ro_cnp'
+          | 'ro_pp'
+          | 'rs_pp'
+          | 'ru_pp'
+          | 'rw_tin'
+          | 'sa_pp'
+          | 'sa_ptin'
           | 'sa_tin'
           | 'se_pin'
+          | 'se_pp'
           | 'sg_fin'
           | 'sg_nric'
+          | 'sg_pp'
+          | 'si_pp'
+          | 'si_ptin'
           | 'sk_dic'
+          | 'sk_pp'
+          | 'sv_pp'
           | 'th_lc'
           | 'th_pin'
+          | 'th_pp'
+          | 'tn_pp'
+          | 'tr_pp'
           | 'tr_tin'
+          | 'tt_bir'
+          | 'tw_pp'
+          | 'ua_pp'
+          | 'ug_pp'
           | 'us_itin'
           | 'us_itin_last_4'
+          | 'us_pp'
           | 'us_ssn'
           | 'us_ssn_last_4'
           | 'uy_dni'
+          | 'uy_pp'
+          | 'uz_pp'
+          | 'uz_tin'
+          | 've_pp'
+          | 'vn_pp'
           | 'za_id'
+          | 'za_pp'
           | OtherString;
       }
 
@@ -7308,6 +7577,28 @@ export namespace Account {
           surname?: string;
         }
       }
+    }
+  }
+
+  export namespace Rejection {
+    export interface PlatformRejection {
+      /**
+       * The reason the platform rejected the Account.
+       */
+      reason: PlatformRejection.Reason;
+    }
+
+    export namespace PlatformRejection {
+      export type Reason =
+        | 'credit'
+        | 'fraud'
+        | 'fraud_no_intent_to_fulfill'
+        | 'fraud_other'
+        | 'fraud_payment_method_casher'
+        | 'fraud_payment_method_tester'
+        | 'other'
+        | 'terms_of_service'
+        | OtherString;
     }
   }
 
@@ -7448,6 +7739,7 @@ export namespace Account {
             export type Code =
               | 'invalid_address_city_state_postal_code'
               | 'invalid_address_cmra_address'
+              | 'invalid_address_crypto_regulated_state'
               | 'invalid_address_highway_contract_box'
               | 'invalid_address_private_mailbox'
               | 'invalid_address_registered_agent_address'
@@ -7489,6 +7781,7 @@ export namespace Account {
               | 'invalid_value_other'
               | 'unresolvable_ip_address'
               | 'unresolvable_postal_code'
+              | 'verification_data_not_found'
               | 'verification_directors_mismatch'
               | 'verification_document_address_mismatch'
               | 'verification_document_address_missing'
@@ -7536,6 +7829,7 @@ export namespace Account {
               | 'verification_missing_directors'
               | 'verification_missing_executives'
               | 'verification_missing_owners'
+              | 'verification_relationships_not_found'
               | 'verification_requires_additional_memorandum_of_associations'
               | 'verification_requires_additional_proof_of_registration'
               | 'verification_selfie_document_missing_photo'
@@ -7644,6 +7938,7 @@ export namespace Account {
         export type Code =
           | 'invalid_address_city_state_postal_code'
           | 'invalid_address_cmra_address'
+          | 'invalid_address_crypto_regulated_state'
           | 'invalid_address_highway_contract_box'
           | 'invalid_address_private_mailbox'
           | 'invalid_address_registered_agent_address'
@@ -7685,6 +7980,7 @@ export namespace Account {
           | 'invalid_value_other'
           | 'unresolvable_ip_address'
           | 'unresolvable_postal_code'
+          | 'verification_data_not_found'
           | 'verification_directors_mismatch'
           | 'verification_document_address_mismatch'
           | 'verification_document_address_missing'
@@ -7732,6 +8028,7 @@ export namespace Account {
           | 'verification_missing_directors'
           | 'verification_missing_executives'
           | 'verification_missing_owners'
+          | 'verification_relationships_not_found'
           | 'verification_requires_additional_memorandum_of_associations'
           | 'verification_requires_additional_proof_of_registration'
           | 'verification_selfie_document_missing_photo'
@@ -7780,7 +8077,6 @@ export namespace Account {
             | 'bank_accounts.rtp'
             | 'bank_accounts.sepa'
             | 'bank_accounts.swift'
-            | 'bank_accounts.wire'
             | 'billie_payments'
             | 'blik_payments'
             | 'blik_recurring_payments'
@@ -7953,7 +8249,7 @@ export namespace V2 {
         merchant?: Configuration.Merchant;
 
         /**
-         * The Recipient Configuration allows the Account to receive funds. Utilize this configuration if the Account will not be the Merchant of Record, like with Separate Charges & Transfers, or Destination Charges without on_behalf_of set.
+         * The Recipient Configuration allows the Account to receive funds from you.
          */
         recipient?: Configuration.Recipient;
       }
@@ -9161,7 +9457,7 @@ export namespace V2 {
               /**
                * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
                */
-              country: string;
+              country?: string;
 
               /**
                * Address line 1 (e.g., street, PO Box, or company name).
@@ -9256,7 +9552,7 @@ export namespace V2 {
 
             export interface StripeBalance {
               /**
-               * Enables this Account to receive /v1/transfers into their Stripe Balance (/v1/balance).
+               * Enables this Account to receive /v1/transfers into their Stripe Balance (/v1/balance). Use this capability if the Account will not be the Merchant of Record, like with Separate Charges & Transfers, or Destination Charges without on_behalf_of set.
                */
               stripe_transfers?: StripeBalance.StripeTransfers;
             }
@@ -9800,7 +10096,7 @@ export namespace V2 {
             /**
              * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
              */
-            country: string;
+            country?: string;
 
             /**
              * Address line 1 (e.g., street, PO Box, or company name).
@@ -10195,6 +10491,7 @@ export namespace V2 {
             export type Type =
               | 'ae_crn'
               | 'ae_vat'
+              | 'ag_tin'
               | 'ao_nif'
               | 'ar_cuit'
               | 'at_fn'
@@ -10203,25 +10500,31 @@ export namespace V2 {
               | 'au_abn'
               | 'au_acn'
               | 'au_in'
+              | 'au_wpn'
               | 'az_tin'
+              | 'ba_pib'
               | 'bd_etin'
               | 'be_cbe'
               | 'be_vat'
               | 'bg_uic'
               | 'bg_vat'
+              | 'bj_ifu'
               | 'br_cnpj'
               | 'ca_cn'
               | 'ca_crarr'
               | 'ca_gst_hst'
               | 'ca_neq'
+              | 'ca_qst'
               | 'ca_rid'
               | 'ch_chid'
               | 'ch_uid'
+              | 'cl_rut'
               | 'cr_cpj'
               | 'cr_nite'
               | 'cy_he'
               | 'cy_tic'
               | 'cy_vat'
+              | 'cz_dic'
               | 'cz_ico'
               | 'cz_vat'
               | 'de_hrn'
@@ -10230,18 +10533,23 @@ export namespace V2 {
               | 'dk_cvr'
               | 'dk_vat'
               | 'do_rcn'
+              | 'dz_nif'
               | 'ee_rk'
               | 'ee_vat'
               | 'es_cif'
               | 'es_vat'
+              | 'et_tin'
               | 'fi_vat'
               | 'fi_yt'
               | 'fr_rna'
               | 'fr_siren'
+              | 'fr_siret'
               | 'fr_vat'
               | 'gb_crn'
               | 'gb_vat'
+              | 'ge_tin'
               | 'gi_crn'
+              | 'gi_vat'
               | 'gr_afm'
               | 'gr_gemi'
               | 'gr_vat'
@@ -10254,14 +10562,25 @@ export namespace V2 {
               | 'hu_cjs'
               | 'hu_tin'
               | 'hu_vat'
+              | 'id_npwp'
               | 'ie_crn'
               | 'ie_trn'
               | 'ie_vat'
+              | 'il_tin'
+              | 'il_vat'
+              | 'in_gst'
+              | 'in_pan'
+              | 'is_kt'
               | 'it_rea'
               | 'it_vat'
               | 'jp_cn'
+              | 'kh_tin'
+              | 'kr_brn'
               | 'kz_bin'
+              | 'la_tin'
+              | 'lc_tin'
               | 'li_uid'
+              | 'li_vat'
               | 'lt_ccrn'
               | 'lt_vat'
               | 'lu_nif'
@@ -10269,30 +10588,38 @@ export namespace V2 {
               | 'lu_vat'
               | 'lv_urn'
               | 'lv_vat'
+              | 'md_cf'
+              | 'mg_nif'
+              | 'mk_edb'
               | 'mt_crn'
               | 'mt_tin'
               | 'mt_vat'
+              | 'mu_vat'
               | 'mx_rfc'
               | 'my_brn'
               | 'my_coid'
               | 'my_itn'
               | 'my_sst'
               | 'mz_nuit'
+              | 'ne_tin'
               | 'nl_kvk'
               | 'nl_rsin'
               | 'nl_vat'
               | 'no_orgnr'
               | 'nz_bn'
               | 'nz_ird'
+              | 'om_tin'
               | 'pe_ruc'
               | 'pk_ntn'
               | 'pl_nip'
               | 'pl_regon'
               | 'pl_vat'
               | 'pt_vat'
+              | 'qa_tin'
               | 'ro_cui'
               | 'ro_orc'
               | 'ro_vat'
+              | 'rw_tin'
               | 'sa_crn'
               | 'sa_tin'
               | 'se_orgnr'
@@ -10304,10 +10631,15 @@ export namespace V2 {
               | 'sk_dic'
               | 'sk_ico'
               | 'sk_vat'
+              | 'sm_coe'
               | 'th_crn'
               | 'th_prn'
               | 'th_tin'
+              | 'tr_tin'
+              | 'tt_bir'
+              | 'tt_vat'
               | 'us_ein'
+              | 'vn_tin'
               | OtherString;
           }
 
@@ -10321,7 +10653,7 @@ export namespace V2 {
               /**
                * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
                */
-              country: string;
+              country?: string;
 
               /**
                * Address line 1 (e.g., street, PO Box, or company name).
@@ -10358,7 +10690,7 @@ export namespace V2 {
               /**
                * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
                */
-              country: string;
+              country?: string;
 
               /**
                * Address line 1 (e.g., street, PO Box, or company name).
@@ -10414,7 +10746,7 @@ export namespace V2 {
             /**
              * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
              */
-            country: string;
+            country?: string;
 
             /**
              * Address line 1 (e.g., street, PO Box, or company name).
@@ -10478,7 +10810,7 @@ export namespace V2 {
             /**
              * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
              */
-            country: string;
+            country?: string;
 
             /**
              * Address line 1 (e.g., street, PO Box, or company name).
@@ -10730,82 +11062,212 @@ export namespace V2 {
           export namespace IdNumber {
             export type Type =
               | 'ae_eid'
+              | 'ae_pp'
+              | 'al_pp'
+              | 'am_pp'
               | 'ao_nif'
               | 'ar_cuil'
               | 'ar_dni'
+              | 'ar_pp'
+              | 'at_pp'
               | 'at_stn'
+              | 'au_pp'
+              | 'az_pin'
+              | 'az_pp'
               | 'az_tin'
               | 'bd_brc'
               | 'bd_etin'
               | 'bd_nid'
+              | 'bd_pp'
               | 'be_nrn'
+              | 'be_pp'
+              | 'bg_pp'
               | 'bg_ucn'
+              | 'bh_pp'
+              | 'bj_pp'
               | 'bn_nric'
+              | 'bo_pp'
               | 'br_cpf'
+              | 'br_pp'
+              | 'br_rg'
+              | 'bs_pp'
+              | 'bs_tin'
+              | 'by_pp'
+              | 'ca_pp'
               | 'ca_sin'
               | 'ch_oasi'
+              | 'ch_pp'
+              | 'ci_pp'
+              | 'cl_pp'
               | 'cl_rut'
+              | 'cm_pp'
               | 'cn_pp'
               | 'co_nuip'
+              | 'co_pp'
               | 'cr_ci'
               | 'cr_cpf'
               | 'cr_dimex'
               | 'cr_nite'
+              | 'cr_pp'
+              | 'cy_pp'
               | 'cy_tic'
+              | 'cz_dic'
+              | 'cz_pp'
               | 'cz_rc'
+              | 'de_pp'
               | 'de_stn'
               | 'dk_cpr'
+              | 'dk_pp'
               | 'do_cie'
+              | 'do_pp'
               | 'do_rcn'
+              | 'dz_pp'
               | 'ec_ci'
+              | 'ec_pp'
               | 'ee_ik'
+              | 'ee_pp'
+              | 'eg_pp'
               | 'es_nif'
+              | 'es_pp'
+              | 'et_tin'
               | 'fi_hetu'
+              | 'fi_pp'
               | 'fr_nir'
+              | 'fr_pp'
+              | 'fr_spi'
+              | 'ga_nif'
               | 'gb_nino'
+              | 'gb_pp'
+              | 'ge_pp'
+              | 'gh_pp'
               | 'gr_afm'
+              | 'gr_pp'
+              | 'gt_cui'
               | 'gt_nit'
+              | 'gt_pp'
               | 'hk_id'
+              | 'hk_pp'
+              | 'hn_dni'
+              | 'hn_pp'
               | 'hr_oib'
+              | 'hr_pp'
+              | 'ht_pp'
               | 'hu_ad'
+              | 'hu_pp'
               | 'id_nik'
+              | 'id_pp'
+              | 'ie_pp'
               | 'ie_ppsn'
+              | 'il_pp'
+              | 'in_pan'
+              | 'in_pp'
+              | 'iq_pp'
               | 'is_kt'
+              | 'is_pp'
               | 'it_cf'
+              | 'it_pp'
+              | 'je_pp'
+              | 'jm_pp'
+              | 'jo_pp'
               | 'jp_inc'
+              | 'jp_pp'
               | 'ke_pin'
+              | 'ke_pp'
+              | 'kr_pp'
+              | 'kw_pp'
               | 'kz_iin'
+              | 'kz_pp'
+              | 'lb_pp'
               | 'li_peid'
+              | 'li_pp'
+              | 'lk_pp'
               | 'lt_ak'
+              | 'lt_pp'
               | 'lu_nif'
+              | 'lu_pp'
               | 'lv_pk'
+              | 'lv_pp'
+              | 'ma_pp'
+              | 'md_cf'
+              | 'md_pp'
+              | 'mg_nif'
+              | 'mk_pin'
+              | 'mk_pp'
+              | 'mm_pp'
+              | 'mn_pp'
+              | 'mt_pp'
+              | 'mu_pp'
+              | 'mx_curp'
+              | 'mx_pp'
               | 'mx_rfc'
               | 'my_nric'
+              | 'my_pp'
               | 'mz_nuit'
               | 'ng_nin'
+              | 'ng_pp'
               | 'nl_bsn'
+              | 'nl_pp'
               | 'no_nin'
+              | 'no_pp'
+              | 'np_pp'
               | 'nz_ird'
+              | 'nz_pp'
+              | 'pa_pp'
               | 'pe_dni'
+              | 'pe_pp'
+              | 'ph_pp'
               | 'pk_cnic'
+              | 'pk_pp'
               | 'pk_snic'
               | 'pl_pesel'
+              | 'pl_pp'
+              | 'pr_pp'
+              | 'ps_pp'
               | 'pt_nif'
+              | 'pt_pp'
+              | 'py_ci'
+              | 'py_pp'
               | 'ro_cnp'
+              | 'ro_pp'
+              | 'rs_pp'
+              | 'ru_pp'
+              | 'rw_tin'
+              | 'sa_pp'
+              | 'sa_ptin'
               | 'sa_tin'
               | 'se_pin'
+              | 'se_pp'
               | 'sg_fin'
               | 'sg_nric'
+              | 'sg_pp'
+              | 'si_pp'
+              | 'si_ptin'
               | 'sk_dic'
+              | 'sk_pp'
+              | 'sv_pp'
               | 'th_lc'
               | 'th_pin'
+              | 'th_pp'
+              | 'tn_pp'
+              | 'tr_pp'
               | 'tr_tin'
+              | 'tt_bir'
+              | 'tw_pp'
+              | 'ua_pp'
+              | 'ug_pp'
               | 'us_itin'
               | 'us_itin_last_4'
+              | 'us_pp'
               | 'us_ssn'
               | 'us_ssn_last_4'
               | 'uy_dni'
+              | 'uy_pp'
+              | 'uz_pp'
+              | 'uz_tin'
+              | 've_pp'
+              | 'vn_pp'
               | 'za_id'
+              | 'za_pp'
               | OtherString;
           }
 
@@ -10819,7 +11281,7 @@ export namespace V2 {
               /**
                * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
                */
-              country: string;
+              country?: string;
 
               /**
                * Address line 1 (e.g., street, PO Box, or company name).
@@ -10856,7 +11318,7 @@ export namespace V2 {
               /**
                * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
                */
-              country: string;
+              country?: string;
 
               /**
                * Address line 1 (e.g., street, PO Box, or company name).
@@ -11003,7 +11465,7 @@ export namespace V2 {
         merchant?: Configuration.Merchant;
 
         /**
-         * The Recipient Configuration allows the Account to receive funds. Utilize this configuration if the Account will not be the Merchant of Record, like with Separate Charges & Transfers, or Destination Charges without on_behalf_of set.
+         * The Recipient Configuration allows the Account to receive funds from you.
          */
         recipient?: Configuration.Recipient;
       }
@@ -12340,7 +12802,7 @@ export namespace V2 {
 
             export interface StripeBalance {
               /**
-               * Enables this Account to receive /v1/transfers into their Stripe Balance (/v1/balance).
+               * Enables this Account to receive /v1/transfers into their Stripe Balance (/v1/balance). Use this capability if the Account will not be the Merchant of Record, like with Separate Charges & Transfers, or Destination Charges without on_behalf_of set.
                */
               stripe_transfers?: StripeBalance.StripeTransfers;
             }
@@ -12695,7 +13157,10 @@ export namespace V2 {
           nationalities?: Array<string>;
 
           /**
-           * The individual's phone number.
+           * The individual's phone number. You can include a country calling code prefixed with `+`,
+           * for example `+12025550123`, or omit it, for example `2025550123`. Spaces, hyphens, periods,
+           * and parentheses are optional and accepted. Numbers beginning with `+` are checked against
+           * the numbering rules for their country calling code, including valid prefixes and number lengths.
            */
           phone?: string;
 
@@ -12811,6 +13276,11 @@ export namespace V2 {
             crypto_money_manager?: TermsOfService.CryptoMoneyManager;
 
             /**
+             * Details on the Account's acceptance of ZeroHash recipient-specific terms of service.
+             */
+            crypto_transfers_zerohash_recipient?: TermsOfService.CryptoTransfersZerohashRecipient;
+
+            /**
              * Details on the Account's acceptance of Treasury-specific terms of service.
              */
             money_manager?: TermsOfService.MoneyManager;
@@ -12841,6 +13311,23 @@ export namespace V2 {
             }
 
             export interface CryptoMoneyManager {
+              /**
+               * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
+               */
+              date?: string;
+
+              /**
+               * The IP address from which the Account's representative accepted the terms of service.
+               */
+              ip?: string;
+
+              /**
+               * The user agent of the browser from which the Account's representative accepted the terms of service.
+               */
+              user_agent?: string;
+            }
+
+            export interface CryptoTransfersZerohashRecipient {
               /**
                * The time when the Account's representative accepted the terms of service. Represented as a RFC 3339 date & time UTC value in millisecond precision, for example: 2022-09-18T13:22:18.123Z.
                */
@@ -13323,6 +13810,7 @@ export namespace V2 {
             export type Type =
               | 'ae_crn'
               | 'ae_vat'
+              | 'ag_tin'
               | 'ao_nif'
               | 'ar_cuit'
               | 'at_fn'
@@ -13331,25 +13819,31 @@ export namespace V2 {
               | 'au_abn'
               | 'au_acn'
               | 'au_in'
+              | 'au_wpn'
               | 'az_tin'
+              | 'ba_pib'
               | 'bd_etin'
               | 'be_cbe'
               | 'be_vat'
               | 'bg_uic'
               | 'bg_vat'
+              | 'bj_ifu'
               | 'br_cnpj'
               | 'ca_cn'
               | 'ca_crarr'
               | 'ca_gst_hst'
               | 'ca_neq'
+              | 'ca_qst'
               | 'ca_rid'
               | 'ch_chid'
               | 'ch_uid'
+              | 'cl_rut'
               | 'cr_cpj'
               | 'cr_nite'
               | 'cy_he'
               | 'cy_tic'
               | 'cy_vat'
+              | 'cz_dic'
               | 'cz_ico'
               | 'cz_vat'
               | 'de_hrn'
@@ -13358,18 +13852,23 @@ export namespace V2 {
               | 'dk_cvr'
               | 'dk_vat'
               | 'do_rcn'
+              | 'dz_nif'
               | 'ee_rk'
               | 'ee_vat'
               | 'es_cif'
               | 'es_vat'
+              | 'et_tin'
               | 'fi_vat'
               | 'fi_yt'
               | 'fr_rna'
               | 'fr_siren'
+              | 'fr_siret'
               | 'fr_vat'
               | 'gb_crn'
               | 'gb_vat'
+              | 'ge_tin'
               | 'gi_crn'
+              | 'gi_vat'
               | 'gr_afm'
               | 'gr_gemi'
               | 'gr_vat'
@@ -13382,14 +13881,25 @@ export namespace V2 {
               | 'hu_cjs'
               | 'hu_tin'
               | 'hu_vat'
+              | 'id_npwp'
               | 'ie_crn'
               | 'ie_trn'
               | 'ie_vat'
+              | 'il_tin'
+              | 'il_vat'
+              | 'in_gst'
+              | 'in_pan'
+              | 'is_kt'
               | 'it_rea'
               | 'it_vat'
               | 'jp_cn'
+              | 'kh_tin'
+              | 'kr_brn'
               | 'kz_bin'
+              | 'la_tin'
+              | 'lc_tin'
               | 'li_uid'
+              | 'li_vat'
               | 'lt_ccrn'
               | 'lt_vat'
               | 'lu_nif'
@@ -13397,30 +13907,38 @@ export namespace V2 {
               | 'lu_vat'
               | 'lv_urn'
               | 'lv_vat'
+              | 'md_cf'
+              | 'mg_nif'
+              | 'mk_edb'
               | 'mt_crn'
               | 'mt_tin'
               | 'mt_vat'
+              | 'mu_vat'
               | 'mx_rfc'
               | 'my_brn'
               | 'my_coid'
               | 'my_itn'
               | 'my_sst'
               | 'mz_nuit'
+              | 'ne_tin'
               | 'nl_kvk'
               | 'nl_rsin'
               | 'nl_vat'
               | 'no_orgnr'
               | 'nz_bn'
               | 'nz_ird'
+              | 'om_tin'
               | 'pe_ruc'
               | 'pk_ntn'
               | 'pl_nip'
               | 'pl_regon'
               | 'pl_vat'
               | 'pt_vat'
+              | 'qa_tin'
               | 'ro_cui'
               | 'ro_orc'
               | 'ro_vat'
+              | 'rw_tin'
               | 'sa_crn'
               | 'sa_tin'
               | 'se_orgnr'
@@ -13432,10 +13950,15 @@ export namespace V2 {
               | 'sk_dic'
               | 'sk_ico'
               | 'sk_vat'
+              | 'sm_coe'
               | 'th_crn'
               | 'th_prn'
               | 'th_tin'
+              | 'tr_tin'
+              | 'tt_bir'
+              | 'tt_vat'
               | 'us_ein'
+              | 'vn_tin'
               | OtherString;
           }
 
@@ -13858,82 +14381,212 @@ export namespace V2 {
           export namespace IdNumber {
             export type Type =
               | 'ae_eid'
+              | 'ae_pp'
+              | 'al_pp'
+              | 'am_pp'
               | 'ao_nif'
               | 'ar_cuil'
               | 'ar_dni'
+              | 'ar_pp'
+              | 'at_pp'
               | 'at_stn'
+              | 'au_pp'
+              | 'az_pin'
+              | 'az_pp'
               | 'az_tin'
               | 'bd_brc'
               | 'bd_etin'
               | 'bd_nid'
+              | 'bd_pp'
               | 'be_nrn'
+              | 'be_pp'
+              | 'bg_pp'
               | 'bg_ucn'
+              | 'bh_pp'
+              | 'bj_pp'
               | 'bn_nric'
+              | 'bo_pp'
               | 'br_cpf'
+              | 'br_pp'
+              | 'br_rg'
+              | 'bs_pp'
+              | 'bs_tin'
+              | 'by_pp'
+              | 'ca_pp'
               | 'ca_sin'
               | 'ch_oasi'
+              | 'ch_pp'
+              | 'ci_pp'
+              | 'cl_pp'
               | 'cl_rut'
+              | 'cm_pp'
               | 'cn_pp'
               | 'co_nuip'
+              | 'co_pp'
               | 'cr_ci'
               | 'cr_cpf'
               | 'cr_dimex'
               | 'cr_nite'
+              | 'cr_pp'
+              | 'cy_pp'
               | 'cy_tic'
+              | 'cz_dic'
+              | 'cz_pp'
               | 'cz_rc'
+              | 'de_pp'
               | 'de_stn'
               | 'dk_cpr'
+              | 'dk_pp'
               | 'do_cie'
+              | 'do_pp'
               | 'do_rcn'
+              | 'dz_pp'
               | 'ec_ci'
+              | 'ec_pp'
               | 'ee_ik'
+              | 'ee_pp'
+              | 'eg_pp'
               | 'es_nif'
+              | 'es_pp'
+              | 'et_tin'
               | 'fi_hetu'
+              | 'fi_pp'
               | 'fr_nir'
+              | 'fr_pp'
+              | 'fr_spi'
+              | 'ga_nif'
               | 'gb_nino'
+              | 'gb_pp'
+              | 'ge_pp'
+              | 'gh_pp'
               | 'gr_afm'
+              | 'gr_pp'
+              | 'gt_cui'
               | 'gt_nit'
+              | 'gt_pp'
               | 'hk_id'
+              | 'hk_pp'
+              | 'hn_dni'
+              | 'hn_pp'
               | 'hr_oib'
+              | 'hr_pp'
+              | 'ht_pp'
               | 'hu_ad'
+              | 'hu_pp'
               | 'id_nik'
+              | 'id_pp'
+              | 'ie_pp'
               | 'ie_ppsn'
+              | 'il_pp'
+              | 'in_pan'
+              | 'in_pp'
+              | 'iq_pp'
               | 'is_kt'
+              | 'is_pp'
               | 'it_cf'
+              | 'it_pp'
+              | 'je_pp'
+              | 'jm_pp'
+              | 'jo_pp'
               | 'jp_inc'
+              | 'jp_pp'
               | 'ke_pin'
+              | 'ke_pp'
+              | 'kr_pp'
+              | 'kw_pp'
               | 'kz_iin'
+              | 'kz_pp'
+              | 'lb_pp'
               | 'li_peid'
+              | 'li_pp'
+              | 'lk_pp'
               | 'lt_ak'
+              | 'lt_pp'
               | 'lu_nif'
+              | 'lu_pp'
               | 'lv_pk'
+              | 'lv_pp'
+              | 'ma_pp'
+              | 'md_cf'
+              | 'md_pp'
+              | 'mg_nif'
+              | 'mk_pin'
+              | 'mk_pp'
+              | 'mm_pp'
+              | 'mn_pp'
+              | 'mt_pp'
+              | 'mu_pp'
+              | 'mx_curp'
+              | 'mx_pp'
               | 'mx_rfc'
               | 'my_nric'
+              | 'my_pp'
               | 'mz_nuit'
               | 'ng_nin'
+              | 'ng_pp'
               | 'nl_bsn'
+              | 'nl_pp'
               | 'no_nin'
+              | 'no_pp'
+              | 'np_pp'
               | 'nz_ird'
+              | 'nz_pp'
+              | 'pa_pp'
               | 'pe_dni'
+              | 'pe_pp'
+              | 'ph_pp'
               | 'pk_cnic'
+              | 'pk_pp'
               | 'pk_snic'
               | 'pl_pesel'
+              | 'pl_pp'
+              | 'pr_pp'
+              | 'ps_pp'
               | 'pt_nif'
+              | 'pt_pp'
+              | 'py_ci'
+              | 'py_pp'
               | 'ro_cnp'
+              | 'ro_pp'
+              | 'rs_pp'
+              | 'ru_pp'
+              | 'rw_tin'
+              | 'sa_pp'
+              | 'sa_ptin'
               | 'sa_tin'
               | 'se_pin'
+              | 'se_pp'
               | 'sg_fin'
               | 'sg_nric'
+              | 'sg_pp'
+              | 'si_pp'
+              | 'si_ptin'
               | 'sk_dic'
+              | 'sk_pp'
+              | 'sv_pp'
               | 'th_lc'
               | 'th_pin'
+              | 'th_pp'
+              | 'tn_pp'
+              | 'tr_pp'
               | 'tr_tin'
+              | 'tt_bir'
+              | 'tw_pp'
+              | 'ua_pp'
+              | 'ug_pp'
               | 'us_itin'
               | 'us_itin_last_4'
+              | 'us_pp'
               | 'us_ssn'
               | 'us_ssn_last_4'
               | 'uy_dni'
+              | 'uy_pp'
+              | 'uz_pp'
+              | 'uz_tin'
+              | 've_pp'
+              | 'vn_pp'
               | 'za_id'
+              | 'za_pp'
               | OtherString;
           }
 
@@ -14078,6 +14731,70 @@ export namespace V2 {
 
     export namespace AccountCloseParams {
       export type AppliedConfiguration = 'customer' | 'merchant' | 'recipient';
+    }
+  }
+}
+export namespace V2 {
+  export namespace Core {
+    export interface AccountRejectParams {
+      /**
+       * The reason for rejecting the Account. Repeated requests replace the previously recorded reason.
+       */
+      reason: AccountRejectParams.Reason;
+
+      /**
+       * Additional fields to include in the response.
+       */
+      include?: Array<AccountRejectParams.Include>;
+
+      /**
+       * Operations that remain unaffected by the rejection. Repeated requests replace the previous set; omitting this field clears any preserved operations.
+       */
+      preserve_operations?: Array<AccountRejectParams.PreserveOperation>;
+    }
+
+    export namespace AccountRejectParams {
+      export type Reason =
+        | 'credit'
+        | 'fraud_no_intent_to_fulfill'
+        | 'fraud_other'
+        | 'fraud_payment_method_casher'
+        | 'fraud_payment_method_tester'
+        | 'other'
+        | 'terms_of_service'
+        | OtherString;
+
+      export type Include =
+        | 'configuration.customer'
+        | 'configuration.merchant'
+        | 'configuration.recipient'
+        | 'defaults'
+        | 'future_requirements'
+        | 'identity'
+        | 'requirements';
+
+      export type PreserveOperation = 'payouts' | OtherString;
+    }
+  }
+}
+export namespace V2 {
+  export namespace Core {
+    export interface AccountUnrejectParams {
+      /**
+       * Additional fields to include in the response.
+       */
+      include?: Array<AccountUnrejectParams.Include>;
+    }
+
+    export namespace AccountUnrejectParams {
+      export type Include =
+        | 'configuration.customer'
+        | 'configuration.merchant'
+        | 'configuration.recipient'
+        | 'defaults'
+        | 'future_requirements'
+        | 'identity'
+        | 'requirements';
     }
   }
 }

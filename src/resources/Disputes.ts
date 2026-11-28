@@ -319,6 +319,11 @@ export namespace Dispute {
 
   export interface EvidenceDetails {
     /**
+     * If the dispute was eligible for appeal, whether the appeal was submitted manually, with Smart Disputes, or not submitted.
+     */
+    appeal_method?: EvidenceDetails.AppealMethod;
+
+    /**
      * Date by which evidence must be submitted in order to successfully challenge dispute. Will be 0 if the customer's bank or credit card company doesn't allow a response for this particular dispute.
      */
     due_by: number | null;
@@ -532,6 +537,13 @@ export namespace Dispute {
   }
 
   export namespace EvidenceDetails {
+    export type AppealMethod =
+      | 'manual'
+      | 'not_applicable'
+      | 'not_submitted'
+      | 'smart_disputes'
+      | OtherString;
+
     export interface EnhancedEligibility {
       mastercard_compliance?: EnhancedEligibility.MastercardCompliance;
 
@@ -639,6 +651,11 @@ export namespace Dispute {
        * Chargeback loss reason mapped by Stripe from Klarna's chargeback loss reason
        */
       chargeback_loss_reason_code?: string;
+
+      /**
+       * The ID of the dispute in Klarna.
+       */
+      dispute_id?: string;
 
       /**
        * The reason for the dispute as defined by Klarna

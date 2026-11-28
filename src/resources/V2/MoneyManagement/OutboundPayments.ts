@@ -337,6 +337,7 @@ export namespace OutboundPayment {
 
     export namespace Returned {
       export type Reason =
+        | 'payout_method_account_type_incorrect'
         | 'payout_method_canceled_by_customer'
         | 'payout_method_closed'
         | 'payout_method_currency_unsupported'
@@ -452,7 +453,7 @@ export namespace V2 {
       to: OutboundPaymentCreateParams.To;
 
       /**
-       * An arbitrary string attached to the OutboundPayment. Often useful for displaying to users.
+       * An arbitrary string attached to the OutboundPayment. Often useful for displaying to users. The description can not be longer than 100 characters and can only contain basic Latin characters and spaces. The following special characters are not allowed: <>\'"* .
        */
       description?: string;
 

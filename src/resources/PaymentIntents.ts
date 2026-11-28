@@ -7291,6 +7291,11 @@ export namespace PaymentIntentCreateParams {
        * Routing number of the bank account.
        */
       routing_number?: string;
+
+      /**
+       * The ID of a bank account [Token](https://docs.stripe.com/api/tokens/object) to use as a payment method.
+       */
+      token?: string;
     }
 
     export interface WechatPay {}
@@ -12214,6 +12219,11 @@ export namespace PaymentIntentUpdateParams {
        * Routing number of the bank account.
        */
       routing_number?: string;
+
+      /**
+       * The ID of a bank account [Token](https://docs.stripe.com/api/tokens/object) to use as a payment method.
+       */
+      token?: string;
     }
 
     export interface WechatPay {}
@@ -18367,6 +18377,11 @@ export namespace PaymentIntentConfirmParams {
        * Routing number of the bank account.
        */
       routing_number?: string;
+
+      /**
+       * The ID of a bank account [Token](https://docs.stripe.com/api/tokens/object) to use as a payment method.
+       */
+      token?: string;
     }
 
     export interface WechatPay {}

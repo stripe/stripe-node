@@ -69,6 +69,8 @@ export declare namespace Core {
   export import AccountRetrieveParams = V2Namespace0.Core.AccountRetrieveParams;
   export import AccountUpdateParams = V2Namespace0.Core.AccountUpdateParams;
   export import AccountCloseParams = V2Namespace0.Core.AccountCloseParams;
+  export import AccountRejectParams = V2Namespace0.Core.AccountRejectParams;
+  export import AccountUnrejectParams = V2Namespace0.Core.AccountUnrejectParams;
   export {Account, AccountResource};
   export import AccountLinkCreateParams = V2Namespace1.Core.AccountLinkCreateParams;
   export {AccountLink, AccountLinkResource};
